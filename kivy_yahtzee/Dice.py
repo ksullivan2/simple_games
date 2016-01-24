@@ -15,7 +15,6 @@ class Dice(ToggleButtonBehavior, Image):
            self.source = ("images/up_state/dice" + str(self.number) + ".gif")
 
     def roll(self):
-        #if state != "down":
-        self.number = randint(1,6)
-        print(self.number)
-        self.source = ("images/up_state/dice" + str(self.number) + ".gif")
+        if self.state != "down":
+            self.number = randint(1,6)
+            self.source = ("images/up_state/dice" + str(self.number) + ".gif")
