@@ -1,14 +1,29 @@
 <YahtzeeGame>:
+    id: game
     orientation: "vertical"
 
     BoxLayout:
+        id: dice_layer
         Dice:
+            id: dice1
         Dice:
+            id: dice2
         Dice:
+            id: dice3
         Dice:
+            id: dice4
         Dice:
+            id: dice5
 
-    BoxLayout:
+    RollButton:
+        text: "Roll"
+        size: 200,50
+        font_size: 20
+        on_press: game.roll_all_dice()
+        
+            
+               
+           
         
     
 
