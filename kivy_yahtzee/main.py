@@ -36,10 +36,10 @@ class ScoreCard(BoxLayout):
         super(ScoreCard,self).__init__()
         score_card_dict = {}
         for entry in score_types:
-            score_card_dict[entry] = 1
+            score_card_dict[entry] = None
             self.add_widget(ScoreOption(text = entry, value = 0))
         score_card_dict = DictProperty
-        
+        #idea is that this will be used to store scores later...
     pass
     
 
