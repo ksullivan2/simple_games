@@ -1,37 +1,77 @@
 <YahtzeeGame>:
-    id: game
-    orientation: "vertical"
-
     BoxLayout:
-        id: dice_layer
-        Dice:
-            id: dice1
-        Dice:
-            id: dice2
-        Dice:
-            id: dice3
-        Dice:
-            id: dice4
-        Dice:
-            id: dice5
+        id: game
+        orientation: "vertical"
+        size_hint_x: 2
 
-    RollButton:
-        text: "Roll"
-        size: 200,50
-        font_size: 20
-        on_press: game.roll_all_dice()
-        
+        DiceLayer:
+            id: dice_layer
+            size_hint_y: 3
             
-               
-           
-        
-    
+            Dice:
+                id: dice1
+            Dice:
+                id: dice2
+            Dice:
+                id: dice3
+            Dice:
+                id: dice4
+            Dice:
+                id: dice5
 
+        RollButton:
+            text: "Roll"
+            size: 200,50
+            font_size: 20
+            on_press: dice_layer.roll_all_dice()
 
-        
-
+    ScoreCard:
                     
             
-            
+<ScoreCard>:
+    BoxLayout:
+        id: scorecard
+        orientation: "vertical"
+        
+        ScoreOption:
+            text:"Aces"
+        ScoreOption:
+            text:"Twos"
+        ScoreOption:
+            text:"Threes"
+        ScoreOption:
+            text:"Fours"
+        ScoreOption:
+            text:"Fives"
+        ScoreOption:
+            text:"Sixes"
+        ScoreOption:
+            text:"Three of a Kind"
+        ScoreOption:
+            text:"Four of a Kind"
+        ScoreOption:
+            text:"Full House"
+        ScoreOption:
+            text:"Small Straight"
+        ScoreOption:
+            text:"Large Straight"
+        ScoreOption:
+            text:"Chance"
+        ScoreOption:
+            text:"Yahtzee"
+        ScoreOption:
+            text:"Yahtzee Bonus"
+
+<ScoreOption>:
+    id: scoreoption
+    text: "will be reset"
+    
+    ToggleButton:
+        size_hint_x: 2
+        id: button
+        text: scoreoption.text
+        group: "score_options_group"
+    Label:
+        text: "test"
                 
             
