@@ -6,8 +6,9 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.properties import NumericProperty, DictProperty
 from kivy.uix.relativelayout import RelativeLayout
 from Dice import *
+from yahtzee_definitions import *
+#from kivy.graphics import *
 
-from kivy.graphics import *
 
 class YahtzeeApp(App):
     def build(self):
@@ -25,9 +26,20 @@ class RollButton(Button):
     pass
     
 class ScoreOption(BoxLayout):
-    pass
+    def __init__(self, text, value, **kwargs):
+        super(ScoreOption, self).__init__()
+        self.text = text
+        self.value = value
 
 class ScoreCard(BoxLayout):
+    def __init__(self, **kwargs):
+        super(ScoreCard,self).__init__()
+        score_card_dict = {}
+        for entry in score_types:
+            score_card_dict[entry] = 1
+            self.add_widget(ScoreOption(text = entry, value = 0))
+        score_card_dict = DictProperty
+        
     pass
     
 

@@ -29,42 +29,15 @@
                     
             
 <ScoreCard>:
-    BoxLayout:
-        id: scorecard
-        orientation: "vertical"
-        
-        ScoreOption:
-            text:"Aces"
-        ScoreOption:
-            text:"Twos"
-        ScoreOption:
-            text:"Threes"
-        ScoreOption:
-            text:"Fours"
-        ScoreOption:
-            text:"Fives"
-        ScoreOption:
-            text:"Sixes"
-        ScoreOption:
-            text:"Three of a Kind"
-        ScoreOption:
-            text:"Four of a Kind"
-        ScoreOption:
-            text:"Full House"
-        ScoreOption:
-            text:"Small Straight"
-        ScoreOption:
-            text:"Large Straight"
-        ScoreOption:
-            text:"Chance"
-        ScoreOption:
-            text:"Yahtzee"
-        ScoreOption:
-            text:"Yahtzee Bonus"
+    id: scorecard
+    orientation: "vertical"
+    
+
 
 <ScoreOption>:
     id: scoreoption
     text: "will be reset"
+    value: 0
     
     ToggleButton:
         size_hint_x: 2
@@ -72,6 +45,7 @@
         text: scoreoption.text
         group: "score_options_group"
     Label:
-        text: "test"
+        id: score_number
+        text: str(scoreoption.value)
                 
             
