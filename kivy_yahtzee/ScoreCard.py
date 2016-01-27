@@ -12,13 +12,7 @@ score_types = ["Aces","Twos","Threes","Fours","Fives","Sixes",
          "Large Straight", "Chance", "Yahtzee", "Yahtzee Bonus"]
 
 
-class DiceLayer(BoxLayout):
-    def roll_all_dice(self):
-        for dice in self.children:
-             dice.roll()
 
-class RollButton(Button):
-    pass
     
 class ScoreOption(BoxLayout):
     def __init__(self, text, value, **kwargs):
