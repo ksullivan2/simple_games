@@ -1,5 +1,5 @@
 from collections import Counter
-from yahtzee_definitions import *
+#from ScoreCard import *
 
 
 

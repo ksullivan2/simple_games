@@ -26,19 +26,16 @@
             on_press: dice_layer.roll_all_dice()
 
     ScoreCard:
+        orientation: "vertical"
                     
             
-<ScoreCard>:
-    id: scorecard
-    orientation: "vertical"
-    
 
 
 <ScoreOption>:
     id: scoreoption
     text: "will be reset"
     value: 0
-    
+
     ToggleButton:
         size_hint_x: 2
         id: button

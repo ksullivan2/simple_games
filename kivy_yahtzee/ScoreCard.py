@@ -2,7 +2,7 @@ import random
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
-from kivy.properties import NumericProperty, DictProperty
+from kivy.properties import NumericProperty, DictProperty, StringProperty
 from kivy.uix.widget import Widget
 
 
@@ -15,19 +15,18 @@ score_types = ["Aces","Twos","Threes","Fours","Fives","Sixes",
 
     
 class ScoreOption(BoxLayout):
-    def __init__(self, text, value, **kwargs):
-        super(ScoreOption, self).__init__()
-        self.text = text
-        self.value = value
+    text = StringProperty("default")
+    value = NumericProperty(0)
 
 class ScoreCard(BoxLayout):
     def __init__(self, **kwargs):
         super(ScoreCard,self).__init__()
-        score_card_dict = {}
+        self.score_card_dict = DictProperty({})
         for entry in score_types:
-            score_card_dict[entry] = None
-            self.add_widget(ScoreOption(text = entry, value = 0))
-        score_card_dict = DictProperty
+            #self.score_card_dict.add(entry: None)
+            self.add_widget(ScoreOption(text = entry))
+        #for key in score_card_dict.keys():
+            #print(score_card_dict)
         #idea is that this will be used to store scores later...
     pass
  
