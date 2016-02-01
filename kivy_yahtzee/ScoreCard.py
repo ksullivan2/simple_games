@@ -2,7 +2,7 @@ import random
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
-from kivy.properties import NumericProperty, DictProperty, StringProperty
+from kivy.properties import NumericProperty, DictProperty, StringProperty, ObjectProperty
 from kivy.uix.widget import Widget
 
 
@@ -17,6 +17,8 @@ score_types = ["Aces","Twos","Threes","Fours","Fives","Sixes",
 class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
+    
+
 
 
 class ScoreCard(BoxLayout):

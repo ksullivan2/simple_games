@@ -29,6 +29,8 @@
     ScoreCard:
         id: scorecard 
         orientation: "vertical"
+
+        
                     
 
 <ScoreCard>:
@@ -45,7 +47,8 @@
         size_hint_x: 2
         text: scoreoption.id
         group: "score_options_group"
-        on_press: actionbutton.unlock()
+        on_press: self.parent.parent.parent.unlock()
+        #I don't like this, but it won't let me do root???
     Label:
         id: score_number
         text: str(scoreoption.value)

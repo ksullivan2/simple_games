@@ -35,7 +35,9 @@ class YahtzeeGame(BoxLayout):
             self.ids["scorecard"].select_score()
             self.ids["actionbutton"].text = "Roll again."
             self.state = 1
-        
+    
+    def unlock(self):
+        self.ids["actionbutton"].disabled = False
         
 
 
