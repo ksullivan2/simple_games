@@ -2,7 +2,8 @@ import random
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
-from kivy.properties import NumericProperty, DictProperty, StringProperty, ObjectProperty
+from kivy.properties import NumericProperty, DictProperty, \
+                            StringProperty, ObjectProperty
 from kivy.uix.widget import Widget
 from ValueChecking import score_types
 
@@ -14,7 +15,7 @@ from ValueChecking import score_types
 class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
-    
+
 
 
 

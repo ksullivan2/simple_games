@@ -7,6 +7,7 @@ class Dice(ToggleButtonBehavior, Image):
         self.number = 6
         super(Dice, self).__init__(**kwargs)
         self.source = ("images/up_state/dice" + str(self.number) + ".gif")
+        self.disabled = True
         
     def on_state(self, widget, value):
         if value == "down":

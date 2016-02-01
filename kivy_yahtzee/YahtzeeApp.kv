@@ -1,5 +1,7 @@
 <YahtzeeGame>:
     id: game
+    gamestate: 0
+    on_gamestate: self.change_game_state()
 
     BoxLayout:
         orientation: "vertical"
@@ -19,18 +21,22 @@
                 id: dice4
             Dice:
                 id: dice5
+        Label:
+            text: "Game State: " + str(game.gamestate)
 
         RollButton:
             id: actionbutton
             text: "Roll"
             size: 200,50
-            on_press: game.change_game_state()
+            on_press: game.increment_game_state()
 
     ScoreCard:
         id: scorecard 
         orientation: "vertical"
 
-        
+
+<Dice>:
+       
                     
 
 <ScoreCard>:
@@ -42,6 +48,7 @@
     # id will be overwritten
     value: 0
 
+
     ToggleButton:
         id: button
         size_hint_x: 2
@@ -49,8 +56,11 @@
         group: "score_options_group"
         on_press: self.parent.parent.parent.a_score_is_selected()
         #I don't like this, but it won't let me do root???
+        # on_state: score_number.text = "TEST"
     Label:
         id: score_number
         text: str(scoreoption.value)
+        
+
                 
             
