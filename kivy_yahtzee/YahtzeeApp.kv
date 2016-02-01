@@ -57,11 +57,12 @@
         group: "score_options_group"
         on_press: self.parent.parent.parent.gamestate = 4
         #I don't like this, but it won't let me do root???
-        disabled: scoreoption.used
+        disabled: True
         
     Label:
         id: score_number
         text: str(scoreoption.value)
+        disabled: button.disabled
         
 
                 

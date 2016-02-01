@@ -41,15 +41,15 @@ class YahtzeeGame(BoxLayout):
             self.ids["dice_layer"].roll_all_dice()
             self.ids["actionbutton"].text = "Choose where to put your points."
             self.ids["actionbutton"].disabled = True
+            self.ids["scorecard"].enable_score_options()
             self.ids["dice_layer"].disable_dice()
             self.show_scores_in_scorecard()
         elif self.gamestate == 4:
            self.ids["actionbutton"].text = "Confirm points?" 
            self.ids["actionbutton"].disabled = False
         elif self.gamestate == 5: 
+            self.ids["scorecard"].disable_score_options()
             self.ids["scorecard"].select_score()
-            self.ids["dice_layer"].enable_dice()
-            #self.ids["dice_layer"].roll_all_dice()
             self.ids["actionbutton"].text = "Roll your next hand."
             
         

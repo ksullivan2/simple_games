@@ -15,6 +15,7 @@ from ValueChecking import score_types
 class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
+    
 
 
 
@@ -37,6 +38,15 @@ class ScoreCard(BoxLayout):
         for option in self.children:
             if option.id in choice_of_scores.keys() and option.ids["button"].disabled == False:
                 option.value = choice_of_scores[option.id]
+
+    def disable_score_options(self):
+        for option in self.children:
+            option.ids['button'].disabled = True
+
+    def enable_score_options(self):
+        for option in self.children:
+            if option.used == False:
+                option.ids['button'].disabled = False
 
 
 
