@@ -22,13 +22,12 @@ class YahtzeeGame(BoxLayout):
     #4 is confirm and re-start rolling
     
     def increment_game_state(self):
-        if self.gamestate == 4:
+        if self.gamestate == 5:
             self.gamestate = 1
         else:
             self.gamestate += 1
 
     def change_game_state(self):
-        
         if self.gamestate == 1:
             self.ids["dice_layer"].enable_dice()
             self.ids["dice_layer"].roll_all_dice()
@@ -45,19 +44,15 @@ class YahtzeeGame(BoxLayout):
             self.ids["dice_layer"].disable_dice()
             self.show_scores_in_scorecard()
         elif self.gamestate == 4:
-           self.ids["actionbutton"].text = "Confirm points and roll your next hand." 
-           
+           self.ids["actionbutton"].text = "Confirm points?" 
+           self.ids["actionbutton"].disabled = False
         elif self.gamestate == 5: 
             self.ids["scorecard"].select_score()
             self.ids["dice_layer"].enable_dice()
-            self.ids["dice_layer"].roll_all_dice()
-            self.ids["actionbutton"].text = "Roll again."
+            #self.ids["dice_layer"].roll_all_dice()
+            self.ids["actionbutton"].text = "Roll your next hand."
             
         
-    
-    def a_score_is_selected(self):
-        self.ids["actionbutton"].disabled = False
-        self.increment_game_state()
 
     def show_scores_in_scorecard(self):
         hand = self.ids["dice_layer"].pass_values_to_hand()

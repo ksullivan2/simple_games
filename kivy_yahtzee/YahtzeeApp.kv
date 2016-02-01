@@ -54,7 +54,7 @@
         size_hint_x: 2
         text: scoreoption.id
         group: "score_options_group"
-        on_press: self.parent.parent.parent.a_score_is_selected()
+        on_press: self.parent.parent.parent.gamestate = 4
         #I don't like this, but it won't let me do root???
         # on_state: score_number.text = "TEST"
     Label:
