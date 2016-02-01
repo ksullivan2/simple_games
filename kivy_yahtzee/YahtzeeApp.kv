@@ -47,6 +47,7 @@
     id: scoreoption
     # id will be overwritten
     value: 0
+    used: False
 
 
     ToggleButton:
@@ -56,7 +57,8 @@
         group: "score_options_group"
         on_press: self.parent.parent.parent.gamestate = 4
         #I don't like this, but it won't let me do root???
-        # on_state: score_number.text = "TEST"
+        disabled: scoreoption.used
+        
     Label:
         id: score_number
         text: str(scoreoption.value)
