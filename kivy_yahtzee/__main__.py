@@ -2,7 +2,7 @@ from kivy.app import App
 from Dice import *
 from ScoreCard import *
 #from ScoreCardBehavior import *
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, ListProperty
 
 
 
@@ -29,6 +29,8 @@ class YahtzeeGame(BoxLayout):
         elif self.state == 2:
             self.ids["actionbutton"].text = "Confirm points and roll again."
             self.ids["actionbutton"].disabled = True
+            #show score options goes here
+            self.ids["dice_layer"].pass_values_to_hand()
             self.state = 3
         elif self.state == 3:
             #choose score value here  
@@ -36,15 +38,24 @@ class YahtzeeGame(BoxLayout):
             self.ids["actionbutton"].text = "Roll again."
             self.state = 1
     
-    def unlock(self):
+    def unlock_action_button(self):
         self.ids["actionbutton"].disabled = False
         
 
 
 class DiceLayer(BoxLayout):  
+    hand = ListProperty([])
+
     def roll_all_dice(self):
         for dice in self.children:
              dice.roll()
+
+    def pass_values_to_hand(self):
+        for dice in self.children:
+            self.hand.append(dice.number)
+        self.hand.sort()
+        return self.hand
+
         
 
 class RollButton(Button):
