@@ -1,7 +1,7 @@
 from kivy.app import App
 from Dice import *
 from ScoreCard import *
-from ScoreCardBehavior import *
+#from ScoreCardBehavior import *
 from kivy.properties import NumericProperty
 
 
@@ -28,9 +28,11 @@ class YahtzeeGame(BoxLayout):
             self.state = 2
         elif self.state == 2:
             self.ids["actionbutton"].text = "Confirm points and roll again."
+            self.ids["actionbutton"].disabled = True
             self.state = 3
         elif self.state == 3:
             #choose score value here  
+            self.ids["scorecard"].select_score()
             self.ids["actionbutton"].text = "Roll again."
             self.state = 1
         
@@ -44,7 +46,9 @@ class DiceLayer(BoxLayout):
         
 
 class RollButton(Button):
-    pass
+    def unlock(self):
+        self.disabled = False
+    
    
 
 if __name__ == '__main__':

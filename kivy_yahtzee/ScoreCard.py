@@ -18,13 +18,27 @@ class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
 
+
 class ScoreCard(BoxLayout):
     def __init__(self, **kwargs):
         super(ScoreCard,self).__init__()
-        self.score_card_dict = {}
+        #self.score_card_dict = {}
         for entry in score_types:
-            self.score_card_dict[entry] = None
+            #self.score_card_dict[entry] = None
             self.add_widget(ScoreOption(id = entry))
         #idea is that this will be used to store scores later...
-    pass
+
+    def select_score(self):
+        for option in self.children:
+            if option.ids["button"].state == "down":
+                #self.score_card_dict[option.id] = option.value
+                option.ids["button"].disabled= True
+            
+
+    
+
+
+
+
+
  

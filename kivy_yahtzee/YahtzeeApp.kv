@@ -1,6 +1,6 @@
 <YahtzeeGame>:
     id: game
-    
+
     BoxLayout:
         orientation: "vertical"
         size_hint_x: 2
@@ -27,11 +27,12 @@
             on_press: game.change_game_state()
 
     ScoreCard:
+        id: scorecard 
         orientation: "vertical"
                     
 
 <ScoreCard>:
-    id: scorecard            
+               
 
 
 <ScoreOption>:
@@ -40,10 +41,11 @@
     value: 0
 
     ToggleButton:
-        size_hint_x: 2
         id: button
+        size_hint_x: 2
         text: scoreoption.id
         group: "score_options_group"
+        on_press: actionbutton.unlock()
     Label:
         id: score_number
         text: str(scoreoption.value)
