@@ -92,7 +92,7 @@ class DiceLayer(BoxLayout):
 
         
 
-class RollButton(Button):
+class DoAnActionButton(Button):
     def unlock(self):
         self.disabled = False
     
