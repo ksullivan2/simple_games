@@ -2,6 +2,7 @@
     id: game
     gamestate: 0
     on_gamestate: self.change_game_state()
+    instructions: "Start your game!"
 
     BoxLayout:
         orientation: "vertical"
@@ -26,7 +27,7 @@
 
         RollButton:
             id: actionbutton
-            text: "Roll"
+            text: game.instructions
             size: 200,50
             on_press: game.increment_game_state()
 
@@ -53,6 +54,7 @@
     ToggleButton:
         id: button
         size_hint_x: 2
+        markup: True
         text: scoreoption.id
         group: "score_options_group"
         on_press: self.parent.parent.parent.gamestate = 4
