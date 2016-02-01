@@ -1,6 +1,7 @@
 <YahtzeeGame>:
+    id: game
+    
     BoxLayout:
-        id: game
         orientation: "vertical"
         size_hint_x: 2
 
@@ -20,26 +21,28 @@
                 id: dice5
 
         RollButton:
+            id: actionbutton
             text: "Roll"
             size: 200,50
-            font_size: 20
-            on_press: dice_layer.roll_all_dice()
+            on_press: game.change_game_state()
 
     ScoreCard:
         orientation: "vertical"
                     
-            
+
+<ScoreCard>:
+    id: scorecard            
 
 
 <ScoreOption>:
     id: scoreoption
-    text: "will be reset"
+    # id will be overwritten
     value: 0
 
     ToggleButton:
         size_hint_x: 2
         id: button
-        text: scoreoption.text
+        text: scoreoption.id
         group: "score_options_group"
     Label:
         id: score_number

@@ -2,6 +2,8 @@ from kivy.app import App
 from Dice import *
 from ScoreCard import *
 from ScoreCardBehavior import *
+from kivy.properties import NumericProperty
+
 
 
 
@@ -10,7 +12,32 @@ class YahtzeeApp(App):
         return YahtzeeGame()
 
 class YahtzeeGame(BoxLayout):
-    pass
+    state = NumericProperty(0)
+    #0 is ready for first roll, first turn only
+    #1 is ready for 2nd roll
+    #2 is ready for final roll
+    #3 is dice set, choose score vall;;o85¿‚Æ(                               ue
+    
+    def change_game_state(self):
+        if self.state == 0:
+            self.ids["dice_layer"].roll_all_dice()
+            self.ids["actionbutton"].text = "Roll again."
+            self.state = 1
+        elif self.state == 1:
+            self.ids["dice_layer"].roll_all_dice()
+            self.ids["actionbutton"].text = "Final roll."
+            self.state = 2
+        elif self.state == 2:
+            self.ids["dice_layer"].roll_all_dice()
+            self.ids["actionbutton"].text = "Confirm points and roll again."
+            self.state = 3
+        elif self.state == 3:
+            #choose score value here
+            self.ids["dice_layer"].roll_all_dice()
+            self.ids["actionbutton"].text = "Roll again."
+            self.state = 1
+        
+
 
 class DiceLayer(BoxLayout):
     roll_count = NumericProperty(0)

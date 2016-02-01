@@ -21,12 +21,10 @@ class ScoreOption(BoxLayout):
 class ScoreCard(BoxLayout):
     def __init__(self, **kwargs):
         super(ScoreCard,self).__init__()
-        self.score_card_dict = DictProperty({})
+        self.score_card_dict = {}
         for entry in score_types:
-            #self.score_card_dict.add(entry: None)
-            self.add_widget(ScoreOption(text = entry))
-        #for key in score_card_dict.keys():
-            #print(score_card_dict)
+            self.score_card_dict[entry] = None
+            self.add_widget(ScoreOption(id = entry))
         #idea is that this will be used to store scores later...
     pass
  
