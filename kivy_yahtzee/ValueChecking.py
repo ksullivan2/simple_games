@@ -47,16 +47,16 @@ def check_for_points(hand):
     counter = Counter(hand).most_common(2)
     #counter[0][1] is the count of the most common element
     
-    if counter[0][1] == 4:
-        possible_scores["Four of a Kind"] = total
-        possible_scores["Three of a Kind"] = total
-    elif counter[0][1] == 3:
-        possible_scores["Three of a Kind"] = total
-        if counter[1][1] == 2:
-            possible_scores["Full House"] = 25
-    elif counter[0][1] == 5:
+    if counter[0][1] == 5:
         possible_scores["Yahtzee"] = 50
         possible_scores["Yahtzee Bonus"] = 100
+    if counter[0][1] >= 4:
+        possible_scores["Four of a Kind"] = total
+    if counter[0][1] >= 3:
+        possible_scores["Three of a Kind"] = total
+        if len(counter) > 1 and counter[1][1] == 2:
+            possible_scores["Full House"] = 25
+    
         
     no_dupes = remove_duplicate_dice(hand)
     
@@ -69,17 +69,6 @@ def check_for_points(hand):
     return possible_scores
 
 
-def check_points_against_score_card(player, possible_scores):
-    '''removes any possible scores from slots the player has already used
-    to present player with only the actual possibilities'''
-    choice_of_scores = {}
-    for key in possible_scores:
-        if player.score_card[key] == None:
-            choice_of_scores[key] = possible_scores[key]
-    #because if you already have yahtzee, you can have as many bonuses as you can roll...
-    if player.score_card["Yahtzee"] != 0 and possible_scores["Yahtzee Bonus"] != 0:
-        choice_of_scores["Yahtzee Bonus"] = possible_scores["Yahtzee Bonus"]
-    return choice_of_scores
 
 def tally_score(player):
     '''tallies the players score card'''
@@ -93,22 +82,4 @@ def tally_score(player):
     return total
     
         
-
-   
-
-
-#below is for testing purposes only
-
-"""player = Player()
-player.hand = [5,5,5,5,5]
-player.score_card["fives"] = 5
-player.score_card["yahtzee_bonus"] = 100
-
-player = Player()
-player.score_card = {key: 1 for key in score_types}
-tally_score(player)"""
-
-
-#possible_scores = check_for_points(player.hand)
-#check_points_against_score_card(player, possible_scores)
     

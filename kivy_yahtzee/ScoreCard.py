@@ -30,13 +30,14 @@ class ScoreCard(BoxLayout):
     def select_score(self):
         for option in self.children:
             if option.ids["button"].state == "down":
-                self.score_card_dict[option.id] = option.value
-                option.ids["button"].disabled= True
+                option.ids["button"].disabled = True
+            elif option.ids["button"].disabled == False:
+                option.value = 0
     
 
     def show_score_options(self, choice_of_scores):
         for option in self.children:
-            if option.id in choice_of_scores.keys():
+            if option.id in choice_of_scores.keys() and option.ids["button"].disabled == False:
                 option.value = choice_of_scores[option.id]
 
 
