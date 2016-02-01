@@ -1,6 +1,9 @@
 from collections import Counter
-#from ScoreCard import *
 
+
+score_types = ["Aces","Twos","Threes","Fours","Fives","Sixes",
+         "Three of a Kind","Four of a Kind","Full House", "Small Straight",
+         "Large Straight", "Chance", "Yahtzee", "Yahtzee Bonus"]
 
 
 
@@ -26,42 +29,42 @@ def check_for_points(hand):
     possible_scores = {key: 0 for key in score_types}
     for die in hand:
         if die == 1:
-            possible_scores["aces"] += 1
+            possible_scores["Aces"] += 1
         elif die == 2:
-            possible_scores["twos"] += 2
+            possible_scores["Twos"] += 2
         elif die == 3:
-            possible_scores["threes"] += 3
+            possible_scores["Threes"] += 3
         elif die == 4:
-            possible_scores["fours"] += 4            
+            possible_scores["Fours"] += 4            
         elif die == 5:
-            possible_scores["fives"] += 5
+            possible_scores["Fives"] += 5
         elif die == 6:
-            possible_scores["sixes"] += 6
+            possible_scores["Sixes"] += 6
 
     total = sum(hand)
-    possible_scores["chance"] = total
+    possible_scores["Chance"] = total
 
     counter = Counter(hand).most_common(2)
     #counter[0][1] is the count of the most common element
     
     if counter[0][1] == 4:
-        possible_scores["four_of_a_kind"] = total
-        possible_scores["three_of_a_kind"] = total
+        possible_scores["Four of a Kind"] = total
+        possible_scores["Three of a Kind"] = total
     elif counter[0][1] == 3:
-        possible_scores["three_of_a_kind"] = total
+        possible_scores["Three of a Kind"] = total
         if counter[1][1] == 2:
-            possible_scores["full_house"] = 25
+            possible_scores["Full House"] = 25
     elif counter[0][1] == 5:
-        possible_scores["yahtzee"] = 50
-        possible_scores["yahtzee_bonus"] = 100
+        possible_scores["Yahtzee"] = 50
+        possible_scores["Yahtzee Bonus"] = 100
         
     no_dupes = remove_duplicate_dice(hand)
     
     if check_for_straight(hand):
-        possible_scores["large_straight"] = 40
-        possible_scores["small_straight"] = 30
+        possible_scores["Large Straight"] = 40
+        possible_scores["Small Straight"] = 30
     elif len(no_dupes) == 4 and check_for_straight(no_dupes):
-        possible_scores["small_straight"] = 30
+        possible_scores["Small Straight"] = 30
 
     return possible_scores
 
@@ -74,8 +77,8 @@ def check_points_against_score_card(player, possible_scores):
         if player.score_card[key] == None:
             choice_of_scores[key] = possible_scores[key]
     #because if you already have yahtzee, you can have as many bonuses as you can roll...
-    if player.score_card["yahtzee"] != 0 and possible_scores["yahtzee_bonus"] != 0:
-        choice_of_scores["yahtzee_bonus"] = possible_scores["yahtzee_bonus"]
+    if player.score_card["Yahtzee"] != 0 and possible_scores["Yahtzee Bonus"] != 0:
+        choice_of_scores["Yahtzee Bonus"] = possible_scores["Yahtzee Bonus"]
     return choice_of_scores
 
 def tally_score(player):

@@ -3,6 +3,7 @@ from Dice import *
 from ScoreCard import *
 #from ScoreCardBehavior import *
 from kivy.properties import NumericProperty, ListProperty
+from ValueChecking import *
 
 
 
@@ -29,17 +30,26 @@ class YahtzeeGame(BoxLayout):
         elif self.state == 2:
             self.ids["actionbutton"].text = "Confirm points and roll again."
             self.ids["actionbutton"].disabled = True
-            #show score options goes here
+            #THIS IS WHAT YOU'RE WORKING ON
+            self.show_scores_in_scorecard()
             self.ids["dice_layer"].pass_values_to_hand()
             self.state = 3
-        elif self.state == 3:
-            #choose score value here  
+        elif self.state == 3: 
             self.ids["scorecard"].select_score()
             self.ids["actionbutton"].text = "Roll again."
             self.state = 1
     
     def unlock_action_button(self):
         self.ids["actionbutton"].disabled = False
+
+    def show_scores_in_scorecard(self):
+        hand = self.ids["dice_layer"].pass_values_to_hand()
+        possible_scores = check_for_points(hand)
+        #choice_of_scores = check_points_against_score_card(self.ids["scorecard"].score_card_dict, possible_scores)
+        self.ids["scorecard"].show_score_options(possible_scores)
+        
+
+
         
 
 
