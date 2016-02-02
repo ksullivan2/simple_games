@@ -2,3 +2,9 @@
 *.pyc
 
 *.pyc
+
+*.iml
+
+*.xml
+
+kivy_yahtzee/__pycache__/__main__.cpython-35.pyc

@@ -22,10 +22,6 @@ class ScoreOption(BoxLayout):
             widget.text = "[i]" + widget.text + "[/i]"
 
 
-class BonusScoreOption(ScoreOption):
-    pass
-
-
 
 class ScoreCard(BoxLayout):
     def __init__(self, **kwargs):

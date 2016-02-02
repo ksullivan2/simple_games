@@ -9,19 +9,9 @@
         size_hint_x: 2
 
         DiceLayer:
-            id: dice_layer
+            id: dicelayer
             size_hint_y: 3
-            
-            Dice:
-                id: dice1
-            Dice:
-                id: dice2
-            Dice:
-                id: dice3
-            Dice:
-                id: dice4
-            Dice:
-                id: dice5
+
         Label:
             text: "Game State: " + str(game.gamestate)
 
@@ -40,6 +30,10 @@
 
 
 <Dice>:
+    number: 6
+    source: "images/up_state/dice" + str(self.number) + ".gif"
+    padding: 0,0
+    disabled: True
 
        
                     
