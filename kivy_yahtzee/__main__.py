@@ -19,7 +19,8 @@ class YahtzeeGame(BoxLayout):
     #1 is rolled once
     #2 is rolled twice
     #3 is choose your value
-    #4 is confirm and re-start rolling
+    #4 is confirm
+    #5 is ready for next roll
     
     def increment_game_state(self):
         if self.gamestate == 5:
@@ -28,10 +29,20 @@ class YahtzeeGame(BoxLayout):
             self.gamestate += 1
 
     def change_game_state(self):
+        scorecard = self.ids["scorecard"]
+        #it's annoying to continually reference the whole thing....
+
+        if self.gamestate == 0:
+            self.ids["dicelayer"].disable_dice()
+            scorecard.clear_scores()
+            self.instructions = "Start your game!"
+            self.ids["gameoverlabel"].text = "Game Over! Your score was: " + str(tally_score())
+
         if self.gamestate == 1:
             self.ids["dicelayer"].enable_dice()
             self.ids["dicelayer"].roll_all_dice()
             self.instructions = "Roll again."
+            self.ids["gameoverlabel"].text = "Game State: " + str(self.gamestate)
             
         elif self.gamestate == 2:
             self.ids["dicelayer"].roll_all_dice()
@@ -50,30 +61,23 @@ class YahtzeeGame(BoxLayout):
            self.ids["actionbutton"].disabled = False
 
         elif self.gamestate == 5:
-            self.ids["scorecard"].disable_score_options()
-            self.ids["scorecard"].select_score()
-            self.instructions = "Roll your next hand."
+            scorecard.disable_score_options()
+            scorecard.select_score()
+            if scorecard.check_if_complete() == False:
+                self.instructions = "Roll your next hand."
+            else:
+                self.gamestate = 0
 
-
-            
         
 
     def show_scores_in_scorecard(self):
         hand = self.ids["dicelayer"].pass_values_to_hand()
         possible_scores = check_for_points(hand)
-        #choice_of_scores = check_points_against_score_card(self.ids["scorecard"].score_card_dict, possible_scores)
         self.ids["scorecard"].show_score_options(possible_scores)
-        
 
-
-        
-
-
-
-
-
-
-
+    def cheat(self):
+        for option in self.ids["scorecard"].children:
+            option.used = True
 
         
 
@@ -81,7 +85,6 @@ class DoTheThingButton(Button):
     def unlock(self):
         self.disabled = False
     
-   
 
 if __name__ == '__main__':
     YahtzeeApp().run()

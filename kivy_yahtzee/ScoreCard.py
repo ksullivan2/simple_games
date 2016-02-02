@@ -6,6 +6,7 @@ from kivy.properties import NumericProperty, DictProperty, \
                             StringProperty, ObjectProperty
 from kivy.uix.widget import Widget
 from ValueChecking import score_types
+from kivy.utils import escape_markup
 
 
 
@@ -53,9 +54,6 @@ class ScoreCard(BoxLayout):
                 option.value += choice_of_scores[option.id]
 
 
-
-
-
     def disable_score_options(self):
         for option in self.children:
             option.disabled = True
@@ -66,8 +64,18 @@ class ScoreCard(BoxLayout):
                 option.disabled = False
 
 
+    def check_if_complete(self):
+        for option in self.children:
+            if option.id != "Yahtzee Bonus" and option.used == False:
+                return False
+        return True
 
-    
+    def clear_scores(self):
+        for option in self.children:
+            option.value = 0
+            option.used = False
+            option.disabled = True
+            option.ids["button"].text = option.id
 
 
 
