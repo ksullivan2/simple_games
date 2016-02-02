@@ -71,6 +71,7 @@ class ScoreCard(BoxLayout):
         return True
 
     def clear_scores(self):
+        '''clears out the score card for a new game'''
         for option in self.children:
             option.value = 0
             option.used = False
@@ -80,5 +81,16 @@ class ScoreCard(BoxLayout):
 
 
 
+    def tally_score(self):
+        '''tallies the score card'''
+        total = 0
+        first_half_total = 0
+        for option in self.children:
+            total += option.value
+            if option.id in ["Aces","Twos","Threes","Fours","Fives","Sixes"]:
+                first_half_total += option.value
+        if first_half_total >= 63:
+            total += 35
+        return total
 
  

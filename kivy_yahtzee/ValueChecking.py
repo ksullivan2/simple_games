@@ -70,16 +70,6 @@ def check_for_points(hand):
 
 
 
-def tally_score():
-    '''tallies the players score card
-    total = sum(player.score_card.values())
-    first_half_total = 0
-    for key in score_types[:6]:
-        first_half_total += player.score_card[key]
-    if first_half_total >= 63:
-        total += 35
-    print(first_half_total)'''
-    return 5
-    
+
         
     
