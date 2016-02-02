@@ -1,4 +1,4 @@
-import random
+#import random
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
@@ -15,8 +15,10 @@ from ValueChecking import score_types
 class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
-    
 
+
+class BonusScoreOption(ScoreOption):
+    pass
 
 
 
@@ -25,6 +27,7 @@ class ScoreCard(BoxLayout):
         super(ScoreCard,self).__init__()
         for entry in score_types:
             self.add_widget(ScoreOption(id = entry))
+
 
     def select_score(self):
         for option in self.children:
@@ -36,17 +39,30 @@ class ScoreCard(BoxLayout):
 
     def show_score_options(self, choice_of_scores):
         for option in self.children:
-            if option.id in choice_of_scores.keys() and option.ids["button"].disabled == False:
-                option.value = choice_of_scores[option.id]
+
+            if option.id == "Yahtzee Bonus":
+                #I thought I could use self.ids["Yahtzee Bonus"] instead of self.children[1] but it won't work
+                if self.children[1].used == True:
+                    if choice_of_scores["Yahtzee Bonus"] != 0:
+                        option.disabled = False
+                else:
+                    option.disabled = True
+
+            if option.id in choice_of_scores.keys() and option.disabled == False:
+                option.value += choice_of_scores[option.id]
+
+
+
+
 
     def disable_score_options(self):
         for option in self.children:
-            option.ids['button'].disabled = True
+            option.disabled = True
 
     def enable_score_options(self):
         for option in self.children:
             if option.used == False:
-                option.ids['button'].disabled = False
+                option.disabled = False
 
 
 

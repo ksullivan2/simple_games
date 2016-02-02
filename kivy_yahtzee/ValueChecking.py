@@ -7,12 +7,12 @@ score_types = ["Aces","Twos","Threes","Fours","Fives","Sixes",
 
 
 
-def check_for_straight(array):
-    '''checks if the passed array is a straight'''
+def check_for_straight(hand):
+    '''checks if the passed hand is a straight'''
     #hand is always sorted lowest to highest
-    for index, number in enumerate(array):
-        if index < len(array)-1:
-            if array[index + 1] - 1 != number:
+    for index, number in enumerate(hand):
+        if index < len(hand)-1:
+            if hand[index + 1] - 1 != number:
                 return False
     return True
 

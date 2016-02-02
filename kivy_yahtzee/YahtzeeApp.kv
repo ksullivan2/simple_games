@@ -25,7 +25,9 @@
         Label:
             text: "Game State: " + str(game.gamestate)
 
-        DoAnActionButton:
+
+
+        DoTheThingButton:
             id: actionbutton
             text: game.instructions
             size: 200,50
@@ -36,7 +38,9 @@
         orientation: "vertical"
 
 
+
 <Dice>:
+
        
                     
 
@@ -49,23 +53,27 @@
     # id will be overwritten
     value: 0
     used: False
+    disabled: True
 
 
     ToggleButton:
         id: button
         size_hint_x: 2
         markup: True
-        text: scoreoption.id
+        text: self.parent.id
         group: "score_options_group"
         on_press: self.parent.parent.parent.gamestate = 4
         #I don't like this, but it won't let me do root???
-        disabled: True
+        disabled: scoreoption.disabled
         
     Label:
         id: score_number
         text: str(scoreoption.value)
-        disabled: button.disabled
-        
+        disabled: scoreoption.disabled
+
+
+
+
 
                 
             
