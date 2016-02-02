@@ -64,6 +64,8 @@ class YahtzeeGame(BoxLayout):
         elif self.gamestate == 5:
             scorecard.disable_score_options()
             scorecard.select_score()
+            for dice in self.ids["dicelayer"].children:
+                dice.state = "normal"
             if scorecard.check_if_complete() == False:
                 self.instructions = "Roll your next hand."
             else:

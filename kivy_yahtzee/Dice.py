@@ -6,16 +6,16 @@ from kivy.properties import ListProperty
 
 class Dice(ToggleButtonBehavior, Image):
         
-    def on_state(self, widget, value):
-        if value == "down":
-            self.source = ("images/down_state/dice" + str(self.number) + ".gif")
+    def get_image(self):
+        if self.state == "down":
+            return "images/down_state/dice" + str(self.number) + ".png"
         else:
-           self.source = ("images/up_state/dice" + str(self.number) + ".gif")
+           return "images/up_state/dice" + str(self.number) + ".png"
 
     def roll(self):
         if self.state != "down":
             self.number = randint(1,6)
-            self.source = ("images/up_state/dice" + str(self.number) + ".gif")
+            self.source = self.get_image()
 
 
 class DiceLayer(BoxLayout):

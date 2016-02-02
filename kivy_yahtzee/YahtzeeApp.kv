@@ -32,11 +32,12 @@
 
 <Dice>:
     number: 6
-    source: "images/up_state/dice" + str(self.number) + ".gif"
+    source: self.get_image()
     padding: 0,0
     disabled: True
+    on_state: self.source = self.get_image()
 
-       
+
                     
 
 <ScoreCard>:
