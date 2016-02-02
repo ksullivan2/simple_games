@@ -44,7 +44,7 @@ class ScoreCard(BoxLayout):
 
             if option.id == "Yahtzee Bonus":
                 #I thought I could use self.ids["Yahtzee Bonus"] instead of self.children[1] but it won't work
-                if self.children[1].used == True:
+                if self.children[1].used == True and self.children[1].value != 0:
                     if choice_of_scores["Yahtzee Bonus"] != 0:
                         option.disabled = False
                 else:
