@@ -16,6 +16,11 @@ class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
 
+    def italicize_text(self):
+        for widget in self.children:
+            widget.markup = True
+            widget.text = "[i]" + widget.text + "[/i]"
+
 
 class BonusScoreOption(ScoreOption):
     pass
