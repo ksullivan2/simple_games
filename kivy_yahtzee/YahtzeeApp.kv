@@ -1,3 +1,7 @@
+<Widget>:
+    font_name: "/Library/Fonts/ChalkboardSE.ttc"
+
+
 <YahtzeeGame>:
     id: game
     gamestate: 0
@@ -23,6 +27,10 @@
             text: game.instructions
             size: 200,50
             on_press: game.increment_game_state()
+            font_size: self.height/4
+            background_normal: ''
+            background_color: [23/265, 232/265, 225/265, 1]
+
 
     ScoreCard:
         id: scorecard 
@@ -58,6 +66,7 @@
         size_hint_x: 2
         markup: True
         text: self.parent.id
+        background_color: [23/265, 232/265, 225/265, 1]
         group: "score_options_group"
         on_press: self.parent.parent.parent.gamestate = 4
         #I don't like this, but it won't let me do root???
