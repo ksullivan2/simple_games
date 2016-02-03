@@ -1,5 +1,5 @@
 <Widget>:
-    font_name: "/Library/Fonts/ChalkboardSE.ttc"
+    font_name: "/System/Library/Fonts/Avenir.ttc"
 
 
 <YahtzeeGame>:
@@ -18,7 +18,8 @@
 
         Label:
             id: gameoverlabel
-            text: "Game State: " + str(game.gamestate)
+            text: ""
+            text: ""
 
 
 
@@ -28,8 +29,12 @@
             size: 200,50
             on_press: game.increment_game_state()
             font_size: self.height/4
-            background_normal: ''
-            background_color: [23/265, 232/265, 225/265, 1]
+
+            background_color: [26/265, 173/265, 163/265, 1]
+            background_normal: ""
+            background_down: "atlas://data/images/defaulttheme/button_pressed"
+            background_disabled_normal: "atlas://data/images/defaulttheme/button"
+            background_disabled_down: "atlas://data/images/defaulttheme/button"
 
 
     ScoreCard:
@@ -58,7 +63,8 @@
     value: 0
     used: False
     disabled: True
-    on_used: self.italicize_text()
+    on_used: self.swap_background()
+
 
 
     ToggleButton:
@@ -66,7 +72,11 @@
         size_hint_x: 2
         markup: True
         text: self.parent.id
-        background_color: [23/265, 232/265, 225/265, 1]
+        background_color: [26/265, 173/265, 163/265, 1]
+        background_normal: ""
+        background_down: "atlas://data/images/defaulttheme/button_pressed"
+        background_disabled_normal: "atlas://data/images/defaulttheme/button"
+        background_disabled_down: "atlas://data/images/defaulttheme/button"
         group: "score_options_group"
         on_press: self.parent.parent.parent.gamestate = 4
         #I don't like this, but it won't let me do root???

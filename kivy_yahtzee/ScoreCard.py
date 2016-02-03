@@ -17,10 +17,13 @@ class ScoreOption(BoxLayout):
     text = StringProperty("default")
     value = NumericProperty(0)
 
-    def italicize_text(self):
-        for widget in self.children:
-            widget.markup = True
-            widget.text = "[i]" + widget.text + "[/i]"
+    def swap_background(self):
+        if self.used:
+            self.ids["button"].background_disabled_normal = "atlas://data/images/defaulttheme/button_disabled"
+            self.ids["button"].background_disabled_down = "atlas://data/images/defaulttheme/button_disabled"
+        else:
+            self.ids["button"].background_disabled_normal = "atlas://data/images/defaulttheme/button"
+            self.ids["button"].background_disabled_down = "atlas://data/images/defaulttheme/button"
 
 
 
@@ -76,7 +79,7 @@ class ScoreCard(BoxLayout):
             option.value = 0
             option.used = False
             option.disabled = True
-            option.ids["button"].text = option.id
+
 
 
 

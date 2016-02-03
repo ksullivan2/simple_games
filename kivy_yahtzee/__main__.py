@@ -43,7 +43,7 @@ class YahtzeeGame(BoxLayout):
             self.ids["dicelayer"].enable_dice()
             self.ids["dicelayer"].roll_all_dice()
             self.instructions = "Roll again."
-            self.ids["gameoverlabel"].text = "Game State: " + str(self.gamestate)
+            self.ids["gameoverlabel"].text = ""
             
         elif self.gamestate == 2:
             self.ids["dicelayer"].roll_all_dice()
@@ -78,9 +78,7 @@ class YahtzeeGame(BoxLayout):
         possible_scores = check_for_points(hand)
         self.ids["scorecard"].show_score_options(possible_scores)
 
-    def cheat(self):
-        for option in self.ids["scorecard"].children:
-            option.used = True
+
 
         
 
