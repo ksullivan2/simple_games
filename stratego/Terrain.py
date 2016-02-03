@@ -1,2 +1,0 @@
-class Terrain(Image):
-    pass
