@@ -9,21 +9,21 @@ from kivy.animation import Animation
 
 class Dice(ToggleButtonBehavior, Image):
         
-    def get_image(self):
+    def get_image(self, *args):
+        '''returns image path for each of the die's sides'''
         if self.state == "down":
-            return "images/down_state/dice" + str(self.number) + ".png"
+            self.source = "images/down_state/dice" + str(self.number) + ".png"
         else:
-           return "images/up_state/dice" + str(self.number) + ".png"
+           self.source  = "images/up_state/dice" + str(self.number) + ".png"
 
-
-
-    def roll(self, *args):
-        if self.state != "down":
-            self.number = randint(1,6)
-            self.source = self.get_image()
+    def roll_animation(self, *args):
+        '''returns random dice face, does NOT set the actual number'''
+        self.source = "images/up_state/dice" + str(randint(1,6)) + ".png"
 
     def roll_animation_callback(self, *args):
-        Clock.unschedule(self.roll)
+        '''turns off the dice rolling animation event'''
+        Clock.unschedule(self.roll_animation)
+        Clock.schedule_once(self.get_image,.1)
 
 
 
@@ -35,12 +35,12 @@ class DiceLayer(BoxLayout):
             self.add_widget(Dice())
 
 
-
-
     def roll_all_dice(self):
         for dice in self.children:
-            Clock.schedule_interval(dice.roll, .1)
-            Clock.schedule_once(dice.roll_animation_callback, .5)
+            if dice.state != "down":
+                dice.number = randint(1,6)
+                Clock.schedule_interval(dice.roll_animation, .1)
+                Clock.schedule_once(dice.roll_animation_callback, .5)
 
 
     def pass_values_to_hand(self):

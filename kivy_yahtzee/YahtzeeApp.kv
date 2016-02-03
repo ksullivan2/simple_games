@@ -16,10 +16,12 @@
             id: dicelayer
             size_hint_y: 3
 
+
         Label:
             id: gameoverlabel
-            text: ""
-            text: ""
+            text:
+
+
 
 
 
@@ -45,10 +47,12 @@
 
 <Dice>:
     number: 6
-    source: self.get_image()
+    source: "images/up_state/dice6.png"
     padding: 0,0
     disabled: True
-    on_state: self.source = self.get_image()
+    on_state: self.get_image()
+
+
 
 
                     
