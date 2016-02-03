@@ -34,8 +34,6 @@ class YahtzeeGame(BoxLayout):
 
         if self.gamestate == 0:
             self.ids["dicelayer"].disable_dice()
-
-            self.ids["gameoverlabel"].text = "Game Over! Your score was: " + str(scorecard.tally_score())
             self.instructions = "Start a new game."
             scorecard.clear_scores()
 
@@ -69,6 +67,7 @@ class YahtzeeGame(BoxLayout):
             if scorecard.check_if_complete() == False:
                 self.instructions = "Roll your next hand."
             else:
+                self.ids["gameoverlabel"].text = "Game Over! Your score was: " + str(scorecard.tally_score())
                 self.gamestate = 0
 
         
