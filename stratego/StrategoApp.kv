@@ -1,11 +1,16 @@
 <GamePiece>:
     id: gamepiece
-    layout: "vertical"
+    orientation: "vertical"
     player_color: "Red"
 
     Image:
         source: "images/" + gamepiece.player_color + "/" + str(gamepiece.number) + ".png"
-        #size_hint_y: 3
+        size_hint_y: 3
 
     Label:
         text: gamepiece.get_name()
+        font_size: self.height/2
+
+    Label:
+        text: str(gamepiece.number)
+        font_size: self.height/4
