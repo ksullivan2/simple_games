@@ -19,7 +19,8 @@ class StrategoBoard(GridLayout):
         for i in range(10):
             self.board.append([])
             for j in range(10):
-                self.board[i].append(Terrain(i,j))
+                self.board[i].append(j)
+                self.add_widget(Terrain(i,j))
 
 
 
