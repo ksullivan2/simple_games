@@ -1,13 +1,13 @@
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.togglebutton import ToggleButton
 
 
 
 
-class GamePiece(BoxLayout):
-    def __init__(self, number, **kwargs):
+class GamePiece(ToggleButton):
+    '''def __init__(self, number, **kwargs):
         self.number = number
-        super(GamePiece, self).__init__()
-
+        super(GamePiece, self).__init__()'''
 
 
     def get_name(self):

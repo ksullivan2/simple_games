@@ -1,16 +1,31 @@
+<StrategoBoard>:
+    cols:10
+
+
+<Terrain>:
+    Image:
+        source: "images/land.png"
+
+
 <GamePiece>:
     id: gamepiece
-    orientation: "vertical"
     player_color: "Red"
+    number: 0
 
-    Image:
-        source: "images/" + gamepiece.player_color + "/" + str(gamepiece.number) + ".png"
-        size_hint_y: 3
 
-    Label:
-        text: gamepiece.get_name()
-        font_size: self.height/2
+    BoxLayout:
+        orientation: "vertical"
+        center: gamepiece.center
+        size: gamepiece.size
 
-    Label:
-        text: str(gamepiece.number)
-        font_size: self.height/4
+        Image:
+            source: "images/" + gamepiece.player_color + "/" + str(gamepiece.number) + ".png"
+            size_hint_y: 3
+
+        Label:
+            text: gamepiece.get_name()
+            font_size: self.height/2
+
+        Label:
+            text: str(gamepiece.number)
+            font_size: self.height/4
