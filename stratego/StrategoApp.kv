@@ -14,7 +14,8 @@
 <GamePiece>:
     id: gamepiece
     player_color: "Red"
-    number: 0
+    number: 11
+    background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
 
 
     BoxLayout:
@@ -22,14 +23,16 @@
         center: gamepiece.center
         size: gamepiece.size
 
-        Image:
-            source: "images/" + gamepiece.player_color + "/" + str(gamepiece.number) + ".png"
-            size_hint_y: 3
-
         Label:
-            text: gamepiece.get_name()
-            font_size: self.height/2
 
         Label:
             text: str(gamepiece.number)
-            font_size: self.height/4
+            color: (0,0,0,1)
+            font_size: gamepiece.height/3
+            bold: True
+
+        Label:
+            text: gamepiece.get_name()
+            color: (0,0,0,1)
+            bold: True
+

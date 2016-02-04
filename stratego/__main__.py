@@ -6,7 +6,7 @@ from GamePiece import *
 from Terrain import *
 from kivy.core.window import Window
 
-Window.size = (600, 600)
+Window.size = (700, 700)
 
 
 
