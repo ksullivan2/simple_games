@@ -14,7 +14,7 @@ from StrategoBoard import *
 
 
 
-#Window.size = (1100, 700)
+Window.size = (1000, 700)
 
 
 
