@@ -17,8 +17,18 @@ class StrategoWindow(FloatLayout):
     def change_gamestate(self):
         #0 is game setup
         if self.gamestate == 0:
-            #self.ids["0,0"].disabled = True
-            pass
+            self.setup_place_pieces()
+
+
+    def setup_place_pieces(self):
+        for square in self.board.children:
+            if square.row in range(0,6):
+                square.disabled = True
+            else:
+                square.disabled = False
+
+
+
 
 
 
