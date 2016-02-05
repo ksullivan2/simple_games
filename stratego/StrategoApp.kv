@@ -1,10 +1,15 @@
 <StrategoBoard>:
+    id: board
+    gamestate: 0
+    on_gamestate: self.change_gamestate()
 
     BoxLayout:
         BoardBackground:
+            id: background
             size_hint_x:10
 
-        InitialPieces:
+        Sidebar:
+            id: sidebar
             cols:4
             size_hint_x: 4
 

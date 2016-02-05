@@ -4,11 +4,19 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty
 from ResizeBehavior import *
 from Terrain import *
+from GamePiece import *
 
 
 
 class StrategoBoard(FloatLayout):
-    pass
+    def change_gamestate(self):
+        #0 is game setup
+        if self.gamestate == 0:
+            pass
+
+
+
+
 
 
 class BoardBackground(GridLayout):
@@ -27,3 +35,10 @@ class BoardBackground(GridLayout):
                 else:
                     self.add_widget(Terrain(i,j))
 
+
+class Sidebar(GridLayout):
+    def __init__(self, **kwargs):
+        super(Sidebar, self).__init__()
+        for piecenumber in pieceamounts:
+            for i in range(pieceamounts[piecenumber]):
+                self.add_widget(GamePiece(piecenumber, "Red"))
