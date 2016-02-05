@@ -1,27 +1,46 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.gridlayout import GridLayout
 
+names = {0: "Flag",
+         1: "Spy",
+         2: "Scout",
+         3: "Miner",
+         4: "Sergeant",
+         5: "Lieutenant",
+         6: "Captain",
+         7: "Major",
+         8: "Colonel",
+         9: "General",
+         10: "Marshal",
+         11: "Bomb"}
 
+amounts = {0: 1,
+           1: 1,
+           2: 8,
+           3: 5,
+           4: 4,
+           5: 4,
+           6: 4,
+           7: 3,
+           8: 2,
+           9: 1,
+           10: 1,
+           11: 6}
 
 
 class GamePiece(ToggleButton):
-    '''def __init__(self, number, **kwargs):
+    def __init__(self, number, **kwargs):
         self.number = number
-        super(GamePiece, self).__init__()'''
-
+        super(GamePiece, self).__init__()
 
     def get_name(self):
-        names = {0: "Flag",
-                 1: "Spy",
-                 2: "Scout",
-                 3: "Miner",
-                 4: "Sergeant",
-                 5: "Lieutenant",
-                 6: "Captain",
-                 7: "Major",
-                 8: "Colonel",
-                 9: "General",
-                 10: "Marshal",
-                 11: "Bomb"}
         return names[self.number]
 
+
+class InitialPieces(GridLayout):
+    def __init__(self, **kwargs):
+        super(InitialPieces, self).__init__()
+        for piecenumber in amounts:
+            for i in range(amounts[piecenumber]):
+                self.add_widget(GamePiece(piecenumber))

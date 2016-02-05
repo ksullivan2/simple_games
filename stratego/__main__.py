@@ -3,6 +3,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from ResizeBehavior import *
+
 
 
 
@@ -12,7 +14,7 @@ from StrategoBoard import *
 
 
 
-Window.size = (700, 700)
+Window.size = (1100, 700)
 
 
 

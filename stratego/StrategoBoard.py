@@ -1,10 +1,15 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import NumericProperty
+from ResizeBehavior import *
 from Terrain import *
 
 
-class StrategoBoard(RelativeLayout):
+
+class StrategoBoard(ResizeBehavior, BoxLayout):
     pass
+
 
 class BoardBackground(GridLayout):
     def __init__(self, **kwargs):
@@ -18,3 +23,4 @@ class BoardBackground(GridLayout):
                     self.add_widget(Terrain(i,j, land=False))
                 else:
                     self.add_widget(Terrain(i,j))
+

@@ -1,6 +1,16 @@
 <StrategoBoard>:
+    #on_size: self.do_layout()
+    ratio: (1)
+
     BoardBackground:
-    
+        size_hint_x:10
+
+
+
+    InitialPieces:
+        cols:4
+        size_hint_x: 4
+
 
 <BoardBackground>:
     cols:10
@@ -9,14 +19,17 @@
 
 
 <Terrain>:
-    background_normal: self.get_background_image()
+    source: self.get_background_image()
+    on_press: print(self.id)
+
+
 
 
 
 <GamePiece>:
     id: gamepiece
     player_color: "Red"
-    number: 11
+    #number: 11
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
 
 
