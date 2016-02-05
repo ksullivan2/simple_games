@@ -1,15 +1,16 @@
 <StrategoBoard>:
-    #on_size: self.do_layout()
-    ratio: (1)
+    ratio: (14/10.)
+
 
     BoardBackground:
         size_hint_x:10
-
+        ratio: (1.)
 
 
     InitialPieces:
         cols:4
         size_hint_x: 4
+        ratio: (10/4.)
 
 
 <BoardBackground>:
@@ -24,13 +25,11 @@
 
 
 
-
-
 <GamePiece>:
     id: gamepiece
     player_color: "Red"
     #number: 11
-    background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
+    source: "images/" + self.player_color + "/" + str(self.number) + ".png"
 
 
     BoxLayout:

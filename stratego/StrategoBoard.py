@@ -7,7 +7,7 @@ from Terrain import *
 
 
 
-class StrategoBoard(ResizeBehavior, BoxLayout):
+class StrategoBoard(BoxLayout):
     pass
 
 
@@ -15,6 +15,9 @@ class BoardBackground(GridLayout):
     def __init__(self, **kwargs):
         self.grid = []
         super(BoardBackground, self).__init__()
+        self.create_background()
+
+    def create_background(self):
         for i in range(10):
             self.grid.append([])
             for j in range(10):

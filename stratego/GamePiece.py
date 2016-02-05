@@ -1,6 +1,9 @@
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.behaviors import ToggleButtonBehavior
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.image import Image
+from ResizeBehavior import *
+
 
 names = {0: "Flag",
          1: "Spy",
@@ -29,13 +32,16 @@ amounts = {0: 1,
            11: 6}
 
 
-class GamePiece(ToggleButton):
+class GamePiece(ToggleButtonBehavior, Image):
     def __init__(self, number, **kwargs):
         self.number = number
+        self.ratio = 1.
         super(GamePiece, self).__init__()
 
     def get_name(self):
         return names[self.number]
+
+
 
 
 class InitialPieces(GridLayout):
@@ -44,3 +50,5 @@ class InitialPieces(GridLayout):
         for piecenumber in amounts:
             for i in range(amounts[piecenumber]):
                 self.add_widget(GamePiece(piecenumber))
+
+
