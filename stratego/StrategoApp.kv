@@ -1,22 +1,17 @@
 <StrategoBoard>:
-    ratio: (1.)
 
+    BoxLayout:
+        BoardBackground:
+            size_hint_x:10
 
-    BoardBackground:
-        size_hint_x:10
-        ratio: (1.)
+        InitialPieces:
+            cols:4
+            size_hint_x: 4
 
-
-    InitialPieces:
-        cols:4
-        size_hint_x: 4
-        ratio: (10/4.)
 
 
 <BoardBackground>:
     cols:10
-
-
 
 
 <Terrain>:
@@ -28,13 +23,10 @@
 
 <GamePiece>:
     id: gamepiece
-    player_color: "Red"
-    #number: 11
+    #player_color: "Red"
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
     border: (0,0,0,0)
-
-    
-
+    group: self.player_color
 
     BoxLayout:
         orientation: "vertical"

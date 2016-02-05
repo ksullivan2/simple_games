@@ -1,5 +1,5 @@
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty
 from ResizeBehavior import *
@@ -7,7 +7,7 @@ from Terrain import *
 
 
 
-class StrategoBoard(BoxLayout):
+class StrategoBoard(FloatLayout):
     pass
 
 

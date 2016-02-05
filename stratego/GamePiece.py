@@ -33,8 +33,9 @@ amounts = {0: 1,
 
 
 class GamePiece(ToggleButton):
-    def __init__(self, number, **kwargs):
+    def __init__(self, number, color, **kwargs):
         self.number = number
+        self.player_color = color
         self.ratio = 1.
         super(GamePiece, self).__init__()
 
@@ -49,6 +50,6 @@ class InitialPieces(GridLayout):
         super(InitialPieces, self).__init__()
         for piecenumber in amounts:
             for i in range(amounts[piecenumber]):
-                self.add_widget(GamePiece(piecenumber))
+                self.add_widget(GamePiece(piecenumber, "Red"))
 
 
