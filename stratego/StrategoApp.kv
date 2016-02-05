@@ -30,23 +30,27 @@
     player_color: "Red"
     #number: 11
     source: "images/" + self.player_color + "/" + str(self.number) + ".png"
+    
 
 
     BoxLayout:
         orientation: "vertical"
         center: gamepiece.center
         size: gamepiece.size
+        padding: 0,0
 
         Label:
+            text: gamepiece.get_name()
+            color: (0,0,0,1)
+
+            pos_hint_y: .5
 
         Label:
             text: str(gamepiece.number)
             color: (0,0,0,1)
             font_size: gamepiece.height/3
             bold: True
+            pos_hint_y: 0
 
-        Label:
-            text: gamepiece.get_name()
-            color: (0,0,0,1)
-            bold: True
+
 
