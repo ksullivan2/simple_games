@@ -1,11 +1,11 @@
-<StrategoBoard>:
-    id: board
+<StrategoWindow>:
+    id: window
     gamestate: 0
     on_gamestate: self.change_gamestate()
 
     BoxLayout:
-        BoardBackground:
-            id: background
+        StrategoBoard:
+            id: board
             size_hint_x:10
 
         Sidebar:
@@ -15,7 +15,7 @@
 
 
 
-<BoardBackground>:
+<StrategoBoard>:
     cols:10
 
 

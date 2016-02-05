@@ -8,7 +8,7 @@ from GamePiece import *
 
 
 
-class StrategoBoard(FloatLayout):
+class StrategoWindow(FloatLayout):
     def change_gamestate(self):
         #0 is game setup
         if self.gamestate == 0:
@@ -19,10 +19,10 @@ class StrategoBoard(FloatLayout):
 
 
 
-class BoardBackground(GridLayout):
+class StrategoBoard(GridLayout):
     def __init__(self, **kwargs):
         self.grid = []
-        super(BoardBackground, self).__init__()
+        super(StrategoBoard, self).__init__()
         self.create_background()
 
     def create_background(self):

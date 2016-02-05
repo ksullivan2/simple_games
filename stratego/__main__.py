@@ -20,7 +20,7 @@ Window.size = (1000, 700)
 
 class StrategoApp(App):
     def build(self):
-        game = StrategoBoard()
+        game = StrategoWindow()
         return game
 
 
