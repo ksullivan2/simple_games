@@ -9,9 +9,15 @@ from GamePiece import *
 
 
 class StrategoWindow(FloatLayout):
+    def __init__(self, **kwargs):
+        super (StrategoWindow, self).__init__()
+        self.board = self.ids["board"]
+        self.sidebar = self.ids["sidebar"]
+
     def change_gamestate(self):
         #0 is game setup
         if self.gamestate == 0:
+            #self.ids["0,0"].disabled = True
             pass
 
 
@@ -29,11 +35,12 @@ class StrategoBoard(GridLayout):
         for i in range(10):
             self.grid.append([])
             for j in range(10):
-                self.grid[i].append(j)
                 if i in (4,5) and j in (2,3,6,7):
-                    self.add_widget(Terrain(i,j, land=False))
+                    temp = Terrain(i,j, land=False)
                 else:
-                    self.add_widget(Terrain(i,j))
+                    temp = Terrain(i,j)
+                self.grid[i].append(temp)
+                self.add_widget(temp)
 
 
 class Sidebar(GridLayout):
