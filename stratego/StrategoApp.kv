@@ -20,8 +20,9 @@
 
 
 <Terrain>:
-    source: self.get_background_image()
+    background_normal: self.get_background_image()
     on_press: print(self.id)
+    border: (0,0,0,0)
 
 
 
@@ -29,7 +30,9 @@
     id: gamepiece
     player_color: "Red"
     #number: 11
-    source: "images/" + self.player_color + "/" + str(self.number) + ".png"
+    background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
+    border: (0,0,0,0)
+
     
 
 

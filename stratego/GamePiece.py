@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.behaviors import ToggleButtonBehavior
+from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import Image
 from ResizeBehavior import *
@@ -32,7 +32,7 @@ amounts = {0: 1,
            11: 6}
 
 
-class GamePiece(ToggleButtonBehavior, Image):
+class GamePiece(ToggleButton):
     def __init__(self, number, **kwargs):
         self.number = number
         self.ratio = 1.

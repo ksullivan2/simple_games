@@ -1,8 +1,9 @@
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
+from kivy.uix.button import Button
 from ResizeBehavior import *
 
-class Terrain(ButtonBehavior, Image):
+class Terrain(Button):
     def __init__(self, row, col, land = True):
         self.row = row
         self.col = col
