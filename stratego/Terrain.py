@@ -24,5 +24,6 @@ class Terrain(Button):
             if piece.state == "down" and not self.occupied:
                 piece.pos = self.pos
                 piece.state = "normal"
+                piece.placed = True
                 self.occupied = True
 
