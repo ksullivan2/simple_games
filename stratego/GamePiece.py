@@ -11,7 +11,8 @@ class GamePiece(ToggleButton):
         self.number = number
         self.player_color = color
         self.ratio = 1.
-        self.placed = False
+        self.col = None
+        self.row = None
         super(GamePiece, self).__init__()
 
     def get_name(self):
