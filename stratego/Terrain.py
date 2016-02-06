@@ -9,7 +9,7 @@ class Terrain(Button):
         self.col = col
         self.id = str(self.row) + "," + str(self.col)
         self.land = land
-        self.ratio = 1.
+        self.occupied = False
         super(Terrain,self).__init__()
 
 
@@ -21,7 +21,8 @@ class Terrain(Button):
 
     def place_piece(self, *args):
         for piece in self.parent.parent.parent.sidebar.children:
-            if piece.state == "down":
+            if piece.state == "down" and not self.occupied:
                 piece.pos = self.pos
                 piece.state = "normal"
+                self.occupied = True
 
