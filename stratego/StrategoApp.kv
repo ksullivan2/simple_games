@@ -1,7 +1,7 @@
 <StrategoWindow>:
     id: window
     gamestate: 0
-    #on_size: self.change_gamestate()
+    on_size: self.change_gamestate()
 
     BoxLayout:
         StrategoBoard:
@@ -22,8 +22,9 @@
 
 <Terrain>:
     background_normal: self.get_background_image()
-    on_press: print(self.id)
     border: (0,0,0,0)
+    occupied: False
+
 
 
 

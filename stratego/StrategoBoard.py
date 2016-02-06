@@ -3,6 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty
 from ResizeBehavior import *
+from functools import partial
 from Terrain import *
 from GamePiece import *
 
@@ -17,19 +18,16 @@ class StrategoWindow(FloatLayout):
     def change_gamestate(self):
         #0 is game setup
         if self.gamestate == 0:
-            self.setup_place_pieces()
+            self.setup_to_place_pieces()
 
 
-    def setup_place_pieces(self):
+    def setup_to_place_pieces(self):
         for square in self.board.children:
             if square.row in range(0,6):
                 square.disabled = True
             else:
                 square.disabled = False
-
-
-
-
+            square.bind(on_press= square.place_piece)
 
 
 

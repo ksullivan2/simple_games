@@ -12,9 +12,16 @@ class Terrain(Button):
         self.ratio = 1.
         super(Terrain,self).__init__()
 
+
     def get_background_image(self):
         if self.land:
             return "images/land.png"
         else:
             return "images/water.png"
+
+    def place_piece(self, *args):
+        for piece in self.parent.parent.parent.sidebar.children:
+            if piece.state == "down":
+                piece.pos = self.pos
+                piece.state = "normal"
 
