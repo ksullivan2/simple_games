@@ -1,7 +1,8 @@
 <StrategoWindow>:
     id: window
     gamestate: 0
-    on_size: self.change_gamestate()
+    on_gamestate: self.change_gamestate()
+
 
     BoxLayout:
         StrategoBoard:
@@ -18,9 +19,15 @@
             #change window size back to 1000 when you delete this
             size_hint_x: 2
             orientation: "vertical"
+
+            Button:
+                text: "start new game"
+                on_press: window.gamestate = 0
+
             Button:
                 text: "place all pieces"
                 on_press: window.debug_place_pieces()
+
 
 
 

@@ -30,14 +30,12 @@ class StrategoWindow(FloatLayout):
         y = 0
         for piece in self.sidebar.children:
             piece.state = "down"
-            self.board.grid[x][y].place_piece()
+            self.board.grid[x][y].move_to_terrain()
             if y == 9:
                 y = 0
                 x += 1
             else:
                 y += 1
-
-
 
 
     def setup_to_place_pieces(self):
@@ -46,7 +44,7 @@ class StrategoWindow(FloatLayout):
                 square.disabled = True
             else:
                 square.disabled = False
-            square.bind(on_press= square.place_piece)
+            square.bind(on_press= square.move_to_terrain)
 
     def pieces_are_all_placed(self):
         for piece in self.sidebar.children:

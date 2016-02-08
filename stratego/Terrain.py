@@ -21,7 +21,7 @@ class Terrain(Button):
         else:
             return "images/water.png"
 
-    def place_piece(self, *args):
+    def move_to_terrain(self, *args):
         for piece in self.parent.parent.parent.sidebar.children:
             if piece.state == "down" and not self.occupied:
                 if piece.row is not None:
