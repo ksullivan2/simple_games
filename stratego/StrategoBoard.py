@@ -23,7 +23,7 @@ class StrategoWindow(FloatLayout):
         if self.gamestate == 0:
             self.setup_to_place_pieces()
         elif self.gamestate == 1:
-            pass
+            self.setup_player_1_turn()
             # bind gamepieces.on_pos to something else?
 
     def debug_place_pieces(self):
@@ -50,6 +50,16 @@ class StrategoWindow(FloatLayout):
             square.bind(on_press= square.move_to_terrain)
         for piece in self.sidebar.children:
             piece.bind(on_pos = self.pieces_are_all_placed)
+            #this statement is currently doing nothing, apparently, the kivy is setting it
+
+    def setup_player_1_turn(self):
+        print("setup player 1 turn")
+        for square in self.board.children:
+            if square.occupied or not square.land:
+                square.disabled = True
+            else:
+                square.disabled = False
+
 
     def pieces_are_all_placed(self, *args):
         for piece in self.sidebar.children:
