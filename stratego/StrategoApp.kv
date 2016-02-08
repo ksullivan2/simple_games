@@ -1,6 +1,6 @@
 <StrategoWindow>:
     id: window
-    gamestate: 0
+    gamestate: -1
     on_gamestate: self.change_gamestate()
 
 
@@ -51,6 +51,7 @@
     border: (0,0,0,0)
     group: self.player_color
     on_pos: self.parent.parent.parent.pieces_are_all_placed()
+
 
     BoxLayout:
         orientation: "vertical"

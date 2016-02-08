@@ -26,11 +26,12 @@ class Terrain(Button):
             if piece.state == "down" and not self.occupied:
                 if piece.row is not None:
                     self.parent.grid[piece.row][piece.col].occupied = False
-                piece.pos = self.pos
                 piece.state = "normal"
                 piece.col = self.col
                 piece.row = self.row
                 self.occupied = True
+                piece.pos = self.pos
+                break
 
 
 

@@ -16,13 +16,14 @@ class StrategoWindow(FloatLayout):
         self.sidebar = self.ids["sidebar"]
 
     def change_gamestate(self):
+        print("change gamestate: " + str(self.gamestate))
         #0 is game setup
         #1 is player 1 move
         #2 is player 2 move
         if self.gamestate == 0:
             self.setup_to_place_pieces()
-        if self.gamestate == 1:
-            print("this worked")
+        elif self.gamestate == 1:
+            pass
             # bind gamepieces.on_pos to something else?
 
     def debug_place_pieces(self):
@@ -38,17 +39,21 @@ class StrategoWindow(FloatLayout):
                 y += 1
 
 
+
     def setup_to_place_pieces(self):
+        print("setup to place pieces")
         for square in self.board.children:
             if square.row in range(0,6):
                 square.disabled = True
             else:
                 square.disabled = False
             square.bind(on_press= square.move_to_terrain)
-
-    def pieces_are_all_placed(self):
         for piece in self.sidebar.children:
-            if piece.x is None:
+            piece.bind(on_pos = self.pieces_are_all_placed)
+
+    def pieces_are_all_placed(self, *args):
+        for piece in self.sidebar.children:
+            if piece.row is None:
                 return False
         self.gamestate = 1
         return True
