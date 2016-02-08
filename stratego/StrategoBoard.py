@@ -17,8 +17,27 @@ class StrategoWindow(FloatLayout):
 
     def change_gamestate(self):
         #0 is game setup
+        #1 is player 1 move
+        #2 is player 2 move
         if self.gamestate == 0:
             self.setup_to_place_pieces()
+        if self.gamestate == 1:
+            print("this worked")
+            # bind gamepieces.on_pos to something else?
+
+    def debug_place_pieces(self):
+        x = 6
+        y = 0
+        for piece in self.sidebar.children:
+            piece.state = "down"
+            self.board.grid[x][y].place_piece()
+            if y == 9:
+                y = 0
+                x += 1
+            else:
+                y += 1
+
+
 
 
     def setup_to_place_pieces(self):
@@ -28,6 +47,14 @@ class StrategoWindow(FloatLayout):
             else:
                 square.disabled = False
             square.bind(on_press= square.place_piece)
+
+    def pieces_are_all_placed(self):
+        for piece in self.sidebar.children:
+            if piece.x is None:
+                return False
+        self.gamestate = 1
+        return True
+
 
 
 

@@ -8,10 +8,19 @@
             id: board
             size_hint_x:10
 
-        Sidebar:
-            id: sidebar
-            cols:4
-            size_hint_x: 4
+        BoxLayout
+            orientation: "vertical"
+
+            Sidebar:
+                id: sidebar
+                cols:4
+                size_hint_x: 4
+
+        BoxLayout:
+            orientation: "vertical"
+            Button:
+                text: "place all pieces"
+                on_press: window.debug_place_pieces()
 
 
 
@@ -34,6 +43,7 @@
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
     border: (0,0,0,0)
     group: self.player_color
+    on_pos: self.parent.parent.parent.parent.pieces_are_all_placed()
 
     BoxLayout:
         orientation: "vertical"
