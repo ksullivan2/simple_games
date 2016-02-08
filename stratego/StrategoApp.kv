@@ -8,15 +8,15 @@
             id: board
             size_hint_x:10
 
-        BoxLayout
-            orientation: "vertical"
-
-            Sidebar:
-                id: sidebar
-                cols:4
-                size_hint_x: 4
+        Sidebar:
+            id: sidebar
+            cols:4
+            size_hint_x: 4
 
         BoxLayout:
+            id: debug
+            #change window size back to 1000 when you delete this
+            size_hint_x: 2
             orientation: "vertical"
             Button:
                 text: "place all pieces"
@@ -43,7 +43,7 @@
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
     border: (0,0,0,0)
     group: self.player_color
-    on_pos: self.parent.parent.parent.parent.pieces_are_all_placed()
+    on_pos: self.parent.parent.parent.pieces_are_all_placed()
 
     BoxLayout:
         orientation: "vertical"
