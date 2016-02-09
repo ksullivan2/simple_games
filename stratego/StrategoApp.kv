@@ -43,13 +43,14 @@
 
 
 
+
 <GamePiece>:
     id: gamepiece
     #player_color: "Red"
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
     border: (0,0,0,0)
     group: self.player_color
-    on_pos: self.parent.parent.parent.pieces_are_all_placed()
+    #on_pos: self.parent.parent.parent.pieces_are_all_placed()
     #i want to make this happen in python, not set awkwardly like this in kivy
 
 

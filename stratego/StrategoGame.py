@@ -20,12 +20,24 @@ class StrategoGame(FloatLayout):
         self.activeplayer = self.player1
 
 
+
+    def create_piece_widgets(self):
+        for piece, spot in zip(self.activeplayer.pieces, self.sidebar.children):
+            print(spot.pos)
+            piece.size_hint = (None, None)
+            piece.size = spot.size
+
+            piece.pos = spot.pos
+            self.add_widget(piece)
+
+
     def change_gamestate(self):
         print("change gamestate: " + str(self.gamestate))
         #0 is game setup
         #1 is player 1 move
         #2 is player 2 move
         if self.gamestate == 0:
+            self.create_piece_widgets()
             self.setup_to_place_pieces()
         elif self.gamestate == 1:
             self.setup_player_1_turn()
