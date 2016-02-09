@@ -7,6 +7,7 @@ from functools import partial
 from Terrain import *
 from GamePiece import *
 from Board import *
+from Player import *
 
 
 class StrategoGame(FloatLayout):
@@ -14,6 +15,10 @@ class StrategoGame(FloatLayout):
         super (StrategoGame, self).__init__()
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
+        self.player1 = Player("Red")
+        self.player2 = Player("Blue")
+        self.activeplayer = self.player1
+
 
     def change_gamestate(self):
         print("change gamestate: " + str(self.gamestate))
@@ -81,13 +86,16 @@ class StrategoGame(FloatLayout):
         Stops if it comes to an invalid square.'''
         for n in range(piece.max_spaces):
             if 0 <= (piece.row + n*direction) <= 9:
+                print('had a valid range')
                 possible_square = self.board.grid[piece.row + n*direction][piece.col]
             else:
+                print('out of range')
                 break
             if possible_square.occupied or not possible_square.land:
+                (print(str(possible_square.row)+"," + str(possible_square.col) + " stopped"))
                 break
             else:
-                print(possible_square.row,possible_square.col)
+                print(str(possible_square.row)+"," + str(possible_square.col) + " stopped") + " valid"
                 possible_square.disabled = True
                 #disabled is for testing purposes, will need to figure out something better
 
@@ -106,9 +114,3 @@ class StrategoGame(FloatLayout):
                 #disabled is for testing purposes, will need to figure out something better
 
 
-class Sidebar(GridLayout):
-    def __init__(self, **kwargs):
-        super(Sidebar, self).__init__()
-        for piecenumber in pieceamounts:
-            for i in range(pieceamounts[piecenumber]):
-                self.add_widget(GamePiece(piecenumber, "Red"))

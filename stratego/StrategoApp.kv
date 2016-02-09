@@ -5,13 +5,12 @@
 
 
     BoxLayout:
-        Board:
+        GameBoard:
             id: board
             size_hint_x:10
 
-        Sidebar:
+        SideBoard:
             id: sidebar
-            cols:4
             size_hint_x: 4
 
         BoxLayout:
@@ -36,11 +35,7 @@
 
 
 
-<Board>:
-    cols:10
-
-
-<Terrain>:
+<Square>:
     background_normal: self.get_background_image()
     border: (0,0,0,0)
     id: "test"
