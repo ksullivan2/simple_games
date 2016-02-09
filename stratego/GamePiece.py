@@ -13,6 +13,14 @@ class GamePiece(ToggleButton):
         self.ratio = 1.
         self.col = None
         self.row = None
+        if self.number not in (1,11):
+            self.moveable = True
+        else:
+            self.moveable = False
+        if self.number == 2:
+            self.max_spaces = 9
+        else:
+            self.max_spaces = 1
         super(GamePiece, self).__init__()
 
     def get_name(self):

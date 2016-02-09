@@ -38,8 +38,6 @@ class StrategoWindow(FloatLayout):
             else:
                 y += 1
 
-
-
     def setup_to_place_pieces(self):
         print("setup to place pieces")
         for square in self.board.children:
@@ -59,6 +57,7 @@ class StrategoWindow(FloatLayout):
                 square.disabled = True
             else:
                 square.disabled = False
+        #bind gamepieces.on_press to highlight viable squares
 
 
     def pieces_are_all_placed(self, *args):
@@ -69,7 +68,39 @@ class StrategoWindow(FloatLayout):
         return True
 
 
+    def highlight_valid_moves(self, piece):
+        self.find_x_moves(piece, 1)
+        self.find_x_moves(piece, -1)
+        self.find_y_moves(piece, 1)
+        self.find_y_moves(piece, -1)
 
+    def find_x_moves(self, piece, direction):
+        '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
+        Stops if it comes to an invalid square.'''
+        for n in range(piece.max_spaces):
+            if 0 <= (piece.row + n*direction) <= 9:
+                possible_square = self.board.grid[piece.row + n*direction][piece.col]
+            else:
+                break
+            if possible_square.occupied or not possible_square.land:
+                break
+            else:
+                possible_square.disabled = True
+                #disabled is for testing purposes, will need to figure out something better
+
+    def find_y_moves(self, piece, direction):
+        '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
+        Stops if it comes to an invalid square.'''
+        for n in range(piece.max_spaces):
+            if 0 <= (piece.col + n*direction) <= 9:
+                possible_square = self.board.grid[piece.row][piece.col +n*direction]
+            else:
+                break
+            if possible_square.occupied or not possible_square.land:
+                break
+            else:
+                possible_square.disabled = True
+                #disabled is for testing purposes, will need to figure out something better
 
 
 
