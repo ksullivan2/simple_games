@@ -6,18 +6,21 @@ from ResizeBehavior import *
 from functools import partial
 from Terrain import *
 from GamePiece import *
+from Player import *
 
 
 
 class Board(GridLayout):
     def __init__(self, **kwargs):
         self.grid = []
-        super(Board, self).__init__()
+        self.player = Player("Red")
+        #change this to reference game.activeplayer later....
+        super().__init__()
 
 
 class GameBoard(Board):
     def __init__(self, **kwargs):
-        super(GameBoard, self).__init__()
+        super().__init__()
         self.cols = 10
         self.create_background()
 
@@ -33,8 +36,18 @@ class GameBoard(Board):
                 self.add_widget(temp)
 
 
-class SideBoard(GridLayout):
+class SideBoard(Board):
     def __init__(self, **kwargs):
-        super(SideBoard, self).__init__()
+        super().__init__()
+        #self.player = super.player
         self.cols = 4
+        self.create_slots()
+
+    def create_slots(self):
+        for i in range(10):
+            self.grid.append([])
+            for j in range(4):
+                temp = Square(i,j, "sideboard")
+                self.grid[i].append(temp)
+                self.add_widget(temp)
 
