@@ -6,12 +6,12 @@ from ResizeBehavior import *
 from functools import partial
 from Terrain import *
 from GamePiece import *
+from Board import *
 
 
-
-class StrategoWindow(FloatLayout):
+class StrategoGame(FloatLayout):
     def __init__(self, **kwargs):
-        super (StrategoWindow, self).__init__()
+        super (StrategoGame, self).__init__()
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
 
@@ -104,25 +104,6 @@ class StrategoWindow(FloatLayout):
             else:
                 possible_square.disabled = True
                 #disabled is for testing purposes, will need to figure out something better
-
-
-
-class StrategoBoard(GridLayout):
-    def __init__(self, **kwargs):
-        self.grid = []
-        super(StrategoBoard, self).__init__()
-        self.create_background()
-
-    def create_background(self):
-        for i in range(10):
-            self.grid.append([])
-            for j in range(10):
-                if i in (4,5) and j in (2,3,6,7):
-                    temp = Terrain(i,j, land=False)
-                else:
-                    temp = Terrain(i,j)
-                self.grid[i].append(temp)
-                self.add_widget(temp)
 
 
 class Sidebar(GridLayout):
