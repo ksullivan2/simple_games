@@ -57,7 +57,8 @@ class StrategoWindow(FloatLayout):
                 square.disabled = True
             else:
                 square.disabled = False
-        #bind gamepieces.on_press to highlight viable squares
+        for piece in self.sidebar.children:
+            piece.bind(on_press = partial(self.highlight_valid_moves,piece))
 
 
     def pieces_are_all_placed(self, *args):
@@ -68,7 +69,8 @@ class StrategoWindow(FloatLayout):
         return True
 
 
-    def highlight_valid_moves(self, piece):
+    def highlight_valid_moves(self, piece, *args):
+        print("highlight valid moves")
         self.find_x_moves(piece, 1)
         self.find_x_moves(piece, -1)
         self.find_y_moves(piece, 1)
@@ -85,6 +87,7 @@ class StrategoWindow(FloatLayout):
             if possible_square.occupied or not possible_square.land:
                 break
             else:
+                print(possible_square.row,possible_square.col)
                 possible_square.disabled = True
                 #disabled is for testing purposes, will need to figure out something better
 
