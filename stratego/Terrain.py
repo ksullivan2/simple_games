@@ -19,17 +19,19 @@ class Square(Button):
         return "images/" + self.type + ".png"
 
 
-    def move_to_terrain(self, *args):
-        for piece in self.parent.parent.parent.sidebar.children:
-            if piece.state == "down" and not self.occupied:
-                if piece.row is not None:
-                    self.parent.grid[piece.row][piece.col].occupied = False
-                piece.state = "normal"
-                piece.col = self.col
-                piece.row = self.row
-                self.occupied = True
-                piece.pos = self.pos
-                break
+    def move_to_square(self):
+        piece = self.parent.player.in_hand
+
+        #remove it from the previous spot
+        piece.spot.occupied = False
+
+        #set attributes of new spot
+        self.occupied = True
+        piece.state = "normal"
+        piece.spot = self
+        piece.pos = self.pos
+
+
 
 
 

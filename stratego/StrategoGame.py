@@ -20,15 +20,12 @@ class StrategoGame(FloatLayout):
         self.activeplayer = self.player1
 
 
-
     def create_piece_widgets(self):
-        for piece, spot in zip(self.activeplayer.pieces, self.sidebar.children):
-            print(spot.pos)
-            piece.size_hint = (None, None)
-            piece.size = spot.size
-
-            piece.pos = spot.pos
+        for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
             self.add_widget(piece)
+            piece.spot = square
+            piece.size = square.size
+
 
 
     def change_gamestate(self):
@@ -42,6 +39,10 @@ class StrategoGame(FloatLayout):
         elif self.gamestate == 1:
             self.setup_player_1_turn()
             # bind gamepieces.on_pos to something else?
+
+    def place_in_hand(self, piece):
+        self.activeplayer.in_hand = piece
+
 
     def debug_place_pieces(self):
         x = 6
@@ -62,10 +63,12 @@ class StrategoGame(FloatLayout):
                 square.disabled = True
             else:
                 square.disabled = False
-            square.bind(on_press= square.move_to_terrain)
+            #square.bind(on_press= square.move_to_terrain)
         for piece in self.sidebar.children:
             piece.bind(on_pos = self.pieces_are_all_placed)
             #this statement is currently doing nothing, apparently, the kivy is setting it
+        self.board.player = self.activeplayer
+        self.sidebar.player = self.activeplayer
 
     def setup_player_1_turn(self):
         print("setup player 1 turn")

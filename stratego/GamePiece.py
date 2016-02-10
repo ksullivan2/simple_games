@@ -10,9 +10,8 @@ class GamePiece(ToggleButton):
     def __init__(self, number, color, **kwargs):
         self.number = number
         self.player_color = color
-        self.ratio = 1.
-        self.col = None
-        self.row = None
+
+        #self.spot = None
         if self.number not in (1,11):
             self.moveable = True
         else:

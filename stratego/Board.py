@@ -13,8 +13,7 @@ from Player import *
 class Board(GridLayout):
     def __init__(self, **kwargs):
         self.grid = []
-        self.player = Player("Red")
-        #change this to reference game.activeplayer later....
+        self.player = None
         super().__init__()
 
 

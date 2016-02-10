@@ -38,7 +38,7 @@
 <Square>:
     background_normal: self.get_background_image()
     border: (0,0,0,0)
-    id: "test"
+
 
 
 
@@ -46,10 +46,14 @@
 
 <GamePiece>:
     id: gamepiece
-    #player_color: "Red"
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
     border: (0,0,0,0)
+    size_hint:(None, None)
     group: self.player_color
+    spot: None
+
+    on_spot: self.pos = self.spot.pos
+    on_press: self.parent.place_in_hand(self)
     #on_pos: self.parent.parent.parent.pieces_are_all_placed()
     #i want to make this happen in python, not set awkwardly like this in kivy
 
@@ -58,21 +62,26 @@
     BoxLayout:
         orientation: "vertical"
         center: gamepiece.center
-        size: gamepiece.size
-        padding: 0,0
+        on_size: self.size = gamepiece.size
 
-        Label:
-            text: gamepiece.get_name()
-            color: (0,0,0,1)
-
-            pos_hint_y: .5
 
         Label:
             text: str(gamepiece.number)
             color: (0,0,0,1)
             font_size: gamepiece.height/3
             bold: True
-            pos_hint_y: 0
+            #pos_hint_y: .9
+
+        Label:
+            text: gamepiece.get_name()
+            bold: True
+            font_size: gamepiece.width/4.5
+            color: (0,0,0,1)
+
+            #pos_hint_y: .2
+
+
+
 
 
 
