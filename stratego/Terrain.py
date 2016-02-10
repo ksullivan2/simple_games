@@ -21,6 +21,7 @@ class Square(Button):
 
     def move_to_square(self):
         piece = self.parent.player.in_hand
+        self.parent.player.in_hand = None
 
         #remove it from the previous spot
         piece.spot.occupied = False
@@ -29,7 +30,7 @@ class Square(Button):
         self.occupied = True
         piece.state = "normal"
         piece.spot = self
-        piece.pos = self.pos
+
 
 
 
