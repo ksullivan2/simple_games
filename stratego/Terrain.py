@@ -20,16 +20,18 @@ class Square(Button):
 
 
     def move_to_square(self):
-        piece = self.parent.player.in_hand
-        self.parent.player.in_hand = None
+        if self.parent.player.in_hand is not None:
+            piece = self.parent.player.in_hand
+            self.parent.player.in_hand = None
 
-        #remove it from the previous spot
-        piece.spot.occupied = False
+            #remove it from the previous spot
+            piece.spot.occupied = False
 
-        #set attributes of new spot
-        self.occupied = True
-        piece.state = "normal"
-        piece.spot = self
+            #set attributes of new spot
+            self.occupied = True
+            piece.state = "normal"
+            piece.spot = self
+
 
 
 
