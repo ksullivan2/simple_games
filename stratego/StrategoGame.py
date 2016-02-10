@@ -47,9 +47,9 @@ class StrategoGame(FloatLayout):
     def debug_place_pieces(self):
         x = 6
         y = 0
-        for piece in self.sidebar.children:
-            piece.state = "down"
-            self.board.grid[x][y].move_to_terrain()
+        for piece in self.activeplayer.pieces:
+            self.activeplayer.in_hand = piece
+            self.board.grid[x][y].move_to_square()
             if y == 9:
                 y = 0
                 x += 1
