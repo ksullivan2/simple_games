@@ -5,12 +5,13 @@ from kivy.properties import BooleanProperty
 from ResizeBehavior import *
 
 class Square(Button):
+    occupied = BooleanProperty(False)
+
     def __init__(self, row, col, type):
         self.row = row
         self.col = col
         self.id = str(self.row) + "," + str(self.col)
         self.type = type
-        self.occupied = BooleanProperty(False)
         super().__init__()
 
     def get_ids(self):

@@ -37,6 +37,7 @@ class StrategoGame(FloatLayout):
         if self.gamestate == 0:
             self.create_piece_widgets()
             self.setup_to_place_pieces()
+
         elif self.gamestate == 1:
             self.setup_player_1_turn()
             # bind gamepieces.on_pos to something else?
