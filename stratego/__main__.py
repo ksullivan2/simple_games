@@ -5,7 +5,7 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from ResizeBehavior import *
 from GamePiece import *
-from Terrain import *
+from Square import *
 from Board import *
 from StrategoGame import *
 

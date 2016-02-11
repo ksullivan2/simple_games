@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty
 from ResizeBehavior import *
 from functools import partial
-from Terrain import *
+from Square import *
 from GamePiece import *
 from Player import *
 

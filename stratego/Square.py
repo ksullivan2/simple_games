@@ -20,6 +20,14 @@ class Square(Button):
     def get_background_image(self):
         return "images/" + self.type + ".png"
 
+    def get_disabled_image(self):
+        if self.type == "land":
+            return "images/land_disabled.png"
+        elif self.type == "water":
+            return "images/water.png"
+        else:
+            return "atlas://data/images/defaulttheme/button_disabled"
+
 
     def move_to_square(self):
         if self.parent.player.in_hand is not None:
