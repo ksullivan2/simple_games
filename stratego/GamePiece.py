@@ -1,5 +1,6 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
+from kivy.properties import ObjectProperty
 from ResizeBehavior import *
 
 
@@ -7,6 +8,8 @@ from ResizeBehavior import *
 
 
 class GamePiece(ToggleButton):
+    spot = ObjectProperty(None)
+
     def __init__(self, number, color, **kwargs):
         self.number = number
         self.player_color = color

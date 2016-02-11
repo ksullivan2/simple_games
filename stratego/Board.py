@@ -33,6 +33,47 @@ class GameBoard(Board):
                 self.grid[i].append(temp)
                 self.add_widget(temp)
 
+    def highlight_valid_moves_during_game(self, *args):
+        print("highlight valid moves")
+        piece = self.player.in_hand
+        self.find_x_moves(piece, 1)
+        self.find_x_moves(piece, -1)
+        self.find_y_moves(piece, 1)
+        self.find_y_moves(piece, -1)
+
+
+    def find_x_moves(self, piece, direction):
+        '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
+        Stops if it comes to an invalid square.'''
+        for n in range(piece.max_spaces):
+            if 0 <= (piece.spot.row + n*direction) <= 9:
+                print('had a valid range')
+                possible_square = self.grid[piece.spot.row + n*direction][piece.spot.col]
+            else:
+                print('out of range')
+                break
+            if possible_square.occupied or not possible_square.land:
+                (print(str(possible_square.row)+"," + str(possible_square.col) + " stopped"))
+                break
+            else:
+                print(str(possible_square.row)+"," + str(possible_square.col) + " stopped") + " valid"
+                possible_square.disabled = True
+                #disabled is for testing purposes, will need to figure out something better
+
+    def find_y_moves(self, piece, direction):
+        '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
+        Stops if it comes to an invalid square.'''
+        for n in range(piece.max_spaces):
+            if 0 <= (piece.spot.col + n*direction) <= 9:
+                possible_square = self.grid[piece.spot.row][piece.spot.col +n*direction]
+            else:
+                break
+            if possible_square.occupied or not possible_square.land:
+                break
+            else:
+                possible_square.disabled = True
+                #disabled is for testing purposes, will need to figure out something better
+
 
 class SideBoard(Board):
     def __init__(self, **kwargs):

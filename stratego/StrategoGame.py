@@ -27,8 +27,6 @@ class StrategoGame(FloatLayout):
             piece.size = square.size
             square.occupied = True
 
-
-
     def change_gamestate(self):
         print("change gamestate: " + str(self.gamestate))
         #0 is game setup
@@ -44,6 +42,9 @@ class StrategoGame(FloatLayout):
 
     def place_in_hand(self, piece):
         self.activeplayer.in_hand = piece
+        if self.gamestate == 1:
+            self.board.highlight_valid_moves_during_game()
+
 
 
     def debug_place_pieces(self):
@@ -79,44 +80,6 @@ class StrategoGame(FloatLayout):
             slot.disabled = True
 
 
-    def highlight_valid_moves(self, *args):
-        print("highlight valid moves")
-        piece = self.activeplayer.in_hand
-        self.find_x_moves(piece, 1)
-        self.find_x_moves(piece, -1)
-        self.find_y_moves(piece, 1)
-        self.find_y_moves(piece, -1)
 
-    def find_x_moves(self, piece, direction):
-        '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
-        Stops if it comes to an invalid square.'''
-        for n in range(piece.max_spaces):
-            if 0 <= (piece.row + n*direction) <= 9:
-                print('had a valid range')
-                possible_square = self.board.grid[piece.row + n*direction][piece.col]
-            else:
-                print('out of range')
-                break
-            if possible_square.occupied or not possible_square.land:
-                (print(str(possible_square.row)+"," + str(possible_square.col) + " stopped"))
-                break
-            else:
-                print(str(possible_square.row)+"," + str(possible_square.col) + " stopped") + " valid"
-                possible_square.disabled = True
-                #disabled is for testing purposes, will need to figure out something better
-
-    def find_y_moves(self, piece, direction):
-        '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
-        Stops if it comes to an invalid square.'''
-        for n in range(piece.max_spaces):
-            if 0 <= (piece.col + n*direction) <= 9:
-                possible_square = self.board.grid[piece.row][piece.col +n*direction]
-            else:
-                break
-            if possible_square.occupied or not possible_square.land:
-                break
-            else:
-                possible_square.disabled = True
-                #disabled is for testing purposes, will need to figure out something better
 
 
