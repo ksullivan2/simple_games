@@ -75,17 +75,13 @@ class StrategoGame(FloatLayout):
                 square.disabled = True
             else:
                 square.disabled = False
-        for piece in self.sidebar.children:
-            piece.bind(on_press = partial(self.highlight_valid_moves,piece))
+        for slot in self.sidebar.children:
+            slot.disabled = True
 
 
-
-
-
-
-
-    def highlight_valid_moves(self, piece, *args):
+    def highlight_valid_moves(self, *args):
         print("highlight valid moves")
+        piece = self.activeplayer.in_hand
         self.find_x_moves(piece, 1)
         self.find_x_moves(piece, -1)
         self.find_y_moves(piece, 1)

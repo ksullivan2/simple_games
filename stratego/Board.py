@@ -16,9 +16,6 @@ class Board(GridLayout):
         self.player = None
         super().__init__()
 
-
-
-
 class GameBoard(Board):
     def __init__(self, **kwargs):
         super().__init__()
@@ -59,7 +56,6 @@ class SideBoard(Board):
         for slot in self.children:
             if slot.occupied:
                 return False
-        print(slot.id)
         self.parent.parent.gamestate = 1
         return True
 

@@ -11,11 +11,13 @@ class GamePiece(ToggleButton):
         self.number = number
         self.player_color = color
 
-        #self.spot = None
+        #flags and bombs aren't moveable
         if self.number not in (1,11):
             self.moveable = True
         else:
             self.moveable = False
+
+        #scouts can move more than 1 space
         if self.number == 2:
             self.max_spaces = 9
         else:
