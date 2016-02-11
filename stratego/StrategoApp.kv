@@ -45,6 +45,8 @@
 
 
 
+
+
 <GamePiece>:
     id: gamepiece
     background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
@@ -55,8 +57,7 @@
 
     on_spot: self.pos = self.spot.pos
     on_press: self.parent.place_in_hand(self)
-    #on_pos: self.parent.parent.parent.pieces_are_all_placed()
-    #i want to make this happen in python, not set awkwardly like this in kivy
+
 
 
 

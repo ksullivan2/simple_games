@@ -17,6 +17,8 @@ class Board(GridLayout):
         super().__init__()
 
 
+
+
 class GameBoard(Board):
     def __init__(self, **kwargs):
         super().__init__()
@@ -41,6 +43,8 @@ class SideBoard(Board):
         #self.player = super.player
         self.cols = 4
         self.create_slots()
+        for slot in self.children:
+            slot.bind(occupied = self.pieces_are_all_placed)
 
     def create_slots(self):
         for i in range(10):
@@ -49,4 +53,15 @@ class SideBoard(Board):
                 temp = Square(i,j, "sideboard")
                 self.grid[i].append(temp)
                 self.add_widget(temp)
+
+    def pieces_are_all_placed(self, *args):
+        print("pieces placed?")
+        for slot in self.children:
+            if slot.occupied:
+                print(slot.id)
+                return False
+        self.parent.gamestate = 1
+        return True
+
+
 

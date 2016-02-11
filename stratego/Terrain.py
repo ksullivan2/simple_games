@@ -1,6 +1,7 @@
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.uix.button import Button
+from kivy.properties import BooleanProperty
 from ResizeBehavior import *
 
 class Square(Button):
@@ -9,8 +10,8 @@ class Square(Button):
         self.col = col
         self.id = str(self.row) + "," + str(self.col)
         self.type = type
-        self.occupied = False
-        super(Square,self).__init__()
+        self.occupied = BooleanProperty(False)
+        super().__init__()
 
     def get_ids(self):
         return self.id

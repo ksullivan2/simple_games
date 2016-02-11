@@ -25,6 +25,7 @@ class StrategoGame(FloatLayout):
             self.add_widget(piece)
             piece.spot = square
             piece.size = square.size
+            square.occupied = True
 
 
 
@@ -63,17 +64,13 @@ class StrategoGame(FloatLayout):
                 square.disabled = True
             else:
                 square.disabled = False
-            #square.bind(on_press= square.move_to_terrain)
-        for piece in self.sidebar.children:
-            piece.bind(on_pos = self.pieces_are_all_placed)
-            #this statement is currently doing nothing, apparently, the kivy is setting it
         self.board.player = self.activeplayer
         self.sidebar.player = self.activeplayer
 
     def setup_player_1_turn(self):
         print("setup player 1 turn")
         for square in self.board.children:
-            if square.occupied or not square.land:
+            if square.occupied or square.type != "land":
                 square.disabled = True
             else:
                 square.disabled = False
@@ -81,12 +78,9 @@ class StrategoGame(FloatLayout):
             piece.bind(on_press = partial(self.highlight_valid_moves,piece))
 
 
-    def pieces_are_all_placed(self, *args):
-        for piece in self.sidebar.children:
-            if piece.row is None:
-                return False
-        self.gamestate = 1
-        return True
+
+
+
 
 
     def highlight_valid_moves(self, piece, *args):
