@@ -15,7 +15,7 @@ class GamePiece(ToggleButton):
         self.player_color = color
 
         #flags and bombs aren't moveable
-        if self.number not in (1,11):
+        if self.number not in (0,11):
             self.moveable = True
         else:
             self.moveable = False

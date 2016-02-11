@@ -38,12 +38,13 @@ class StrategoGame(FloatLayout):
 
         elif self.gamestate == 1:
             self.setup_player_1_turn()
-            # bind gamepieces.on_pos to something else?
+
 
     def place_in_hand(self, piece):
         self.activeplayer.in_hand = piece
+
         if self.gamestate == 1:
-            self.board.highlight_valid_moves_during_game()
+           self.board.highlight_valid_moves_during_game()
 
 
 
@@ -71,6 +72,9 @@ class StrategoGame(FloatLayout):
 
     def setup_player_1_turn(self):
         print("setup player 1 turn")
+        for piece in self.activeplayer.pieces:
+            if not piece.moveable:
+                piece.disabled = True
         for square in self.board.children:
             if square.occupied or square.type != "land":
                 square.disabled = True
@@ -78,6 +82,8 @@ class StrategoGame(FloatLayout):
                 square.disabled = False
         for slot in self.sidebar.children:
             slot.disabled = True
+
+
 
 
 
