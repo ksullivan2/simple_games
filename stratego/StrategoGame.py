@@ -78,7 +78,7 @@ class StrategoGame(FloatLayout):
             slot.disabled = True
 
         self.activeplayer = self.player1
-        self.board.activate_only_activeplayer_pieces()
+        self.board.activate_attacking_player_pieces()
 
 
 
@@ -88,7 +88,9 @@ class StrategoGame(FloatLayout):
         self.activeplayer.in_hand = piece
 
         if self.gamestate == 1:
-           self.board.highlight_valid_moves_during_game()
+            self.board.highlight_valid_moves_during_game()
+            self.board.activate_defending_player_pieces()
+
 
     def clear_hand(self):
         self.activeplayer.in_hand = None
