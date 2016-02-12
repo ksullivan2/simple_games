@@ -58,7 +58,7 @@ class StrategoGame(FloatLayout):
                 square.valid = True
             else:
                 square.valid = False
-        self.board.disable_invalid_squares()
+        self.board.enable_valid_squares()
 
 
     def pieces_placed_next_action(self):

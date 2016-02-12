@@ -44,14 +44,14 @@ class GameBoard(Board):
         self.find_x_moves(piece, -1)
         self.find_y_moves(piece, 1)
         self.find_y_moves(piece, -1)
-        self.disable_invalid_squares()
+        self.enable_valid_squares()
 
     def clear_all_valid_markers(self):
         for square in self.children:
             square.disabled = True
             square.valid = False
 
-    def disable_invalid_squares(self):
+    def enable_valid_squares(self):
         for square in self.children:
             if square.valid:
                 square.disabled = False
@@ -76,9 +76,11 @@ class GameBoard(Board):
         Stops if it comes to an invalid square.'''
         for n in range(1, piece.max_spaces+1):
             newrow = piece.spot.row + n*direction
-            possible_square = self.grid[newrow][piece.spot.col]
-            if newrow > 9 or newrow < 0 or \
-               not self.test_for_valid_square(possible_square):
+            if not 0 <= newrow <= 9:
+                break
+            else:
+                possible_square = self.grid[newrow][piece.spot.col]
+            if not self.test_for_valid_square(possible_square):
                    break
             else:
                 possible_square.valid = True
@@ -91,9 +93,11 @@ class GameBoard(Board):
         Stops if it comes to an invalid square.'''
         for n in range(1, piece.max_spaces+1):
             newcol = piece.spot.col + n*direction
-            possible_square = self.grid[piece.spot.row][newcol]
-            if newcol > 9 or newcol < 0 or \
-                not self.test_for_valid_square(possible_square):
+            if not 0 <= newcol <= 9:
+                break
+            else:
+                possible_square = self.grid[piece.spot.row][newcol]
+            if not self.test_for_valid_square(possible_square):
                    break
             else:
                 possible_square.valid = True
