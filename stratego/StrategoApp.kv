@@ -1,5 +1,5 @@
 <StrategoGame>:
-    id: window
+    id: game
     gamestate: -1
     on_gamestate: self.change_gamestate()
 
@@ -7,10 +7,12 @@
     BoxLayout:
         GameBoard:
             id: board
+            player: game.activeplayer
             size_hint_x:10
 
         SideBoard:
             id: sidebar
+            player: game.activeplayer
             size_hint_x: 4
 
         BoxLayout:
@@ -21,15 +23,15 @@
 
             Button:
                 text: "start new game"
-                on_press: window.gamestate = 0
+                on_press: game.gamestate = 0
 
             Button:
                 text: "place all pieces"
-                on_press: window.debug_place_pieces()
+                on_press: game.debug_place_pieces()
 
             Button:
                 text: "gamestate 1"
-                on_press: window.gamestate = 1
+                on_press: game.gamestate = 1
 
 
 

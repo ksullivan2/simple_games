@@ -1,7 +1,7 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, ObjectProperty
 from random import randint
 from ResizeBehavior import *
 from functools import partial
@@ -12,6 +12,8 @@ from Player import *
 
 
 class StrategoGame(FloatLayout):
+    activeplayer = ObjectProperty
+
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
         self.board = self.ids["board"]
@@ -20,8 +22,7 @@ class StrategoGame(FloatLayout):
         self.player2 = Player("Blue")
         self.activeplayer = self.player1
 
-
-
+#gamestate actions
 
     def change_gamestate(self):
         print("change gamestate: " + str(self.gamestate))
@@ -31,11 +32,12 @@ class StrategoGame(FloatLayout):
             self.player_start()
 
         elif self.gamestate == 1:
-            self.setup_player_1_turn()
+            self.begin_competitive_phase()
 
     def player_start(self):
         self.create_piece_widgets()
         self.setup_to_place_pieces()
+        self.propogate_player_references()
 
     def create_piece_widgets(self):
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
@@ -44,7 +46,44 @@ class StrategoGame(FloatLayout):
             piece.size = square.size
             square.occupied = True
 
+    def setup_to_place_pieces(self):
+        if self.activeplayer.color == "Red":
+            toprow = 6
+            bottomrow = 9
+        else:
+            toprow = 0
+            bottomrow = 3
+        for square in self.board.children:
+            if square.row in range(toprow, bottomrow+1):
+                square.valid = True
+            else:
+                square.valid = False
+        self.board.disable_invalid_squares()
 
+    def propogate_player_references(self):
+        self.board.player = self.activeplayer
+        self.sidebar.player = self.activeplayer
+
+
+    def pieces_placed_next_action(self):
+        if self.activeplayer == self.player1:
+            self.activeplayer = self.player2
+            self.player_start()
+        else:
+            self.gamestate = 1
+        return True
+
+    def begin_competitive_phase(self):
+        self.board.clear_all_valid_markers()
+
+        #disable anything not in use
+        for slot in self.sidebar.children:
+            slot.disabled = True
+
+
+
+
+#interacting with the "hand"
     def place_in_hand(self, piece):
         self.activeplayer.in_hand = piece
 
@@ -55,7 +94,26 @@ class StrategoGame(FloatLayout):
         self.activeplayer.in_hand = None
 
         if self.gamestate == 1:
-            self.clear_all_valid_markers()
+            self.board.clear_all_valid_markers()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#debug functions
 
     def debug_place_pieces(self):
         if self.activeplayer.color =="Red":
@@ -76,58 +134,5 @@ class StrategoGame(FloatLayout):
                 x += 1
             else:
                 y += 1
-
-
-    def disable_invalid_squares(self):
-        for square in self.board.children:
-            if square.valid:
-                square.disabled = False
-            else:
-                square.disabled = True
-
-    def clear_all_valid_markers(self):
-        for square in self.board.children:
-            square.disabled = True
-            square.valid = False
-
-
-    def pieces_placed_next_action(self):
-        if self.activeplayer == self.player1:
-            self.activeplayer = self.player2
-            self.player_start()
-        else:
-            self.gamestate = 1
-        return True
-
-    def setup_to_place_pieces(self):
-        if self.activeplayer.color == "Red":
-            toprow = 6
-            bottomrow = 9
-        else:
-            toprow = 0
-            bottomrow = 3
-        for square in self.board.children:
-            if square.row in range(toprow, bottomrow+1):
-                square.valid = True
-            else:
-                square.valid = False
-        self.disable_invalid_squares()
-
-        #move these
-        self.board.player = self.activeplayer
-        self.sidebar.player = self.activeplayer
-
-    def setup_player_1_turn(self):
-        #set up valid moves
-        self.clear_all_valid_markers()
-
-        #disable anything not in use
-        for slot in self.sidebar.children:
-            slot.disabled = True
-
-
-
-
-
 
 

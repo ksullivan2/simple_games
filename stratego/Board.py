@@ -13,7 +13,7 @@ from Player import *
 class Board(GridLayout):
     def __init__(self, **kwargs):
         self.grid = []
-        self.player = None
+        #self.player = None
         super().__init__()
 
 class GameBoard(Board):
@@ -43,8 +43,19 @@ class GameBoard(Board):
         self.find_x_moves(piece, -1)
         self.find_y_moves(piece, 1)
         self.find_y_moves(piece, -1)
-        self.parent.parent.disable_invalid_squares()
+        self.disable_invalid_squares()
 
+    def clear_all_valid_markers(self):
+        for square in self.children:
+            square.disabled = True
+            square.valid = False
+
+    def disable_invalid_squares(self):
+        for square in self.children:
+            if square.valid:
+                square.disabled = False
+            else:
+                square.disabled = True
 
     def find_y_moves(self, piece, direction):
         '''direction: 1 is down, -1 is up. Goes through squares in that direction and marks the valid ones.
