@@ -100,10 +100,6 @@ class StrategoGame(FloatLayout):
     def setup_player_1_turn(self):
         #set up valid moves
         self.clear_all_valid_markers()
-        '''for square in self.board.children:
-            if not square.occupied or square.type == "land":
-                square.valid = True
-        self.disable_invalid_squares()'''
 
         #disable anything not in use
         for slot in self.sidebar.children:
