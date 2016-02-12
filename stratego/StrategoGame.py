@@ -46,7 +46,8 @@ class StrategoGame(FloatLayout):
         if self.gamestate == 1:
            self.board.highlight_valid_moves_during_game()
 
-
+    def clear_hand(self):
+        self.activeplayer.in_hand = None
 
     def debug_place_pieces(self):
         x = 6

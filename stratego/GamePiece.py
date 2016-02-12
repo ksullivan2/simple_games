@@ -31,6 +31,19 @@ class GamePiece(ToggleButton):
         return names[self.number]
 
 
+    def on_state(self, widget, value):
+        if value == 'down':
+            self.parent.place_in_hand(self)
+        else:
+            self.parent.clear_hand()
+
+
+
+    def select_piece(self):
+        pass
+
+
+
 
 names = {0: "Flag",
          1: "Spy",
