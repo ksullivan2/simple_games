@@ -1,11 +1,11 @@
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.uix.button import Button
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, ObjectProperty
 from ResizeBehavior import *
 
 class Square(Button):
-    occupied = BooleanProperty(False)
+    occupied = ObjectProperty(None, rebind = True, allownone=True)
 
     def __init__(self, row, col, type):
         self.row = row
@@ -35,10 +35,10 @@ class Square(Button):
             piece = self.parent.player.in_hand
 
             #remove it from the previous spot
-            piece.spot.occupied = False
+            piece.spot.occupied = None
 
             #set attributes of new spot
-            self.occupied = True
+            self.occupied = piece
             piece.state = "normal"
             piece.spot = self
 

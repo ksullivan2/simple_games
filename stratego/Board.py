@@ -58,6 +58,13 @@ class GameBoard(Board):
             else:
                 square.disabled = True
 
+    def test_for_valid_square(self, square):
+        if square.type == "land":
+            if square.occupied is None or \
+                square.occupied.color != self.player.color:
+                return True
+        return False
+
     def find_y_moves(self, piece, direction):
         '''direction: 1 is down, -1 is up. Goes through squares in that direction and marks the valid ones.
         Stops if it comes to an invalid square.'''
@@ -66,10 +73,11 @@ class GameBoard(Board):
                 possible_square = self.grid[piece.spot.row + n*direction][piece.spot.col]
             else:
                 break
-            if possible_square.occupied or possible_square.type != "land":
-                break
-            else:
+            if self.test_for_valid_square(possible_square):
                 possible_square.valid = True
+            else:
+                possible_square.valid = False
+                break
 
 
     def find_x_moves(self, piece, direction):
@@ -80,10 +88,11 @@ class GameBoard(Board):
                 possible_square = self.grid[piece.spot.row][piece.spot.col + n*direction]
             else:
                 break
-            if possible_square.occupied or possible_square.type != "land":
-                break
-            else:
+            if self.test_for_valid_square(possible_square):
                 possible_square.valid = True
+            else:
+                possible_square.valid = False
+                break
 
 
 class SideBoard(Board):
