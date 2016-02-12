@@ -58,6 +58,15 @@ class GameBoard(Board):
             else:
                 square.disabled = True
 
+    def activate_only_activeplayer_pieces(self):
+        for square in self.children:
+            if square.occupied is not None:
+                if square.occupied.player_color == self.player.color:
+                    square.occupied.disabled = False
+                else: square.occupied.disabled = True
+
+
+
     def test_for_valid_square(self, square):
         if square.type == "land":
             if square.occupied is None or \

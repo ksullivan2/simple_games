@@ -78,6 +78,7 @@ class StrategoGame(FloatLayout):
             slot.disabled = True
 
         self.activeplayer = self.player1
+        self.board.activate_only_activeplayer_pieces()
 
 
 
