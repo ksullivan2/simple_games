@@ -21,12 +21,7 @@ class StrategoGame(FloatLayout):
         self.activeplayer = self.player1
 
 
-    def create_piece_widgets(self):
-        for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
-            self.add_widget(piece)
-            piece.spot = square
-            piece.size = square.size
-            square.occupied = True
+
 
     def change_gamestate(self):
         print("change gamestate: " + str(self.gamestate))
@@ -41,6 +36,13 @@ class StrategoGame(FloatLayout):
     def player_start(self):
         self.create_piece_widgets()
         self.setup_to_place_pieces()
+
+    def create_piece_widgets(self):
+        for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
+            self.add_widget(piece)
+            piece.spot = square
+            piece.size = square.size
+            square.occupied = True
 
 
     def place_in_hand(self, piece):
@@ -122,9 +124,7 @@ class StrategoGame(FloatLayout):
         #disable anything not in use
         for slot in self.sidebar.children:
             slot.disabled = True
-        for piece in self.activeplayer.pieces:
-            if not piece.moveable:
-                piece.disabled = True
+
 
 
 

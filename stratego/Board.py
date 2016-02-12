@@ -34,8 +34,11 @@ class GameBoard(Board):
                 self.add_widget(temp)
 
     def highlight_valid_moves_during_game(self, *args):
-        print("highlight valid moves")
         piece = self.player.in_hand
+
+        if piece.max_spaces == 0:
+            return
+
         self.find_x_moves(piece, 1)
         self.find_x_moves(piece, -1)
         self.find_y_moves(piece, 1)
