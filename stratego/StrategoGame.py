@@ -24,7 +24,6 @@ class StrategoGame(FloatLayout):
 #gamestate actions
 
     def change_gamestate(self):
-        print("change gamestate: " + str(self.gamestate))
         #0 is game setup
         #1 is move during game
         if self.gamestate == 0:
@@ -90,6 +89,17 @@ class StrategoGame(FloatLayout):
             self.activeplayer = self.player1
         self.activeplayer.activate_player_pieces()
 
+
+    def piece_death(self, piece):
+        piece.dead = True
+        for slot in self.sidebar.children:
+            if slot.occupied is None:
+                slot.occupied = piece
+                piece.pos = slot.pos
+                piece.state = "normal"
+                piece.disabled = True
+                break
+        #there are not enough slots....
 
 
 

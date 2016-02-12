@@ -16,7 +16,6 @@ class Board(GridLayout):
         #self.player = None
         super().__init__()
 
-
 class GameBoard(Board):
     def __init__(self, **kwargs):
         super().__init__()
@@ -55,14 +54,12 @@ class GameBoard(Board):
         for square in self.children:
             if square.valid:
                 square.disabled = False
-                if square.occupied is not None:
+                if square.occupied is not None and \
+                    square.occupied.player_color != self.parent.parent.activeplayer.color:
                     square.occupied.disabled = False
+
             else:
                 square.disabled = True
-
-
-
-
 
     def test_for_valid_square(self, square):
         if square.type == "land":

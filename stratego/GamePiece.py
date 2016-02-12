@@ -13,6 +13,7 @@ class GamePiece(ToggleButton):
     def __init__(self, number, color, **kwargs):
         self.number = number
         self.player_color = color
+        self.dead = False
 
         #scouts can move more than 1 space, flags/bombs can't move
         if self.number == 2:

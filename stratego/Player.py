@@ -12,7 +12,8 @@ class Player():
 
     def activate_player_pieces(self):
         for piece in self.pieces:
-            piece.disabled = False
+            if not piece.dead:
+                piece.disabled = False
 
     def disable_player_pieces(self):
         for piece in self.pieces:

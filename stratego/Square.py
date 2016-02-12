@@ -31,27 +31,33 @@ class Square(Button):
 
 
     def move_to_square(self):
+        print("move " + str(self.parent.player.in_hand.number) + self.parent.player.in_hand.player_color + " to " +
+        self.id)
+
         if self.parent.player.in_hand is not None:
             piece = self.parent.player.in_hand
+
 
             #remove it from the previous spot
             piece.spot.occupied = None
 
-
+            #returns the winner of the conflict and destroys the loser
             if self.occupied is not None:
-                piece = self.player_conflict()
+                piece = self.player_conflict(piece)
 
-            #set attributes of new spot
+            #square and piece must reference each other
             self.occupied = piece
-            piece.state = "normal"
             piece.spot = self
+
+            piece.state = "normal"
+
 
         if self.parent.parent.parent.gamestate == 1:
             self.parent.parent.parent.new_turn()
 
 
-    def player_conflict(self):
-        attacker = self.parent.player.in_hand
+    def player_conflict(self, attacker):
+        '''returns the winner of the conflict and destroys the loser'''
         defender = self.occupied
         winner = None
         loser = None
@@ -70,7 +76,7 @@ class Square(Button):
             loser = attacker
 
         #delete the losing piece, or move it to sidebar??
-        loser.parent.remove_widget(loser)
+        loser.parent.piece_death(loser)
         return winner
 
 
