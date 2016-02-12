@@ -30,7 +30,13 @@ class StrategoGame(FloatLayout):
             self.player_start()
 
         elif self.gamestate == 1:
-            self.begin_competitive_phase()
+            for slot in self.sidebar.children:
+                slot.disabled = True
+
+
+    def new_turn(self):
+        self.swap_active_player()
+        self.board.clear_all_valid_markers()
 
 
     def player_start(self):
@@ -62,23 +68,11 @@ class StrategoGame(FloatLayout):
 
     def pieces_placed_next_action(self):
         if self.activeplayer == self.player1:
-            self.activeplayer = self.player2
+            self.swap_active_player()
             self.player_start()
         else:
             self.gamestate = 1
         return True
-
-    def begin_competitive_phase(self):
-        #disable anything not in use
-        #likely delete this widget later....
-        for slot in self.sidebar.children:
-            slot.disabled = True
-
-        self.new_turn()
-
-    def new_turn(self):
-        self.swap_active_player()
-        self.board.clear_all_valid_markers()
 
 
     def swap_active_player(self):
@@ -88,6 +82,8 @@ class StrategoGame(FloatLayout):
         else:
             self.activeplayer = self.player1
         self.activeplayer.activate_player_pieces()
+        print(self.activeplayer.color)
+
 
 
     def piece_death(self, piece):

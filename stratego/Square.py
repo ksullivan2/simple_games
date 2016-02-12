@@ -31,9 +31,6 @@ class Square(Button):
 
 
     def move_to_square(self):
-        print("move " + str(self.parent.player.in_hand.number) + self.parent.player.in_hand.player_color + " to " +
-        self.id)
-
         if self.parent.player.in_hand is not None:
             piece = self.parent.player.in_hand
 
@@ -50,7 +47,6 @@ class Square(Button):
             piece.spot = self
 
             piece.state = "normal"
-
 
         if self.parent.parent.parent.gamestate == 1:
             self.parent.parent.parent.new_turn()
