@@ -31,14 +31,16 @@ class StrategoGame(FloatLayout):
     def change_gamestate(self):
         print("change gamestate: " + str(self.gamestate))
         #0 is game setup
-        #1 is player 1 move
-        #2 is player 2 move
+        #1 is move during game
         if self.gamestate == 0:
-            self.create_piece_widgets()
-            self.setup_to_place_pieces()
+            self.player_start()
 
         elif self.gamestate == 1:
             self.setup_player_1_turn()
+
+    def player_start(self):
+        self.create_piece_widgets()
+        self.setup_to_place_pieces()
 
 
     def place_in_hand(self, piece):
@@ -86,14 +88,30 @@ class StrategoGame(FloatLayout):
             square.disabled = True
             square.valid = False
 
+
+    def pieces_placed_next_action(self):
+        if self.activeplayer == self.player1:
+            self.activeplayer = self.player2
+            self.player_start()
+        else:
+            self.gamestate = 1
+        return True
+
     def setup_to_place_pieces(self):
-        print("setup to place pieces")
+        if self.activeplayer.color == "Red":
+            toprow = 6
+            bottomrow = 9
+        else:
+            toprow = 0
+            bottomrow = 3
         for square in self.board.children:
-            if square.row in range(0,6):
-                square.valid = False
-            else:
+            if square.row in range(toprow, bottomrow+1):
                 square.valid = True
+            else:
+                square.valid = False
         self.disable_invalid_squares()
+
+        #move these
         self.board.player = self.activeplayer
         self.sidebar.player = self.activeplayer
 

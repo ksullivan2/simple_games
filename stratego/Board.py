@@ -90,12 +90,12 @@ class SideBoard(Board):
                 temp.bind(occupied = self.pieces_are_all_placed)
 
     def pieces_are_all_placed(self, *args):
-        print("pieces placed?")
         for slot in self.children:
             if slot.occupied:
                 return False
-        self.parent.parent.gamestate = 1
-        return True
+        self.parent.parent.pieces_placed_next_action()
+
+
 
 
 
