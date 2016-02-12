@@ -28,12 +28,13 @@ class GamePiece(ToggleButton):
 
 
     def on_state(self, widget, value):
+        print(str(self.number) + self.player_color + self.state)
         if value == 'down':
             if self.player_color == self.parent.activeplayer.color:
                 self.parent.place_in_hand(self)
             else:
                 self.spot.move_to_square()
-                self.state = "normal"
+                #self.state = "normal"
         else:
             self.parent.clear_hand()
 

@@ -67,9 +67,7 @@ class Square(Button):
             loser = attacker
 
         #delete the losing piece, or move it to sidebar??
-        #loser.parent.remove_widget(loser)
-
-        print(winner.number)
+        loser.parent.remove_widget(loser)
         return winner
 
 
