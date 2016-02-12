@@ -61,13 +61,6 @@ class GameBoard(Board):
                 square.disabled = True
 
 
-    def activate_attacking_player_pieces(self):
-        for square in self.children:
-            if square.occupied is not None:
-                if square.occupied.player_color == self.player.color:
-                    square.occupied.disabled = False
-                else: square.occupied.disabled = True
-
 
 
 

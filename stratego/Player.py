@@ -10,6 +10,11 @@ class Player():
             for i in range(pieceamounts[piecenumber]):
                 self.pieces.append((GamePiece(piecenumber, self.color)))
 
+    def activate_player_pieces(self):
+        for piece in self.pieces:
+            piece.disabled = False
 
-
+    def disable_player_pieces(self):
+        for piece in self.pieces:
+            piece.disabled = True
 

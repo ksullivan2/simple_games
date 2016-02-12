@@ -46,6 +46,9 @@ class Square(Button):
             piece.state = "normal"
             piece.spot = self
 
+        if self.parent.parent.parent.gamestate == 1:
+            self.parent.parent.parent.new_turn()
+
 
     def player_conflict(self):
         attacker = self.parent.player.in_hand

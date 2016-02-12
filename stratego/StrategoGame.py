@@ -80,13 +80,20 @@ class StrategoGame(FloatLayout):
     def new_turn(self):
         self.swap_active_player()
         self.board.clear_all_valid_markers()
-        self.board.activate_attacking_player_pieces()
+
 
     def swap_active_player(self):
+        self.activeplayer.disable_player_pieces()
         if self.activeplayer == self.player1:
             self.activeplayer = self.player2
         else:
             self.activeplayer = self.player1
+        self.activeplayer.activate_player_pieces()
+
+
+
+
+
 
 
 #interacting with the "hand"
