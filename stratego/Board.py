@@ -73,7 +73,6 @@ class GameBoard(Board):
 
 
     def find_x_moves(self, piece, direction):
-        print(piece.spot.id)
         '''direction: 1 is right, -1 is left. Goes through squares in that direction and marks the valid ones.
         Stops if it comes to an invalid square.'''
         for n in range(1, piece.max_spaces+1):

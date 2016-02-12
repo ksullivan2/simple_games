@@ -13,7 +13,6 @@ from Player import *
 
 class StrategoGame(FloatLayout):
 
-
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
         self.board = self.ids["board"]
@@ -33,7 +32,7 @@ class StrategoGame(FloatLayout):
 
         elif self.gamestate == 1:
             self.begin_competitive_phase()
-    
+
 
     def player_start(self):
         self.create_piece_widgets()
@@ -74,8 +73,11 @@ class StrategoGame(FloatLayout):
         self.board.clear_all_valid_markers()
 
         #disable anything not in use
+        #likely delete this widget later....
         for slot in self.sidebar.children:
             slot.disabled = True
+
+        self.activeplayer = self.player1
 
 
 
@@ -92,22 +94,6 @@ class StrategoGame(FloatLayout):
 
         if self.gamestate == 1:
             self.board.clear_all_valid_markers()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #debug functions
