@@ -40,6 +40,7 @@ class GameBoard(Board):
         self.find_x_moves(piece, -1)
         self.find_y_moves(piece, 1)
         self.find_y_moves(piece, -1)
+        self.parent.parent.disable_invalid_squares()
 
 
     def find_y_moves(self, piece, direction):
@@ -53,8 +54,8 @@ class GameBoard(Board):
             if possible_square.occupied or possible_square.type != "land":
                 break
             else:
-                possible_square.disabled = True
-                #disabled is for testing purposes, will need to figure out something better
+                possible_square.valid = True
+
 
     def find_x_moves(self, piece, direction):
         print(piece.spot.id)
@@ -68,8 +69,7 @@ class GameBoard(Board):
             if possible_square.occupied or possible_square.type != "land":
                 break
             else:
-                possible_square.disabled = True
-                #disabled is for testing purposes, will need to figure out something better
+                possible_square.valid = True
 
 
 class SideBoard(Board):

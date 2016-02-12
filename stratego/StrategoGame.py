@@ -48,6 +48,7 @@ class StrategoGame(FloatLayout):
 
     def clear_hand(self):
         self.activeplayer.in_hand = None
+        self.clear_all_valid_markers()
 
     def debug_place_pieces(self):
         x = 6
