@@ -12,7 +12,7 @@ from Player import *
 
 
 class StrategoGame(FloatLayout):
-    activeplayer = ObjectProperty
+
 
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
@@ -33,11 +33,12 @@ class StrategoGame(FloatLayout):
 
         elif self.gamestate == 1:
             self.begin_competitive_phase()
+    
 
     def player_start(self):
         self.create_piece_widgets()
         self.setup_to_place_pieces()
-        self.propogate_player_references()
+
 
     def create_piece_widgets(self):
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
@@ -59,10 +60,6 @@ class StrategoGame(FloatLayout):
             else:
                 square.valid = False
         self.board.disable_invalid_squares()
-
-    def propogate_player_references(self):
-        self.board.player = self.activeplayer
-        self.sidebar.player = self.activeplayer
 
 
     def pieces_placed_next_action(self):

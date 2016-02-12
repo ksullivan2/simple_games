@@ -16,6 +16,7 @@ class Board(GridLayout):
         #self.player = None
         super().__init__()
 
+
 class GameBoard(Board):
     def __init__(self, **kwargs):
         super().__init__()
