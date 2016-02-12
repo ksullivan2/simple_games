@@ -35,10 +35,6 @@ class GamePiece(ToggleButton):
 
 
 
-    def select_piece(self):
-        pass
-
-
 
 
 names = {0: "Flag",
