@@ -54,13 +54,11 @@
     on_spot: self.pos = self.spot.pos
 
 
-
-
-
-    BoxLayout:
-        orientation: "vertical"
+    RelativeLayout:
+        #orientation: "vertical"
         center: gamepiece.center
         on_size: self.size = gamepiece.size
+
 
 
         Label:
@@ -68,13 +66,14 @@
             color: (0,0,0,1)
             font_size: gamepiece.height/3
             bold: True
-            #pos_hint_y: .9
+            pos_hint: {"x": -.4, "y": -.5}
 
-        Label:
-            text: gamepiece.get_name()
-            bold: True
-            font_size: gamepiece.width/4.5
-            color: (0,0,0,1)
+
+        #Label:
+            #text: gamepiece.get_name()
+            #bold: True
+            #font_size: gamepiece.width/4.5
+            #color: (0,0,0,1)
 
             #pos_hint_y: .2
 
