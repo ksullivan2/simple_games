@@ -12,6 +12,7 @@ class Square(Button):
         self.col = col
         self.id = str(self.row) + "," + str(self.col)
         self.type = type
+        self.valid = False
         super().__init__()
 
     def get_ids(self):

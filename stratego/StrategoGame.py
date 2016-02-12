@@ -61,29 +61,43 @@ class StrategoGame(FloatLayout):
             else:
                 y += 1
 
+    def disable_invalid_squares(self):
+        for square in self.board.children:
+            if square.valid:
+                square.disabled = False
+            else:
+                square.disabled = True
+
+    def clear_all_valid_markers(self):
+        for square in self.board.children:
+            square.disabled = True
+            square.valid = False
+
     def setup_to_place_pieces(self):
         print("setup to place pieces")
         for square in self.board.children:
             if square.row in range(0,6):
-                square.disabled = True
+                square.valid = False
             else:
-                square.disabled = False
+                square.valid = True
+        self.disable_invalid_squares()
         self.board.player = self.activeplayer
         self.sidebar.player = self.activeplayer
 
     def setup_player_1_turn(self):
-        print("setup player 1 turn")
+        #set up valid moves
+        self.clear_all_valid_markers()
+        '''for square in self.board.children:
+            if not square.occupied or square.type == "land":
+                square.valid = True
+        self.disable_invalid_squares()'''
+
+        #disable anything not in use
+        for slot in self.sidebar.children:
+            slot.disabled = True
         for piece in self.activeplayer.pieces:
             if not piece.moveable:
                 piece.disabled = True
-        for square in self.board.children:
-            if square.occupied or square.type != "land":
-                square.disabled = True
-            else:
-                square.disabled = False
-        for slot in self.sidebar.children:
-            slot.disabled = True
-
 
 
 
