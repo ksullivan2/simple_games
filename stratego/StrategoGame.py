@@ -2,6 +2,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty
+from random import randint
 from ResizeBehavior import *
 from functools import partial
 from Square import *
@@ -53,16 +54,25 @@ class StrategoGame(FloatLayout):
             self.clear_all_valid_markers()
 
     def debug_place_pieces(self):
-        x = 6
+        if self.activeplayer.color =="Red":
+            x = 6
+        else:
+            x = 0
         y = 0
+        templist = []
         for piece in self.activeplayer.pieces:
+            templist.append(piece)
+        while len(templist) > 0:
+            piece = templist[randint(0,len(templist)-1)]
             self.activeplayer.in_hand = piece
             self.board.grid[x][y].move_to_square()
+            templist.remove(piece)
             if y == 9:
                 y = 0
                 x += 1
             else:
                 y += 1
+
 
     def disable_invalid_squares(self):
         for square in self.board.children:
