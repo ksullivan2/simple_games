@@ -70,17 +70,23 @@ class StrategoGame(FloatLayout):
         return True
 
     def begin_competitive_phase(self):
-        self.board.clear_all_valid_markers()
-
         #disable anything not in use
         #likely delete this widget later....
         for slot in self.sidebar.children:
             slot.disabled = True
 
-        self.activeplayer = self.player1
+        self.new_turn()
+
+    def new_turn(self):
+        self.swap_active_player()
+        self.board.clear_all_valid_markers()
         self.board.activate_attacking_player_pieces()
 
-
+    def swap_active_player(self):
+        if self.activeplayer == self.player1:
+            self.activeplayer = self.player2
+        else:
+            self.activeplayer = self.player1
 
 
 #interacting with the "hand"
@@ -89,7 +95,6 @@ class StrategoGame(FloatLayout):
 
         if self.gamestate == 1:
             self.board.highlight_valid_moves_during_game()
-            self.board.activate_defending_player_pieces()
 
 
     def clear_hand(self):

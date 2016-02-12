@@ -37,10 +37,41 @@ class Square(Button):
             #remove it from the previous spot
             piece.spot.occupied = None
 
+
+            if self.occupied is not None:
+                piece = self.player_conflict()
+
             #set attributes of new spot
             self.occupied = piece
             piece.state = "normal"
             piece.spot = self
+
+
+    def player_conflict(self):
+        attacker = self.parent.player.in_hand
+        defender = self.occupied
+        winner = None
+        loser = None
+
+        #special cases first
+        if defender.number == 0:
+            pass
+            #game over
+        elif (attacker.number == 1 and defender.number == 10) or \
+                (attacker.number == 3 and defender.number == 11) or \
+                (attacker.number >= defender.number):
+            winner = attacker
+            loser = defender
+        else:
+            winner = defender
+            loser = attacker
+
+        #delete the losing piece, or move it to sidebar??
+        #loser.parent.remove_widget(loser)
+
+        print(winner.number)
+        return winner
+
 
 
 

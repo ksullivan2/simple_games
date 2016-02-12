@@ -55,8 +55,11 @@ class GameBoard(Board):
         for square in self.children:
             if square.valid:
                 square.disabled = False
+                if square.occupied is not None:
+                    square.occupied.disabled = False
             else:
                 square.disabled = True
+
 
     def activate_attacking_player_pieces(self):
         for square in self.children:
@@ -65,12 +68,6 @@ class GameBoard(Board):
                     square.occupied.disabled = False
                 else: square.occupied.disabled = True
 
-    def activate_defending_player_pieces(self):
-        for square in self.children:
-            if square.occupied is not None:
-                if square.occupied.player_color != self.player.color:
-                    square.occupied.disabled = False
-                else: square.occupied.disabled = True
 
 
 
