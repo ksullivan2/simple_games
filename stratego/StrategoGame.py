@@ -2,6 +2,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty
+from kivy.graphics.instructions import *
 from random import randint
 from ResizeBehavior import *
 from functools import partial
