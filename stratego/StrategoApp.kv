@@ -61,13 +61,19 @@
         center: gamepiece.center
         on_size: self.size = gamepiece.size
 
-
+        canvas:
+            Color:
+                rgb: 0,0,0
+            Rectangle:
+                size: (gamepiece.width/3, gamepiece.height/3)
+                pos: -15, -20
         Label:
+            id: number
             text: str(gamepiece.number)
             color: (1,1,1,1)
             font_size: gamepiece.height/3
             bold: True
-            pos_hint: {"x": -.4, "y": -.5}
+            pos_hint: {"x": -.45, "y": -.5}
 
 
         #Label:
