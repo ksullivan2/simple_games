@@ -47,9 +47,10 @@
 
 <GamePiece>:
     id: gamepiece
-    background_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
-    background_disabled_normal: "images/" + self.player_color + "/" + str(self.number) + ".png"
-    border: (0,0,0,0)
+    background_normal: "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
+    background_disabled_normal: "images/" + self.player_color + "/disabled/" + str(self.number) + ".png"
+    background_down: "images/" + self.player_color + "/down/" + str(self.number) + ".png"
+    border: (20,20,20,20)
     size_hint:(None, None)
     group: self.player_color
     on_spot: self.pos = self.spot.pos
