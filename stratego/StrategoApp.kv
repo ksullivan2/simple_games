@@ -65,7 +65,7 @@
             Color:
                 rgb: 0,0,0
             Ellipse:
-                size: (gamepiece.width/3, gamepiece.height/3)
+                size: (gamepiece.width/2.5, gamepiece.height/3)
                 pos: -15, -20
         Label:
             id: number
@@ -73,8 +73,7 @@
             color: (1,1,1,1)
             font_size: gamepiece.height/4
             bold: True
-            pos_hint: {"x": -.45, "y": -.45}
-
+            pos_hint: {"x": -.4, "y": -.45}
 
         #Label:
             #text: gamepiece.get_name()
