@@ -7,6 +7,7 @@ from ResizeBehavior import *
 class Square(Button):
     occupied = ObjectProperty(None, rebind = True, allownone=True)
 
+
     def __init__(self, row, col, type):
         self.row = row
         self.col = col

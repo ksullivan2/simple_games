@@ -3,6 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.graphics.instructions import *
+
 from random import randint
 from ResizeBehavior import *
 from functools import partial
@@ -21,6 +22,7 @@ class StrategoGame(FloatLayout):
         self.player1 = Player("Red")
         self.player2 = Player("Blue")
         self.activeplayer = self.player1
+        self.animation = Animation()
 
 #gamestate actions
 

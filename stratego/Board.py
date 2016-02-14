@@ -5,6 +5,7 @@ from kivy.properties import NumericProperty
 from ResizeBehavior import *
 from functools import partial
 from Square import *
+
 from GamePiece import *
 from Player import *
 
@@ -15,6 +16,7 @@ class Board(GridLayout):
         self.grid = []
         #self.player = None
         super().__init__()
+
 
 class GameBoard(Board):
     def __init__(self, **kwargs):

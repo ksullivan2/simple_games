@@ -1,6 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.properties import ObjectProperty
+from kivy.animation import Animation
 from ResizeBehavior import *
 
 
@@ -14,6 +15,8 @@ class GamePiece(ToggleButton):
         self.number = number
         self.player_color = color
         self.dead = False
+
+
 
         #scouts can move more than 1 space, flags/bombs can't move
         if self.number == 2:
@@ -39,7 +42,9 @@ class GamePiece(ToggleButton):
         else:
             self.parent.clear_hand()
 
-
+    def on_spot(self, instance, newpos):
+        anim = Animation(pos = self.spot.pos)
+        anim.start(instance)
 
 
 
