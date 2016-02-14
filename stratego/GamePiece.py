@@ -11,10 +11,13 @@ from ResizeBehavior import *
 class GamePiece(ToggleButton):
     spot = ObjectProperty(None)
 
+
     def __init__(self, number, color, **kwargs):
         self.number = number
         self.player_color = color
         self.dead = False
+        self.moveanim = Animation()
+
 
 
 
@@ -32,20 +35,31 @@ class GamePiece(ToggleButton):
 
 
     def on_state(self, widget, value):
-        print(str(self.number) + self.player_color + self.state)
+
         if value == 'down':
             if self.player_color == self.parent.activeplayer.color:
                 self.parent.place_in_hand(self)
             else:
                 self.spot.move_to_square()
-                #self.state = "normal"
+
         else:
             self.parent.clear_hand()
 
     def on_spot(self, instance, newpos):
-        anim = Animation(pos = self.spot.pos)
-        anim.start(instance)
+        print(instance, self, newpos)
+        #self.moveanim = Animation(pos = self.spot.pos)
+        #self.moveanim.start(instance)
 
+    def piece_death(self):
+        self.dead = True
+        for slot in self.parent.sidebar.children:
+            if slot.occupied is None:
+                slot.occupied = self
+                self.spot = slot
+                slot.state = "normal"
+                slot.disabled = True
+                break
+        #there are not enough slots....
 
 
 names = {0: "Flag",

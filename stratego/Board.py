@@ -14,9 +14,58 @@ from Player import *
 class Board(GridLayout):
     def __init__(self, **kwargs):
         self.grid = []
-        #self.player = None
+
         super().__init__()
 
+
+    #moving pieces around the board
+    def move_to_square(self, square):
+        if self.player.in_hand is not None:
+            piece = self.player.in_hand
+
+            #remove it from the previous spot and put it on new one
+            piece.spot.occupied = None
+            piece.spot = square
+
+            #piece's animation
+            piece.moveanim = Animation(pos = piece.spot.pos)
+            piece.moveanim.bind(on_complete = partial(self.player_conflict(piece, square)))
+            piece.moveanim.start(piece)
+
+            #square and piece must reference each other
+            square.occupied = piece
+            piece.state = "normal"
+
+        if self.parent.parent.gamestate == 1:
+            self.parent.parent.new_turn()
+
+
+    def player_conflict(self, attacker, square):
+        '''returns the winner of the conflict and destroys the loser'''
+        if square.occupied is None:
+            return
+
+        defender = square.occupied
+        winner = None
+        loser = None
+
+
+        #special cases first
+        if defender.number == 0:
+            pass
+            #game over
+        elif (attacker.number == 1 and defender.number == 10) or \
+                (attacker.number == 3 and defender.number == 11) or \
+                (attacker.number >= defender.number):
+            winner = attacker
+            loser = defender
+        else:
+            winner = defender
+            loser = attacker
+
+        #delete the losing piece, or move it to sidebar??
+        loser.piece_death()
+        return winner
 
 class GameBoard(Board):
     def __init__(self, **kwargs):

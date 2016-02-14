@@ -89,16 +89,7 @@ class StrategoGame(FloatLayout):
 
 
 
-    def piece_death(self, piece):
-        piece.dead = True
-        for slot in self.sidebar.children:
-            if slot.occupied is None:
-                slot.occupied = piece
-                piece.pos = slot.pos
-                piece.state = "normal"
-                piece.disabled = True
-                break
-        #there are not enough slots....
+
 
 
 

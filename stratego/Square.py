@@ -31,50 +31,16 @@ class Square(Button):
             return "atlas://data/images/defaulttheme/button_disabled"
 
 
-    def move_to_square(self):
-        if self.parent.player.in_hand is not None:
-            piece = self.parent.player.in_hand
+    def on_press(self):
+         #if self.occupied is None:
+         self.parent.move_to_square(self)
+         #else:
+             #self.parent.player_conflict()
 
 
-            #remove it from the previous spot
-            piece.spot.occupied = None
-
-            #returns the winner of the conflict and destroys the loser
-            if self.occupied is not None:
-                piece = self.player_conflict(piece)
-
-            #square and piece must reference each other
-            self.occupied = piece
-            piece.spot = self
-
-            piece.state = "normal"
-
-        if self.parent.parent.parent.gamestate == 1:
-            self.parent.parent.parent.new_turn()
 
 
-    def player_conflict(self, attacker):
-        '''returns the winner of the conflict and destroys the loser'''
-        defender = self.occupied
-        winner = None
-        loser = None
 
-        #special cases first
-        if defender.number == 0:
-            pass
-            #game over
-        elif (attacker.number == 1 and defender.number == 10) or \
-                (attacker.number == 3 and defender.number == 11) or \
-                (attacker.number >= defender.number):
-            winner = attacker
-            loser = defender
-        else:
-            winner = defender
-            loser = attacker
-
-        #delete the losing piece, or move it to sidebar??
-        loser.parent.piece_death(loser)
-        return winner
 
 
 
