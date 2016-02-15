@@ -1,6 +1,10 @@
 from GamePiece import *
+from kivy.uix.widget import Widget
+from kivy.properties import NumericProperty
 
-class Player():
+class Player(Widget):
+    pieces_on_board = NumericProperty(0)
+
     def __init__(self, color):
         self.color = color
         self.pieces = []
@@ -9,6 +13,7 @@ class Player():
         for piecenumber in pieceamounts:
             for i in range(pieceamounts[piecenumber]):
                 self.pieces.append((GamePiece(piecenumber, self.color)))
+
 
     def activate_player_pieces(self):
         for piece in self.pieces:

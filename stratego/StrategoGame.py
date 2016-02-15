@@ -35,11 +35,7 @@ class StrategoGame(FloatLayout):
         elif self.gamestate == 1:
             for slot in self.sidebar.children:
                 slot.disabled = True
-
-
-    def new_turn(self):
-        self.swap_active_player()
-        self.board.clear_all_valid_markers()
+            self.swap_active_player()
 
 
     def player_start(self):
@@ -51,6 +47,7 @@ class StrategoGame(FloatLayout):
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
             self.add_widget(piece)
             piece.spot = square
+            piece.pos = piece.spot.pos
             piece.size = square.size
             square.occupied = True
 
@@ -67,15 +64,24 @@ class StrategoGame(FloatLayout):
             else:
                 square.valid = False
         self.board.enable_valid_squares()
+        self.activeplayer.bind(pieces_on_board = self.pieces_are_all_placed)
 
+    def pieces_are_all_placed(self, *args):
+        if self.activeplayer.pieces_on_board != 40:
+            return
 
-    def pieces_placed_next_action(self):
+        print("pieces placed")
         if self.activeplayer == self.player1:
             self.swap_active_player()
             self.player_start()
         else:
             self.gamestate = 1
-        return True
+
+
+    def new_turn(self):
+        print("new turn")
+        self.swap_active_player()
+        self.board.clear_all_valid_markers()
 
 
     def swap_active_player(self):

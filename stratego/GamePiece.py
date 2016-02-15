@@ -40,15 +40,11 @@ class GamePiece(ToggleButton):
             if self.player_color == self.parent.activeplayer.color:
                 self.parent.place_in_hand(self)
             else:
-                self.spot.move_to_square()
+                self.parent.board.move_to_square(self.spot)
 
         else:
             self.parent.clear_hand()
 
-    def on_spot(self, instance, newpos):
-        print(instance, self, newpos)
-        #self.moveanim = Animation(pos = self.spot.pos)
-        #self.moveanim.start(instance)
 
     def piece_death(self):
         self.dead = True

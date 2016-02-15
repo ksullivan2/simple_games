@@ -34,11 +34,13 @@ class Board(GridLayout):
             piece.moveanim.start(piece)
 
     def officially_place_on_square(self, square, piece):
-        #square and piece must reference each other
         square.occupied = piece
         piece.state = "normal"
 
-        if self.parent.parent.gamestate == 1:
+        if self.parent.parent.gamestate == 0:
+            self.player.pieces_on_board += 1
+
+        else:
             self.parent.parent.new_turn()
 
 
@@ -75,6 +77,8 @@ class GameBoard(Board):
 
     def clear_all_valid_markers(self):
         for square in self.children:
+            if square.occupied is not None and square.valid:
+                square.occupied.disabled = True
             square.disabled = True
             square.valid = False
 
@@ -92,7 +96,7 @@ class GameBoard(Board):
     def test_for_valid_square(self, square):
         if square.type == "land":
             if square.occupied is None or \
-                square.occupied.color != self.player.color:
+                square.occupied.player_color != self.player.color:
                 return True
         return False
 
@@ -146,13 +150,9 @@ class SideBoard(Board):
                 temp = Square(i,j, "sideboard")
                 self.grid[i].append(temp)
                 self.add_widget(temp)
-                temp.bind(occupied = self.pieces_are_all_placed)
 
-    def pieces_are_all_placed(self, *args):
-        for slot in self.children:
-            if slot.occupied:
-                return False
-        self.parent.parent.pieces_placed_next_action()
+
+
 
 
 
