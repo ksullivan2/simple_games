@@ -29,7 +29,7 @@ class Board(GridLayout):
 
             #piece's animation
             piece.moveanim = Animation(pos = piece.spot.pos)
-            piece.moveanim.bind(on_complete = partial(self.player_conflict(piece, square)))
+            piece.moveanim.bind(on_complete = partial(self.player_conflict, attacker= piece, square= square))
             piece.moveanim.start(piece)
 
             #square and piece must reference each other
@@ -40,7 +40,7 @@ class Board(GridLayout):
             self.parent.parent.new_turn()
 
 
-    def player_conflict(self, attacker, square):
+    def player_conflict(self, instance, idontknowwhythisishere, attacker, square):
         '''returns the winner of the conflict and destroys the loser'''
         if square.occupied is None:
             return
