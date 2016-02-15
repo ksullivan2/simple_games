@@ -29,12 +29,14 @@ class Board(GridLayout):
 
             #piece's animation
             piece.moveanim = Animation(pos = piece.spot.pos)
-            piece.moveanim.bind(on_complete = partial(self.parent.player_conflict, attacker= piece, square= square))
+            piece.moveanim.bind(on_complete = partial(self.parent.parent.player_conflict, attacker= piece,
+                                                      square= square))
             piece.moveanim.start(piece)
 
-            #square and piece must reference each other
-            square.occupied = piece
-            piece.state = "normal"
+    def officially_place_on_square(self, square, piece):
+        #square and piece must reference each other
+        square.occupied = piece
+        piece.state = "normal"
 
         if self.parent.parent.gamestate == 1:
             self.parent.parent.new_turn()

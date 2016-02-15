@@ -88,10 +88,11 @@ class StrategoGame(FloatLayout):
         print(self.activeplayer.color)
 
 
-
-    def player_conflict(self, instance, idontknowwhythisishere, attacker, square):
+# game actions
+    def player_conflict(self, instance, idontknowwhythisishere, square, attacker):
         '''returns the winner of the conflict and destroys the loser'''
         if square.occupied is None:
+            self.board.officially_place_on_square(square, attacker)
             return
 
         defender = square.occupied
@@ -113,9 +114,8 @@ class StrategoGame(FloatLayout):
 
         #delete the losing piece, or move it to sidebar??
         loser.piece_death()
-        return winne
 
-
+        self.board.officially_place_on_square(square, winner)
 
 
 
@@ -149,7 +149,7 @@ class StrategoGame(FloatLayout):
         while len(templist) > 0:
             piece = templist[randint(0,len(templist)-1)]
             self.activeplayer.in_hand = piece
-            self.board.grid[x][y].move_to_square()
+            self.board.move_to_square(self.board.grid[x][y])
             templist.remove(piece)
             if y == 9:
                 y = 0
