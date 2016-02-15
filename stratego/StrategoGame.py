@@ -89,7 +89,31 @@ class StrategoGame(FloatLayout):
 
 
 
+    def player_conflict(self, instance, idontknowwhythisishere, attacker, square):
+        '''returns the winner of the conflict and destroys the loser'''
+        if square.occupied is None:
+            return
 
+        defender = square.occupied
+        winner = None
+        loser = None
+
+        #special cases first
+        if defender.number == 0:
+            pass
+            #game over
+        elif (attacker.number == 1 and defender.number == 10) or \
+                (attacker.number == 3 and defender.number == 11) or \
+                (attacker.number >= defender.number):
+            winner = attacker
+            loser = defender
+        else:
+            winner = defender
+            loser = attacker
+
+        #delete the losing piece, or move it to sidebar??
+        loser.piece_death()
+        return winne
 
 
 

@@ -29,7 +29,7 @@ class Board(GridLayout):
 
             #piece's animation
             piece.moveanim = Animation(pos = piece.spot.pos)
-            piece.moveanim.bind(on_complete = partial(self.player_conflict, attacker= piece, square= square))
+            piece.moveanim.bind(on_complete = partial(self.parent.player_conflict, attacker= piece, square= square))
             piece.moveanim.start(piece)
 
             #square and piece must reference each other
@@ -40,32 +40,7 @@ class Board(GridLayout):
             self.parent.parent.new_turn()
 
 
-    def player_conflict(self, instance, idontknowwhythisishere, attacker, square):
-        '''returns the winner of the conflict and destroys the loser'''
-        if square.occupied is None:
-            return
 
-        defender = square.occupied
-        winner = None
-        loser = None
-
-
-        #special cases first
-        if defender.number == 0:
-            pass
-            #game over
-        elif (attacker.number == 1 and defender.number == 10) or \
-                (attacker.number == 3 and defender.number == 11) or \
-                (attacker.number >= defender.number):
-            winner = attacker
-            loser = defender
-        else:
-            winner = defender
-            loser = attacker
-
-        #delete the losing piece, or move it to sidebar??
-        loser.piece_death()
-        return winner
 
 class GameBoard(Board):
     def __init__(self, **kwargs):
