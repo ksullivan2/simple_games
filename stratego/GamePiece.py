@@ -35,25 +35,23 @@ class GamePiece(ToggleButton):
 
 
     def on_state(self, widget, value):
-
-        if value == 'down':
-            if self.player_color == self.parent.activeplayer.color:
+        if self.player_color == self.parent.activeplayer.color:
+            if value == 'down':
                 self.parent.place_in_hand(self)
             else:
-                self.parent.board.move_to_square(self.spot)
-
+                self.parent.clear_hand()
         else:
-            self.parent.clear_hand()
+            if value == "down":
+                self.parent.board.move_to_square(self.spot)
 
 
     def piece_death(self):
         self.dead = True
         for slot in self.parent.sidebar.children:
             if slot.occupied is None:
-                slot.occupied = self
-                self.spot = slot
-                slot.state = "normal"
-                slot.disabled = True
+                #self.state = "normal"
+                slot.parent.move_to_square(slot)
+                #slot.disabled = True
                 break
         #there are not enough slots....
 
