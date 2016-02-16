@@ -11,18 +11,23 @@ from Square import *
 from GamePiece import *
 from Board import *
 from Player import *
+from EventHandler import *
 
 
 class StrategoGame(FloatLayout):
+    #events = ObjectProperty(EventHandler())
+
 
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
+        self.events = EventHandler(self)
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
         self.player1 = Player("Red")
         self.player2 = Player("Blue")
         self.activeplayer = self.player1
         self.animation = Animation()
+
 
 #gamestate actions
 
@@ -34,10 +39,12 @@ class StrategoGame(FloatLayout):
         '''
         
         #-1 is new window
-        #0 is game setup
-        #1 is no piece selected
-        #2 is piece selected
-        #3 is player conflict
+        #0 is game setup, no piece selected
+        #1 is game setup, piece selected
+        #2 is all pieces placed
+        #3 is gameplay, no piece selected
+        #4 is gaemplay, piece selected
+        #5 is player conflict
 
         if self.gamestate == 0:
             self.player_start()
@@ -46,6 +53,8 @@ class StrategoGame(FloatLayout):
             for slot in self.sidebar.children:
                 slot.disabled = True
             self.swap_active_player()
+
+
 
     def new_turn(self):
         print("new turn")
@@ -81,7 +90,7 @@ class StrategoGame(FloatLayout):
 
     def player_start(self):
         self.create_piece_widgets()
-        self.setup_gamestate_1()
+        self.setup_gamestate_0()
 
 
     def create_piece_widgets(self):
@@ -92,7 +101,7 @@ class StrategoGame(FloatLayout):
             piece.size = square.size
             square.occupied = True
 
-    def setup_gamestate_1(self):
+    def setup_gamestate_0(self):
         '''activates the appropriate rows for each player'''
         if self.activeplayer.color == "Red":
             toprow = 6
@@ -105,7 +114,7 @@ class StrategoGame(FloatLayout):
                 square.valid = True
             else:
                 square.valid = False
-        self.board.enable_valid_squares()
+        #self.board.enable_valid_squares()
         self.activeplayer.bind(pieces_on_board = self.pieces_are_all_placed)
 
     def pieces_are_all_placed(self, *args):
@@ -159,6 +168,8 @@ class StrategoGame(FloatLayout):
 
 
 #debug functions
+
+
 
     def debug_place_pieces(self):
         if self.activeplayer.color =="Red":
