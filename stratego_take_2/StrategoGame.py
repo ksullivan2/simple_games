@@ -27,7 +27,7 @@ class StrategoGame(FloatLayout):
         #gamestatus
         self.activeplayer = self.player1
         self.pieceinhand = None
-        self.gamestate = -1
+        self.gamestate = -2
 
 
 
@@ -37,12 +37,16 @@ class StrategoGame(FloatLayout):
         print("swap", self.gamestate, "to", newstate)
         self.gamestate = newstate
 
-        if self.gamestate == 0:
+        if self.gamestate == -1:
             self.player_start()
             self.board.highlight_valid_game_setup_rows(self.activeplayer)
+            self.change_gamestate(0)
+
+        elif self.gamestate == 0:
+            pass
 
 
-        elif self.gamestate == 1:
+        elif self.gamestate == 3:
             for slot in self.sidebar.children:
                 slot.disabled = True
             self.swap_active_player()

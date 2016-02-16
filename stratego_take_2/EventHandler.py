@@ -57,15 +57,17 @@ class EventHandlers(EventDispatcher):
 
     def start_game_button_press(self, *args):
         print("start button press")
-        if self.game.gamestate == -1:
-            self.game.change_gamestate(0)
+
+        if self.game.gamestate in (-2,2):
+
+            self.game.change_gamestate(-1)
 
     def gamepiece_press(self, instance):
         if self.game.gamestate == 0:
             self.game.place_in_hand(instance)
             self.game.change_gamestate(1)
         elif self.game.gamestate == 1:
-            self.game.remove_from_hand()
+            self.game.clear_hand()
             self.game.change_gamestate(0)
         elif self.game.gamestate == 2:
             pass
