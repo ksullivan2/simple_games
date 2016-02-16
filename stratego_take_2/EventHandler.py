@@ -51,9 +51,10 @@ from kivy.uix.widget import Widget
         activities associated with entering the new state '''
 
 
-class EventHandlers(EventDispatcher):
+class EventsMethods(EventDispatcher):
     def __init__(self, game):
         self.game = game
+
 
     def start_game_button_press(self, *args):
         print("start button press")
@@ -83,6 +84,7 @@ class EventHandlers(EventDispatcher):
         #nothing for state 5 and 6
 
     def square_press(self,instance):
+        print(square.id)
         #make sure that during state 1, it -=1 to pieces left to be placed
         if self.game.gamestate == 1:
             self.game.move_to_square(instance)

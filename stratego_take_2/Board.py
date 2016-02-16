@@ -13,8 +13,9 @@ from Player import *
 
 class Board(GridLayout):
     def __init__(self, **kwargs):
-        self.grid = []
         super().__init__()
+        self.grid = []
+
 
     def add_square_to_grid(self, row, square):
         #add to grid @ row and add widget to graphics
@@ -22,26 +23,40 @@ class Board(GridLayout):
         self.add_widget(square)
 
         #need to set a reference to the event dispatcher object upon widget creation
-        square.events = self.events
+        #square.bind(on_press = self.eventsobject.square_press)
 
+
+class SideBoard(Board):
+    def __init__(self, **kwargs):
+        super().__init__()
+        #self.player = super.player
+        self.cols = 4
+        self.create_squares()
+
+
+    def create_squares(self):
+        for i in range(10):
+            self.grid.append([])
+            for j in range(4):
+                temp = Square(i,j, "sideboard")
+                self.add_square_to_grid(i,temp)
 
 class GameBoard(Board):
     def __init__(self, **kwargs):
         super().__init__()
         self.cols = 10
-        self.create_background()
+        self.create_squares()
 
 
-    def create_background(self):
+    def create_squares(self):
         for i in range(10):
             self.grid.append([])
-            for j in range(10):
+            for j in range(self.cols):
                 if i in (4,5) and j in (2,3,6,7):
                     temp = Square(i,j, "water")
                 else:
                     temp = Square(i,j, "land")
                 self.add_square_to_grid(i,temp)
-
 
 
     def highlight_valid_game_setup_rows(self, activeplayer):
@@ -132,20 +147,7 @@ class GameBoard(Board):
                 if possible_square.occupied is not None:
                     break
 
-class SideBoard(Board):
-    def __init__(self, **kwargs):
-        super().__init__()
-        #self.player = super.player
-        self.cols = 4
-        self.create_slots()
 
-
-    def create_slots(self):
-        for i in range(10):
-            self.grid.append([])
-            for j in range(4):
-                temp = Square(i,j, "sideboard")
-                self.add_square_to_grid(i,temp)
 
 
 

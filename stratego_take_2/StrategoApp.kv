@@ -1,15 +1,14 @@
 <StrategoGame>:
     id: game
 
+
     BoxLayout:
         GameBoard:
             id: board
-            events: game.events
             size_hint_x:10
 
         SideBoard:
             id: sidebar
-            events: game.events
             size_hint_x: 4
 
         BoxLayout:
@@ -20,7 +19,7 @@
 
             Button:
                 text: "start new game"
-                on_press: game.events.start_game_button_press()
+                on_press: game.eventsobject.start_game_button_press()
 
             Button:
                 text: "place all pieces"
@@ -48,7 +47,8 @@
     size_hint:(None, None)
     group: self.player_color
     border: (0,0,0,0)
-    on_press: self.events.gamepiece_press(self)
+    on_press: self.eventsobject.gamepiece_press(self)
+
 
 
 

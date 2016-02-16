@@ -17,12 +17,18 @@ from EventHandler import *
 class StrategoGame(FloatLayout):
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
-        #initialize
-        self.events = EventHandlers(self)
-        self.board = self.ids["board"]
-        self.sidebar = self.ids["sidebar"]
+        #create players
         self.player1 = Player("Red")
         self.player2 = Player("Blue")
+
+        #create aliases for children widgets
+        self.board = self.ids["board"]
+        self.sidebar = self.ids["sidebar"]
+
+        #set up event handlers for all relevant widgets
+        self.eventsobject = EventsMethods(self)
+        self.board.eventsobject = self.eventsobject
+        self.sidebar.eventsobject = self.eventsobject
 
         #gamestatus
         self.activeplayer = self.player1
@@ -113,14 +119,14 @@ class StrategoGame(FloatLayout):
 
         #initializes the count of how many pieces are left to be placed
         #which will count down to 0
-        self.activeplayer.bind(pieces_left_to_be_placed = self.events.piece_placed)
+        self.activeplayer.bind(pieces_left_to_be_placed = self.eventsobject.piece_placed)
 
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
             self.add_widget(piece)
             piece.spot = square
             piece.pos = piece.spot.pos
             piece.size = square.size
-            piece.events = self.events
+            piece.eventsobject = self.eventsobject
             square.occupied = True
 
 
