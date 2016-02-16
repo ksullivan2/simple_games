@@ -55,9 +55,6 @@ class EventHandlers(EventDispatcher):
     def __init__(self, game):
         self.game = game
 
-
-
-
     def start_game_button_press(self, *args):
         print("start button press")
         if self.game.gamestate == -1:
@@ -67,7 +64,33 @@ class EventHandlers(EventDispatcher):
         if self.game.gamestate == 0:
             self.game.place_in_hand(instance)
             self.game.change_gamestate(1)
-        if self.game.gamestate == 3:
+        elif self.game.gamestate == 1:
+            self.game.remove_from_hand()
+            self.game.change_gamestate(0)
+        elif self.game.gamestate == 2:
+            pass
+        #"are you done" popup
+        elif self.game.gamestate == 3:
+            self.game.place_in_hand(instance)
             self.game.change_gamestate(4)
+        elif self.game.gamestate == 4:
+            if self.game.piece_belongs_to_activeplayer(instance):
+                self.game.remove_from_hand()
+                self.game.change_gamestate(3)
+            else:
+                self.game.change_gamestate(5)
 
+    def square_press(self,instance):
+        #make sure that during state 1, it -=1 to pieces left to be placed
+        if self.game.gamestate == 0:
+            pass
+
+
+    def pieces_placed(self):
+        if self.game.activeplayer.color == "Red":
+            self.game.swap_active_player()
+            self.game.change_gamestate(0)
+        else:
+            self.game.swap_active_player()
+            self.game.change_gamestate(1)
 

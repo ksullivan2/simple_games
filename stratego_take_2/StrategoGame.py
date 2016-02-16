@@ -15,42 +15,32 @@ from EventHandler import *
 
 
 class StrategoGame(FloatLayout):
-    #events = ObjectProperty(EventHandler())
-
-
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
+        #initialize
         self.events = EventHandlers(self)
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
         self.player1 = Player("Red")
         self.player2 = Player("Blue")
+
+        #gamestatus
         self.activeplayer = self.player1
-        self.animation = Animation()
+        self.pieceinhand = None
+        self.gamestate = -1
+
 
 
 #gamestate actions
 
     def change_gamestate(self, newstate):
-        print(self.gamestate, newstate)
+        print("swap", self.gamestate, "to", newstate)
         self.gamestate = newstate
-
-        '''
-        activities associated with leaving the current state
-        change the current status to the new status
-        activities associated with entering the new state
-        '''
-        
-        #-1 is new window
-        #0 is game setup, no piece selected
-        #1 is game setup, piece selected
-        #2 is all pieces placed
-        #3 is gameplay, no piece selected
-        #4 is gaemplay, piece selected
-        #5 is player conflict
 
         if self.gamestate == 0:
             self.player_start()
+            self.board.highlight_valid_game_setup_rows(self.activeplayer)
+
 
         elif self.gamestate == 1:
             for slot in self.sidebar.children:
@@ -72,32 +62,30 @@ class StrategoGame(FloatLayout):
         else:
             self.activeplayer = self.player1
         self.activeplayer.activate_player_pieces()
-        print(self.activeplayer.color)
+        print("swap activeplayer to " + self.activeplayer.color)
 
 
 #interacting with the "hand"
     def place_in_hand(self, piece):
-        self.activeplayer.in_hand = piece
-        print(self.activeplayer.in_hand.number)
-
-        if self.gamestate == 1:
-            self.board.highlight_valid_moves_during_game()
+        self.pieceinhand = piece
 
 
     def clear_hand(self):
-        self.activeplayer.in_hand = None
+        self.pieceinhand = None
 
-        if self.gamestate == 1:
-            self.board.clear_all_valid_markers()
+        #if self.gamestate == 1:
+            #self.board.clear_all_valid_markers()
+
+
 
 #creating players
 
     def player_start(self):
-        self.create_piece_widgets()
-        self.setup_gamestate_0()
+        '''creates the gamepieces for each player'''
 
+        #initializes the count of how many pieces are left to be placed
+        self.activeplayer.bind(pieces_left_to_be_placed = self.pieces_are_all_placed)
 
-    def create_piece_widgets(self):
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
             self.add_widget(piece)
             piece.spot = square
@@ -106,34 +94,27 @@ class StrategoGame(FloatLayout):
             piece.events = self.events
             square.occupied = True
 
-    def setup_gamestate_0(self):
-        '''activates the appropriate rows for each player'''
-        if self.activeplayer.color == "Red":
-            toprow = 6
-            bottomrow = 9
-        else:
-            toprow = 0
-            bottomrow = 3
-        for square in self.board.children:
-            if square.row in range(toprow, bottomrow+1):
-                square.valid = True
-            else:
-                square.valid = False
-        #self.board.enable_valid_squares()
-        self.activeplayer.bind(pieces_on_board = self.pieces_are_all_placed)
 
+
+
+
+
+
+#boolean helper functions
     def pieces_are_all_placed(self, *args):
-        if self.activeplayer.pieces_on_board != 40:
-            return
+        if self.activeplayer.pieces_left_to_be_placed > 0:
+            return False
 
         print("pieces placed")
-        if self.activeplayer == self.player1:
-            self.swap_active_player()
-            self.player_start()
-        else:
-            self.gamestate = 1
+        return True
 
 
+
+
+    def piece_belongs_to_activeplayer(self, piece):
+        if piece.player_color == activeplayer.color:
+            return True
+        return False
 
 
 #gameplay actions

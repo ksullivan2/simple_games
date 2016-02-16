@@ -5,9 +5,6 @@ from kivy.animation import Animation
 from ResizeBehavior import *
 
 
-
-
-
 class GamePiece(ToggleButton):
     spot = ObjectProperty(None)
 
@@ -28,7 +25,6 @@ class GamePiece(ToggleButton):
 
     def get_name(self):
         return names[self.number]
-
 
 
 
