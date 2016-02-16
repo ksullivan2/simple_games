@@ -67,8 +67,9 @@ class EventHandlers(EventDispatcher):
             self.game.place_in_hand(instance)
             self.game.change_gamestate(1)
         elif self.game.gamestate == 1:
-            self.game.clear_hand()
-            self.game.change_gamestate(0)
+            if instance.state == "normal":
+                self.game.clear_hand()
+                self.game.change_gamestate(0)
         #nothing for state 2
         elif self.game.gamestate == 3:
             self.game.place_in_hand(instance)
@@ -84,7 +85,10 @@ class EventHandlers(EventDispatcher):
     def square_press(self,instance):
         #make sure that during state 1, it -=1 to pieces left to be placed
         if self.game.gamestate == 1:
-            pass
+            self.game.move_to_square(instance)
+            self.game.update_pieces_left_to_be_placed(instance)
+            self.game.change_gamestate(0)
+
 
 
     def piece_placed(self):
