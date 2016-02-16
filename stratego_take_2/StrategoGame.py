@@ -20,7 +20,7 @@ class StrategoGame(FloatLayout):
 
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
-        self.events = EventHandler(self)
+        self.events = EventHandlers(self)
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
         self.player1 = Player("Red")
@@ -31,7 +31,10 @@ class StrategoGame(FloatLayout):
 
 #gamestate actions
 
-    def change_gamestate(self):
+    def change_gamestate(self, newstate):
+        print(self.gamestate, newstate)
+        self.gamestate = newstate
+
         '''
         activities associated with leaving the current state
         change the current status to the new status
@@ -75,6 +78,7 @@ class StrategoGame(FloatLayout):
 #interacting with the "hand"
     def place_in_hand(self, piece):
         self.activeplayer.in_hand = piece
+        print(self.activeplayer.in_hand.number)
 
         if self.gamestate == 1:
             self.board.highlight_valid_moves_during_game()
@@ -99,6 +103,7 @@ class StrategoGame(FloatLayout):
             piece.spot = square
             piece.pos = piece.spot.pos
             piece.size = square.size
+            piece.events = self.events
             square.occupied = True
 
     def setup_gamestate_0(self):

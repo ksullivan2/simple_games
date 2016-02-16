@@ -51,13 +51,23 @@ from kivy.uix.widget import Widget
         activities associated with entering the new state '''
 
 
-class EventHandler(EventDispatcher):
+class EventHandlers(EventDispatcher):
     def __init__(self, game):
         self.game = game
 
+
+
+
     def start_game_button_press(self, *args):
+        print("start button press")
         if self.game.gamestate == -1:
-            self.game.player_start()
-            self.gamestate = 0
+            self.game.change_gamestate(0)
+
+    def gamepiece_press(self, instance):
+        if self.game.gamestate == 0:
+            self.game.place_in_hand(instance)
+            self.game.change_gamestate(1)
+        if self.game.gamestate == 3:
+            self.game.change_gamestate(4)
 
 

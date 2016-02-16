@@ -16,6 +16,17 @@ class Board(GridLayout):
         self.grid = []
         super().__init__()
 
+    def add_square_to_grid(self, row, square):
+        #add to grid @ row and add widget to graphics
+        self.grid[row].append(square)
+        self.add_widget(square)
+
+        #need to set this reference upon widget creation
+        square.events = self.events
+
+
+
+#if these no longer have unique methods, probably combine them into one class
 
 class GameBoard(Board):
     def __init__(self, **kwargs):
@@ -31,10 +42,7 @@ class GameBoard(Board):
                     temp = Square(i,j, "water")
                 else:
                     temp = Square(i,j, "land")
-                self.grid[i].append(temp)
-                self.add_widget(temp)
-
-
+                self.add_square_to_grid(i,temp)
 
 
 class SideBoard(Board):
@@ -50,8 +58,9 @@ class SideBoard(Board):
             self.grid.append([])
             for j in range(4):
                 temp = Square(i,j, "sideboard")
-                self.grid[i].append(temp)
-                self.add_widget(temp)
+                self.add_square_to_grid(i,temp)
+
+
 
 
 

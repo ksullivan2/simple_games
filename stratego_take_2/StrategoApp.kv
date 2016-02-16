@@ -2,6 +2,7 @@
     id: game
     gamestate: -1
 
+
     BoxLayout:
         GameBoard:
             id: board
@@ -49,6 +50,7 @@
     size_hint:(None, None)
     group: self.player_color
     border: (0,0,0,0)
+    on_press: self.events.gamepiece_press(self)
 
 
 
