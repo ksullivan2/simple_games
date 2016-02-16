@@ -69,9 +69,7 @@ class EventHandlers(EventDispatcher):
         elif self.game.gamestate == 1:
             self.game.clear_hand()
             self.game.change_gamestate(0)
-        elif self.game.gamestate == 2:
-            pass
-        #"are you done" popup
+        #nothing for state 2
         elif self.game.gamestate == 3:
             self.game.place_in_hand(instance)
             self.game.change_gamestate(4)
@@ -81,18 +79,20 @@ class EventHandlers(EventDispatcher):
                 self.game.change_gamestate(3)
             else:
                 self.game.change_gamestate(5)
+        #nothing for state 5 and 6
 
     def square_press(self,instance):
         #make sure that during state 1, it -=1 to pieces left to be placed
-        if self.game.gamestate == 0:
+        if self.game.gamestate == 1:
             pass
 
 
-    def pieces_placed(self):
-        if self.game.activeplayer.color == "Red":
-            self.game.swap_active_player()
-            self.game.change_gamestate(0)
-        else:
-            self.game.swap_active_player()
-            self.game.change_gamestate(1)
+    def piece_placed(self):
+        if self.game.pieces_are_all_placed():
+            if self.game.activeplayer.color == "Red":
+                self.game.swap_active_player()
+                self.game.change_gamestate(0)
+            else:
+                self.game.swap_active_player()
+                self.game.change_gamestate(1)
 

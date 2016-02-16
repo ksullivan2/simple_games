@@ -47,6 +47,7 @@ class StrategoGame(FloatLayout):
 
 
         elif self.gamestate == 3:
+            #move this to LEAVING state 2
             for slot in self.sidebar.children:
                 slot.disabled = True
             self.swap_active_player()
@@ -77,18 +78,35 @@ class StrategoGame(FloatLayout):
     def clear_hand(self):
         self.pieceinhand = None
 
-        #if self.gamestate == 1:
-            #self.board.clear_all_valid_markers()
+
+#moving pieces around the board
+    def move_to_square(self, square):
+        piece = self.pieceinhand
+
+        #remove it from the previous spot and put it on new one
+        piece.spot.occupied = None
+        piece.spot = square
+
+        #piece's animation
+        #piece.moveanim = Animation(pos = piece.spot.pos)
+        #piece.moveanim.bind(on_complete = partial(self.parent.parent.player_conflict, attacker= piece,
+                                                #square= square))
+        #piece.moveanim.start(piece)
+
+    #def officially_place_on_square(self, square, piece):
+        square.occupied = piece
+        piece.state = "normal"
 
 
 
-#creating players
+#creating players & pieces
 
     def player_start(self):
         '''creates the gamepieces for each player'''
 
         #initializes the count of how many pieces are left to be placed
-        self.activeplayer.bind(pieces_left_to_be_placed = self.pieces_are_all_placed)
+        #which will count down to 0
+        self.activeplayer.bind(pieces_left_to_be_placed = self.events.piece_placed)
 
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
             self.add_widget(piece)
@@ -100,10 +118,6 @@ class StrategoGame(FloatLayout):
 
 
 
-
-
-
-
 #boolean helper functions
     def pieces_are_all_placed(self, *args):
         if self.activeplayer.pieces_left_to_be_placed > 0:
@@ -112,16 +126,13 @@ class StrategoGame(FloatLayout):
         print("pieces placed")
         return True
 
-
-
-
     def piece_belongs_to_activeplayer(self, piece):
         if piece.player_color == activeplayer.color:
             return True
         return False
 
 
-#gameplay actions
+#conflict
 
     def player_conflict(self, instance, idontknowwhythisishere, square, attacker):
         '''returns the winner of the conflict and destroys the loser'''
@@ -158,8 +169,6 @@ class StrategoGame(FloatLayout):
 
 
 #debug functions
-
-
 
     def debug_place_pieces(self):
         if self.activeplayer.color =="Red":
