@@ -91,7 +91,11 @@ class EventsMethods(EventDispatcher):
                 self.game.change_gamestate(2)
 
     def square_press(self,instance):
-        if self.game.gamestate in (1,4):
+        if self.game.gamestate == 1:
+            self.game.update_pieces_left_to_be_placed(instance)
+            self.game.move_to_square(instance)
+            #see "anim_on_complete" for the rest of the actions
+        if self.game.gamestate == 4:
             self.game.move_to_square(instance)
             #see "anim_on_complete" for the rest of the actions
 
@@ -99,7 +103,7 @@ class EventsMethods(EventDispatcher):
     def anim_on_complete(self, instance, square, *args):
         if self.game.gamestate == 1:
             self.game.change_gamestate(0)
-            self.game.update_pieces_left_to_be_placed(square)
+
 
         elif self.game.gamestate == 4:
             self.game.swap_active_player()
