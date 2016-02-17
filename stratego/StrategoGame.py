@@ -16,7 +16,7 @@ from GamePiece import *
 from Board import *
 from Player import *
 from EventHandler import *
-from GameState import GameState
+from GameState import *
 
 
 class StrategoGame(FloatLayout):
@@ -33,7 +33,7 @@ class StrategoGame(FloatLayout):
         #gamestatus
         self.activeplayer = self.player1
         self.pieceinhand = None
-        self.gamestate = GameState.player_setup
+        self.gamestate = GameState.start_popup
 
         #set up event handlers for all relevant widgets
         self.eventsobject = EventsMethods(self)
@@ -51,7 +51,7 @@ class StrategoGame(FloatLayout):
         print("swap", self.gamestate, "to", newstate)
         self.gamestate = newstate
 
-        if self.gamestate == GameState.start:
+        if self.gamestate == GameState.player_setup:
             self.player_start()
             self.board.highlight_valid_game_setup_rows()
             self.change_gamestate(GameState.setup_no_piece)

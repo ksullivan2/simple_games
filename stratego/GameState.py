@@ -1,8 +1,8 @@
 from enum import Enum
 
 class GameState(Enum):
-    player_setup = -2
-    start = -1
+    start_popup = -2
+    player_setup = -1
     setup_no_piece = 0
     setup_selected_piece = 1
     pieces_placed = 2

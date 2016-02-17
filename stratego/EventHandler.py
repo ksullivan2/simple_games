@@ -56,8 +56,8 @@ class EventsMethods(EventDispatcher):
 
 
     def start_game_button_press(self, *args):
-        if self.game.gamestate in (GameState.player_setup, GameState.pieces_placed):
-            self.game.change_gamestate(GameState.start)
+        if self.game.gamestate in (GameState.start_popup, GameState.pieces_placed):
+            self.game.change_gamestate(GameState.player_setup)
 
     def gamepiece_press(self, instance):
         if self.game.gamestate == GameState.setup_no_piece:
@@ -100,7 +100,7 @@ class EventsMethods(EventDispatcher):
         if self.game.pieces_are_all_placed():
             if self.game.activeplayer.color == "Red":
                 self.game.swap_active_player()
-                self.game.change_gamestate(GameState.start)
+                self.game.change_gamestate(GameState.player_setup)
             else:
                 self.game.change_gamestate(GameState.pieces_placed)
 
