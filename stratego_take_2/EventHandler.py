@@ -77,6 +77,7 @@ class EventsMethods(EventDispatcher):
                 self.game.clear_hand()
                 self.game.change_gamestate(3)
             else:
+                self.game.move_to_square(instance.spot)
                 self.game.change_gamestate(5)
         #nothing for state 5 and 6
 
@@ -95,7 +96,7 @@ class EventsMethods(EventDispatcher):
             #see "anim_on_complete" for the rest of the actions
 
 
-    def anim_on_complete(self, *args):
+    def anim_on_complete(self, instance, square, *args):
         if self.game.gamestate == 1:
             self.game.change_gamestate(0)
             self.game.update_pieces_left_to_be_placed(instance)
@@ -104,6 +105,7 @@ class EventsMethods(EventDispatcher):
             self.game.swap_active_player()
             self.game.change_gamestate(3)
 
-        #self.game.parent.player_conflict, attacker= piece,
-                                                #square= square)
+        elif self.game.gamestate == 5:
+            self.game.player_conflict(square)
+
 

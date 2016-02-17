@@ -108,14 +108,18 @@ class StrategoGame(FloatLayout):
 
         #remove it from the previous spot and put it on new one
         piece.spot.occupied = None
-        piece.spot = square
 
         #piece's animation
-        piece.moveanim = Animation(pos = piece.spot.pos)
-        piece.moveanim.bind(on_complete = self.eventsobject.anim_on_complete)
+        piece.moveanim = Animation(pos = square.pos)
+        piece.moveanim.bind(on_complete = partial(self.eventsobject.anim_on_complete, self, square))
         piece.moveanim.start(piece)
 
-    #def officially_place_on_square(self, square, piece):
+        #this is necessary since this method is also used before player conflict
+        if square.occupied is None:
+            self.officially_place_on_square(square, piece)
+
+    def officially_place_on_square(self, square, piece):
+        piece.spot = square
         square.occupied = piece
         piece.state = "normal"
 
@@ -156,13 +160,12 @@ class StrategoGame(FloatLayout):
 
 #conflict
 
-    def player_conflict(self, instance, idontknowwhythisishere, square, attacker):
+    def player_conflict(self, square):
         '''returns the winner of the conflict and destroys the loser'''
-        if square.occupied is None:
-            self.board.officially_place_on_square(square, attacker)
-            return
-
+        attacker = self.pieceinhand
         defender = square.occupied
+
+
         winner = None
         loser = None
 
@@ -180,11 +183,19 @@ class StrategoGame(FloatLayout):
             loser = attacker
 
         #delete the losing piece, or move it to sidebar??
-        loser.piece_death()
+        self.piece_death(loser)
 
-        self.board.officially_place_on_square(square, winner)
+        self.officially_place_on_square(square, winner)
 
-
+    def piece_death(self, piece):
+        piece.dead = True
+        for slot in self.sidebar.children:
+            if slot.occupied is None:
+                #self.state = "normal"
+                self.move_to_square(slot)
+                #slot.disabled = True
+                break
+        #there are not enough slots....
 
 
 

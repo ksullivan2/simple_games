@@ -148,13 +148,21 @@ class StrategoGame(FloatLayout):
             loser = attacker
 
         #delete the losing piece, or move it to sidebar??
-        loser.piece_death()
+        piece_death(loser)
 
         self.board.officially_place_on_square(square, winner)
 
 
 
-
+    def piece_death(self, piece):
+        piece.dead = True
+        for slot in self.sidebar.children:
+            if slot.occupied is None:
+                #self.state = "normal"
+                self.move_to_square(slot)
+                #slot.disabled = True
+                break
+        #there are not enough slots....
 
 
 
