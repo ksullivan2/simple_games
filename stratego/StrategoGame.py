@@ -113,6 +113,11 @@ class StrategoGame(FloatLayout):
     def move_to_square(self, square, on_complete=None):
         piece = self.pieceinhand
 
+        #disable inactive pieces so the user can't create unwanted input
+        for item in self.activeplayer.pieces:
+            if item != self.pieceinhand:
+                item.disabled = True
+
         #the most recently added piece is highest on Z axis
         #it's really annoying there's no other way to do this
         #the check is so that it goes behind the winning piece if it's dying
