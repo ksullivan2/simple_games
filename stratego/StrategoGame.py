@@ -32,10 +32,6 @@ class StrategoGame(FloatLayout):
         #gamestatus
         self.activeplayer = self.player1
         self.pieceinhand = None
-        '''self.gamestate = OptionProperty("start popup", options = ["start popup", "player creation",
-                                                        "game setup: none selected","game setup: piece selected",
-                                                        "all pieces placed", "gameplay: none selected",
-                                                        "gameplay: piece selected", "player conflict", "win popup"])'''
         self.gamestate = -2
 
         #set up event handlers for all relevant widgets
@@ -75,6 +71,9 @@ class StrategoGame(FloatLayout):
 
         elif self.gamestate == 4:
             self.board.highlight_valid_moves_during_game(self.pieceinhand)
+
+        elif self.gamestate == 5:
+            self.board.clear_all_valid_markers()
 
 
 
