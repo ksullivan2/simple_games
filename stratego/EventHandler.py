@@ -99,7 +99,7 @@ class EventsMethods(EventDispatcher):
     def anim_on_complete(self, instance, square, *args):
         if self.game.gamestate == 1:
             self.game.change_gamestate(0)
-            self.game.update_pieces_left_to_be_placed(instance)
+            self.game.update_pieces_left_to_be_placed(square)
 
         elif self.game.gamestate == 4:
             self.game.swap_active_player()
