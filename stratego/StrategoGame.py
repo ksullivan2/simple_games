@@ -12,6 +12,7 @@ from GamePiece import *
 from Board import *
 from Player import *
 from EventHandler import *
+from GameState import GameState
 
 
 class StrategoGame(FloatLayout):
@@ -28,7 +29,7 @@ class StrategoGame(FloatLayout):
         #gamestatus
         self.activeplayer = self.player1
         self.pieceinhand = None
-        self.gamestate = -2
+        self.gamestate = GameState.player_setup
 
         #set up event handlers for all relevant widgets
         self.eventsobject = EventsMethods(self)
@@ -48,26 +49,26 @@ class StrategoGame(FloatLayout):
         print("swap", self.gamestate, "to", newstate)
         self.gamestate = newstate
 
-        if self.gamestate == -1:
+        if self.gamestate == GameState.start:
             self.player_start()
             self.board.highlight_valid_game_setup_rows()
-            self.change_gamestate(0)
+            self.change_gamestate(GameState.setup_no_piece)
 
-        elif self.gamestate == 0:
+        elif self.gamestate == GameState.setup_no_piece:
             pass
 
-        elif self.gamestate == 2:
+        elif self.gamestate == GameState.pieces_placed:
             for slot in self.sidebar.children:
                 slot.disabled = True
-            self.change_gamestate(3)
+            self.change_gamestate(GameState.gameplay_no_piece)
             self.swap_active_player()
 
 
-        elif self.gamestate == 3:
+        elif self.gamestate == GameState.gameplay_no_piece:
             self.board.clear_all_valid_markers()
 
 
-        elif self.gamestate == 4:
+        elif self.gamestate == GameState.game_selected_piece:
             self.board.highlight_valid_moves_during_game(self.pieceinhand)
 
 

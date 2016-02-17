@@ -1,7 +1,5 @@
 
 
-
-
 '''- 1 start:
     newgame: to 0
 
@@ -37,6 +35,7 @@
 
 from kivy.event import EventDispatcher
 from kivy.uix.widget import Widget
+from GameState import GameState
 
 #-1 is new window
 #0 is game setup, no piece selected
@@ -57,28 +56,28 @@ class EventsMethods(EventDispatcher):
 
 
     def start_game_button_press(self, *args):
-        if self.game.gamestate in (-2,2):
-            self.game.change_gamestate(-1)
+        if self.game.gamestate in (GameState.player_setup, GameState.pieces_placed):
+            self.game.change_gamestate(GameState.start)
 
     def gamepiece_press(self, instance):
-        if self.game.gamestate == 0:
+        if self.game.gamestate == GameState.setup_no_piece:
             self.game.place_in_hand(instance)
-            self.game.change_gamestate(1)
-        elif self.game.gamestate == 1:
+            self.game.change_gamestate(GameState.setup_selected_piece)
+        elif self.game.gamestate == GameState.setup_selected_piece:
             if instance.state == "normal":
                 self.game.clear_hand()
-                self.game.change_gamestate(0)
+                self.game.change_gamestate(GameState.setup_no_piece)
         #nothing for state 2
-        elif self.game.gamestate == 3:
+        elif self.game.gamestate == GameState.gameplay_no_piece:
             self.game.place_in_hand(instance)
-            self.game.change_gamestate(4)
-        elif self.game.gamestate == 4:
+            self.game.change_gamestate(GameState.game_selected_piece)
+        elif self.game.gamestate == GameState.game_selected_piece:
             if self.game.piece_belongs_to_activeplayer(instance):
                 self.game.clear_hand()
-                self.game.change_gamestate(3)
+                self.game.change_gamestate(GameState.gameplay_no_piece)
             else:
                 self.game.move_to_square(instance.spot)
-                self.game.change_gamestate(5)
+                self.game.change_gamestate(GameState.conflict)
         #nothing for state 5 and 6
 
     def piece_placed(self, *args):
@@ -86,33 +85,31 @@ class EventsMethods(EventDispatcher):
         if self.game.pieces_are_all_placed():
             if self.game.activeplayer.color == "Red":
                 self.game.swap_active_player()
-                self.game.change_gamestate(-1)
+                self.game.change_gamestate(GameState.start)
             else:
-                self.game.change_gamestate(2)
+                self.game.change_gamestate(GameState.pieces_placed)
 
     def square_press(self,instance):
-        if self.game.gamestate == 1:
+        if self.game.gamestate == GameState.setup_selected_piece:
             self.game.update_pieces_left_to_be_placed(instance)
             self.game.move_to_square(instance)
             #see "anim_on_complete" for the rest of the actions
-        if self.game.gamestate == 4:
+        if self.game.gamestate == GameState.game_selected_piece:
             self.game.move_to_square(instance)
             #see "anim_on_complete" for the rest of the actions
 
 
     def anim_on_complete(self, instance, square, *args):
-        if self.game.gamestate == 1:
-            self.game.change_gamestate(0)
+        if self.game.gamestate == GameState.setup_selected_piece:
+            self.game.change_gamestate(GameState.setup_no_piece)
 
 
-        elif self.game.gamestate == 4:
+        elif self.game.gamestate == GameState.game_selected_piece:
             self.game.swap_active_player()
-            self.game.change_gamestate(3)
+            self.game.change_gamestate(GameState.gameplay_no_piece)
 
-        elif self.game.gamestate == 5:
+        elif self.game.gamestate == GameState.conflict:
             self.game.player_conflict(square)
             #i want to add conflict animation here
             self.game.swap_active_player()
-            self.game.change_gamestate(3)
-
-
+            self.game.change_gamestate(GaneState.gameplay_no_piece)
