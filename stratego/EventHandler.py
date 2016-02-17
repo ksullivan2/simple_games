@@ -87,6 +87,7 @@ class EventsMethods(EventDispatcher):
 
             else:
                 self.game.move_to_square(instance.spot)
+                instance.state = "normal"
                 self.game.change_gamestate(5)
         #nothing for state 5 and 6
 
