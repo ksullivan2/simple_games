@@ -190,7 +190,7 @@ class StrategoGame(FloatLayout):
         loser.conflictanim.start(loser)
 
         #delete the losing piece, or move it to sidebar??
-        self.piece_death(loser)
+        #self.piece_death(loser)
 
         self.officially_place_on_square(square, winner)
 
@@ -199,7 +199,8 @@ class StrategoGame(FloatLayout):
 
 
 
-    def piece_death(self, piece):
+    def piece_death(self, instance, piece, *args):
+        print(piece.number, "dead")
         piece.dead = True
         self.pieceinhand = piece
         for slot in self.sidebar.children:

@@ -58,14 +58,24 @@ class GamePiece(ToggleButton):
 
         if direction == 1:
             anim.bind(on_complete = (partial(self.winner_animation)))
+            anim.bind(on_complete = (partial(self.winner_animation)))
+        else:
+            anim.bind(on_complete = (partial(self.loser_animation)))
 
         return anim
 
 
     def winner_animation(self, *args):
-        self.sizeanim = Animation(size = (self.width*1.5, self.height*1.5), t = "out_bounce")
-        self.sizeanim += Animation(size = (self.width, self.height), t = "out_bounce", pos = self.spot.pos)
-        self.sizeanim.start(self)
+        self.winanim = Animation(size = (self.width*1.5, self.height*1.5), t = "out_bounce")
+        self.winanim += Animation(size = (self.width, self.height), t = "out_bounce", pos = self.spot.pos)
+        self.winanim.start(self)
+
+    def loser_animation(self, *args):
+        self.loseanim = Animation(size = (self.width*.75, self.height*.75))
+        self.loseanim += Animation(size = (self.width, self.height), d=.1)
+        self.loseanim.bind(on_complete = partial(self.parent.piece_death))
+        self.loseanim.start(self)
+
 
 
 
