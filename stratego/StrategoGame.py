@@ -184,19 +184,12 @@ class StrategoGame(FloatLayout):
             winner = defender
             loser = attacker
 
+        self.officially_place_on_square(square, winner)
+
         winner.conflictanim = winner.conflict_animation(winner, 1)
         loser.conflictanim = loser.conflict_animation(loser, -1)
         winner.conflictanim.start(winner)
         loser.conflictanim.start(loser)
-
-        #delete the losing piece, or move it to sidebar??
-        #self.piece_death(loser)
-
-        self.officially_place_on_square(square, winner)
-
-
-
-
 
 
     def piece_death(self, instance, piece, *args):

@@ -33,8 +33,8 @@ class GamePiece(ToggleButton):
         direction is 1 for winner, -1 for loser'''
 
         #make sure they look normal
-        instance.state = "normal"
-        instance.disabled = False
+        #instance.state = "normal"
+        #instance.disabled = False
 
         #circle animation
         radius = 100*direction
