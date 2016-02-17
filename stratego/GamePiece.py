@@ -29,6 +29,16 @@ class GamePiece(ToggleButton):
     def get_name(self):
         return names[self.number]
 
+    def reveal_image(self):
+        self.background_normal = "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
+        self.background_disabled_normal = "images/" + self.player_color + "/disabled/" + str(self.number) + ".png"
+        self.background_down = "images/" + self.player_color + "/down/" + str(self.number) + ".png"
+
+    def hide_image(self):
+        self.background_normal = "images/" + self.player_color + "/normal/back.png"
+        self.background_disabled_normal = "images/" + self.player_color + "/disabled/back.png"
+        self.background_down = "images/" + self.player_color + "/down/back.png"
+
     def conflict_animation(self, instance, direction):
         '''first the pieces circle each other, then "joust" at each other
         direction is 1 for winner, -1 for loser'''

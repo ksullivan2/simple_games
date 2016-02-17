@@ -7,8 +7,8 @@ Blue:
         background: 090e93
         foreground: f6f6f6
     down:
-        background:
-        foreground:
+        background: 0166FF
+        foreground: FDFDFD
 
 Red:
     disabled:
@@ -19,5 +19,5 @@ Red:
         background: a8180b
         foreground: f6f6f6
     down:
-        background:
-        foreground:
+        background: D40000
+        foreground: FDFDFD
