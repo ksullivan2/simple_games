@@ -65,19 +65,29 @@ class EventsMethods(EventDispatcher):
             self.game.place_in_hand(instance)
             self.game.change_gamestate(1)
         elif self.game.gamestate == 1:
-            if instance.state == "normal":
+            if instance == self.game.pieceinhand:
                 self.game.clear_hand()
                 self.game.change_gamestate(0)
+            else:
+                self.game.place_in_hand(instance)
+                self.game.change_gamestate(1)
         #nothing for state 2
         elif self.game.gamestate == 3:
             self.game.place_in_hand(instance)
             self.game.change_gamestate(4)
         elif self.game.gamestate == 4:
-            if self.game.piece_belongs_to_activeplayer(instance):
+            if instance == self.game.pieceinhand:
                 self.game.clear_hand()
                 self.game.change_gamestate(3)
+
+            elif self.game.piece_belongs_to_activeplayer(instance):
+                self.game.board.clear_all_valid_markers()
+                self.game.place_in_hand(instance)
+                self.game.change_gamestate(4)
+
             else:
                 self.game.move_to_square(instance.spot)
+                instance.state = "normal"
                 self.game.change_gamestate(5)
         #nothing for state 5 and 6
 
@@ -100,7 +110,7 @@ class EventsMethods(EventDispatcher):
             #see "anim_on_complete" for the rest of the actions
 
 
-    def anim_on_complete(self, instance, square, *args):
+    def moveanim_on_complete(self, instance, square, *args):
         if self.game.gamestate == 1:
             self.game.change_gamestate(0)
 
@@ -111,8 +121,10 @@ class EventsMethods(EventDispatcher):
 
         elif self.game.gamestate == 5:
             self.game.player_conflict(square)
-            #i want to add conflict animation here
-            self.game.swap_active_player()
-            self.game.change_gamestate(3)
+
+
+    def conflictanim_on_complete(self, *args):
+        self.game.swap_active_player()
+        self.game.change_gamestate(3)
 
 
