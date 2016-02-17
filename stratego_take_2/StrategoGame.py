@@ -194,9 +194,10 @@ class StrategoGame(FloatLayout):
             templist.append(piece)
         while len(templist) > 0:
             piece = templist[randint(0,len(templist)-1)]
-            self.activeplayer.in_hand = piece
-            self.board.move_to_square(self.board.grid[x][y])
+            self.pieceinhand = piece
+            self.move_to_square(self.board.grid[x][y])
             templist.remove(piece)
+            self.activeplayer.pieces_left_to_be_placed -= 1
             if y == 9:
                 y = 0
                 x += 1
