@@ -7,7 +7,7 @@ from kivy.clock import Clock
 #from kivy.animation import *
 
 from random import randint
-from math import sin, cos
+
 
 from ResizeBehavior import *
 from functools import partial
@@ -184,43 +184,17 @@ class StrategoGame(FloatLayout):
             winner = defender
             loser = attacker
 
+        winner.conflictanim = winner.conflict_animation(winner, 1)
+        loser.conflictanim = loser.conflict_animation(loser, -1)
+        winner.conflictanim.start(winner)
+        loser.conflictanim.start(loser)
+
         #delete the losing piece, or move it to sidebar??
         self.piece_death(loser)
 
         self.officially_place_on_square(square, winner)
 
-    def conflict_animation(self, instance):
-        radius = 100
-        xcenter, ycenter = instance.pos
 
-        #current angle IN RADIANS
-        #6.28319 radians in 360 degress
-        #starts at 90 deg
-        angle = 1.57
-
-        #speed IN RADIANS per frame
-        speed = .25
-
-        instance.anim = Animation(pos = (xcenter + radius, ycenter))
-
-
-        while angle < 6.28+1.57:
-            newx = radius * sin(angle) + xcenter
-            newy = radius * cos(angle) + ycenter
-            print(newx,newx)
-
-            instance.anim += Animation(pos = (newx,newy), d = .05)
-            angle += speed
-
-        instance.anim += Animation(pos = (xcenter, ycenter))
-
-        instance.anim.start(instance)
-
-
-
-        #conflictanim = Animation(pos = (xcenter + radius, ycenter))
-
-        #return conflictanim
 
 
 

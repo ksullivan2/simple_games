@@ -2,6 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.properties import ObjectProperty
 from kivy.animation import Animation
+from math import sin, cos
 from ResizeBehavior import *
 
 
@@ -25,6 +26,38 @@ class GamePiece(ToggleButton):
 
     def get_name(self):
         return names[self.number]
+
+    def conflict_animation(self, instance, direction):
+        '''first the pieces circle each other, then "joust" at each other
+        direction is 1 for winner, -1 for loser'''
+
+        #circle animation
+        radius = 100*direction
+        xcenter, ycenter = self.pos
+
+        #current angle IN RADIANS
+        #6.28319 radians in 360 degress
+        #starts at 90 deg
+        angle = 1.57
+
+        #speed IN RADIANS per frame
+        speed = .25
+
+        anim = Animation(pos = (xcenter + radius, ycenter), d = .1)
+
+        while angle < 6.28+1.57:
+            newx = radius * sin(angle) + xcenter
+            newy = radius * cos(angle) + ycenter
+
+            anim += Animation(pos = (newx,newy), d = .03)
+            angle += speed
+
+        anim += Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")
+        anim += Animation(pos = (xcenter + radius , ycenter - radius/2), t = "in_out_back")
+
+        return anim
+
+
 
 
 
