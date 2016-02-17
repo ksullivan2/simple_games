@@ -73,12 +73,6 @@ class StrategoGame(FloatLayout):
 
 
 
-    def new_turn(self):
-        print("new turn")
-        self.swap_active_player()
-        self.board.clear_all_valid_markers()
-
-
     def swap_active_player(self):
         self.activeplayer.disable_player_pieces()
         if self.activeplayer == self.player1:

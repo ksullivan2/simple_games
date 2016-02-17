@@ -91,7 +91,7 @@ class EventsMethods(EventDispatcher):
 
         if self.game.gamestate == 4:
             self.game.move_to_square(instance)
-            self.game.new_turn()
+            self.game.swap_active_player()
             self.game.change_gamestate(3)
 
 
