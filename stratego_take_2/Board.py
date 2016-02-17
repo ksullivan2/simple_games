@@ -87,7 +87,8 @@ class GameBoard(Board):
 
     def clear_all_valid_markers(self):
         for square in self.children:
-            if square.occupied is not None and square.valid:
+            if square.occupied is not None and square.valid and \
+                    not self.piece_belongs_to_activeplayer(square.occupied):
                 square.occupied.disabled = True
             square.disabled = True
             square.valid = False
@@ -96,8 +97,7 @@ class GameBoard(Board):
         for square in self.children:
             if square.valid:
                 square.disabled = False
-                if square.occupied is not None and \
-                    square.occupied.player_color != self.activeplayer.color:
+                if square.occupied is not None:
                     square.occupied.disabled = False
 
             else:
@@ -106,7 +106,7 @@ class GameBoard(Board):
     def test_for_valid_square(self, square):
         if square.type == "land":
             if square.occupied is None or \
-                square.occupied.player_color != self.activeplayer.color:
+                not self.piece_belongs_to_activeplayer(square.occupied):
                 return True
         return False
 
@@ -145,7 +145,10 @@ class GameBoard(Board):
 
 
 
-
+    def piece_belongs_to_activeplayer(self, piece):
+        if piece.player_color == self.activeplayer.color:
+            return True
+        return False
 
 
 

@@ -79,6 +79,9 @@ class StrategoGame(FloatLayout):
             self.activeplayer = self.player2
         else:
             self.activeplayer = self.player1
+        #make sure the board knows the new player too...
+        self.board.activeplayer = self.activeplayer
+
         self.activeplayer.activate_player_pieces()
         print("swap activeplayer to " + self.activeplayer.color)
 
