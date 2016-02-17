@@ -165,7 +165,6 @@ class StrategoGame(FloatLayout):
         attacker = self.pieceinhand
         defender = square.occupied
 
-
         winner = None
         loser = None
 
@@ -176,9 +175,11 @@ class StrategoGame(FloatLayout):
         elif (attacker.number == 1 and defender.number == 10) or \
                 (attacker.number == 3 and defender.number == 11) or \
                 (attacker.number >= defender.number):
+            print("attacker wins")
             winner = attacker
             loser = defender
         else:
+            print("defender wins")
             winner = defender
             loser = attacker
 
@@ -189,11 +190,11 @@ class StrategoGame(FloatLayout):
 
     def piece_death(self, piece):
         piece.dead = True
+        self.pieceinhand = piece
         for slot in self.sidebar.children:
             if slot.occupied is None:
-                #self.state = "normal"
                 self.move_to_square(slot)
-                #slot.disabled = True
+                piece.disabled = True
                 break
         #there are not enough slots....
 
