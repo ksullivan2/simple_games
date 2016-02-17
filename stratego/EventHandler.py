@@ -107,5 +107,8 @@ class EventsMethods(EventDispatcher):
 
         elif self.game.gamestate == 5:
             self.game.player_conflict(square)
+            #i want to add conflict animation here
+            self.game.swap_active_player()
+            self.game.change_gamestate(3)
 
 
