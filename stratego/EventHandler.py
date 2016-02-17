@@ -76,15 +76,18 @@ class EventsMethods(EventDispatcher):
             self.game.place_in_hand(instance)
             self.game.change_gamestate(4)
         elif self.game.gamestate == 4:
+            #first check if we're clicking the active piece
             if instance == self.game.pieceinhand:
                 self.game.clear_hand()
                 self.game.change_gamestate(3)
 
+            #then if it's another piece in my own hand
             elif self.game.piece_belongs_to_activeplayer(instance):
                 self.game.board.clear_all_valid_markers()
                 self.game.place_in_hand(instance)
                 self.game.change_gamestate(4)
 
+            #only pieces left are opponent's pieces
             else:
                 self.game.move_to_square(instance.spot)
                 instance.state = "normal"
