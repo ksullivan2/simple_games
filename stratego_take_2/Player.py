@@ -3,7 +3,7 @@ from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty
 
 class Player(Widget):
-    pieces_left_to_be_placed = NumericProperty(0)
+    pieces_left_to_be_placed = NumericProperty(40)
 
     def __init__(self, color):
         self.color = color

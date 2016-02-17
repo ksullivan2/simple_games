@@ -92,7 +92,6 @@ class EventsMethods(EventDispatcher):
             self.game.change_gamestate(0)
 
 
-
     def piece_placed(self, *args):
         if self.game.pieces_are_all_placed():
             if self.game.activeplayer.color == "Red":
