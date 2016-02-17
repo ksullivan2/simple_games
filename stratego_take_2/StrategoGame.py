@@ -67,7 +67,6 @@ class StrategoGame(FloatLayout):
             self.board.clear_all_valid_markers()
 
 
-
         elif self.gamestate == 4:
             self.board.highlight_valid_moves_during_game(self.pieceinhand)
 

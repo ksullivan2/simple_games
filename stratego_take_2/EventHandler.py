@@ -89,6 +89,11 @@ class EventsMethods(EventDispatcher):
             self.game.update_pieces_left_to_be_placed(instance)
             self.game.change_gamestate(0)
 
+        if self.game.gamestate == 4:
+            self.game.move_to_square(instance)
+            self.game.new_turn()
+            self.game.change_gamestate(3)
+
 
     def piece_placed(self, *args):
         if self.game.pieces_are_all_placed():
