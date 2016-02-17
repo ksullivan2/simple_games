@@ -3,12 +3,12 @@ from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty
 
 class Player(Widget):
-    pieces_on_board = NumericProperty(0)
+    pieces_left_to_be_placed = NumericProperty(40)
 
     def __init__(self, color):
         self.color = color
         self.pieces = []
-        self.in_hand = None
+
 
         for piecenumber in pieceamounts:
             for i in range(pieceamounts[piecenumber]):

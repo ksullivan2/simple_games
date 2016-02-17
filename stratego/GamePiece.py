@@ -5,21 +5,14 @@ from kivy.animation import Animation
 from ResizeBehavior import *
 
 
-
-
-
 class GamePiece(ToggleButton):
     spot = ObjectProperty(None)
-
 
     def __init__(self, number, color, **kwargs):
         self.number = number
         self.player_color = color
         self.dead = False
         self.moveanim = Animation()
-
-
-
 
         #scouts can move more than 1 space, flags/bombs can't move
         if self.number == 2:
@@ -33,27 +26,6 @@ class GamePiece(ToggleButton):
     def get_name(self):
         return names[self.number]
 
-
-    def on_state(self, widget, value):
-        if self.player_color == self.parent.activeplayer.color:
-            if value == 'down':
-                self.parent.place_in_hand(self)
-            else:
-                self.parent.clear_hand()
-        else:
-            if value == "down":
-                self.parent.board.move_to_square(self.spot)
-
-
-    def piece_death(self):
-        self.dead = True
-        for slot in self.parent.sidebar.children:
-            if slot.occupied is None:
-                #self.state = "normal"
-                slot.parent.move_to_square(slot)
-                #slot.disabled = True
-                break
-        #there are not enough slots....
 
 
 names = {0: "Flag",

@@ -11,46 +11,66 @@ from Square import *
 from GamePiece import *
 from Board import *
 from Player import *
+from EventHandler import *
 
 
 class StrategoGame(FloatLayout):
-
     def __init__(self, **kwargs):
         super (StrategoGame, self).__init__()
-        self.board = self.ids["board"]
-        self.sidebar = self.ids["sidebar"]
+        #create players
         self.player1 = Player("Red")
         self.player2 = Player("Blue")
+
+        #create aliases for children widgets
+        self.board = self.ids["board"]
+        self.sidebar = self.ids["sidebar"]
+
+        #gamestatus
         self.activeplayer = self.player1
-        self.animation = Animation()
+        self.pieceinhand = None
+        self.gamestate = -2
+
+        #set up event handlers for all relevant widgets
+        self.eventsobject = EventsMethods(self)
+        self.board.eventsobject = self.eventsobject
+        self.sidebar.eventsobject = self.eventsobject
+
+        #board also needs to know the active player
+        self.board.activeplayer = self.activeplayer
+
+
+
+
 
 #gamestate actions
 
-    def change_gamestate(self):
-        '''
-        activities associated with leaving the current state
-        change the current status to the new status
-        activities associated with entering the new state
-        '''
-        
-        #-1 is new window
-        #0 is game setup
-        #1 is no piece selected
-        #2 is piece selected
-        #3 is player conflict
+    def change_gamestate(self, newstate):
+        print("swap", self.gamestate, "to", newstate)
+        self.gamestate = newstate
 
-        if self.gamestate == 0:
+        if self.gamestate == -1:
             self.player_start()
+            self.board.highlight_valid_game_setup_rows()
+            self.change_gamestate(0)
 
-        elif self.gamestate == 1:
+        elif self.gamestate == 0:
+            pass
+
+        elif self.gamestate == 2:
             for slot in self.sidebar.children:
                 slot.disabled = True
+            self.change_gamestate(3)
             self.swap_active_player()
 
-    def new_turn(self):
-        print("new turn")
-        self.swap_active_player()
-        self.board.clear_all_valid_markers()
+
+        elif self.gamestate == 3:
+            self.board.clear_all_valid_markers()
+
+
+        elif self.gamestate == 4:
+            self.board.highlight_valid_moves_during_game(self.pieceinhand)
+
+
 
 
     def swap_active_player(self):
@@ -59,78 +79,93 @@ class StrategoGame(FloatLayout):
             self.activeplayer = self.player2
         else:
             self.activeplayer = self.player1
+        #make sure the board knows the new player too...
+        self.board.activeplayer = self.activeplayer
+
         self.activeplayer.activate_player_pieces()
-        print(self.activeplayer.color)
+        print("swap activeplayer to " + self.activeplayer.color)
 
 
 #interacting with the "hand"
     def place_in_hand(self, piece):
-        self.activeplayer.in_hand = piece
-
-        if self.gamestate == 1:
-            self.board.highlight_valid_moves_during_game()
+        self.pieceinhand = piece
 
 
     def clear_hand(self):
-        self.activeplayer.in_hand = None
+        self.pieceinhand = None
 
-        if self.gamestate == 1:
-            self.board.clear_all_valid_markers()
 
-#creating players
+#moving pieces around the board
+
+    def update_pieces_left_to_be_placed(self, square):
+        if square.type == "sideboard":
+            self.activeplayer.pieces_left_to_be_placed += 1
+        else:
+            self.activeplayer.pieces_left_to_be_placed -=1
+
+    def move_to_square(self, square):
+        piece = self.pieceinhand
+
+        #remove it from the previous spot and put it on new one
+        piece.spot.occupied = None
+
+        #piece's animation
+        piece.moveanim = Animation(pos = square.pos)
+        piece.moveanim.bind(on_complete = partial(self.eventsobject.anim_on_complete, self, square))
+        piece.moveanim.start(piece)
+
+        #this is necessary since this method is also used before player conflict
+        if square.occupied is None:
+            self.officially_place_on_square(square, piece)
+
+    def officially_place_on_square(self, square, piece):
+        piece.spot = square
+        square.occupied = piece
+        piece.state = "normal"
+
+
+
+#creating players & pieces
 
     def player_start(self):
-        self.create_piece_widgets()
-        self.setup_gamestate_1()
+        '''creates the gamepieces for each player'''
 
+        #initializes the count of how many pieces are left to be placed
+        #which will count down to 0
+        self.activeplayer.bind(pieces_left_to_be_placed = self.eventsobject.piece_placed)
 
-    def create_piece_widgets(self):
         for piece, square in zip(self.activeplayer.pieces, self.sidebar.children):
             self.add_widget(piece)
             piece.spot = square
             piece.pos = piece.spot.pos
             piece.size = square.size
+            piece.eventsobject = self.eventsobject
             square.occupied = True
 
-    def setup_gamestate_1(self):
-        '''activates the appropriate rows for each player'''
-        if self.activeplayer.color == "Red":
-            toprow = 6
-            bottomrow = 9
-        else:
-            toprow = 0
-            bottomrow = 3
-        for square in self.board.children:
-            if square.row in range(toprow, bottomrow+1):
-                square.valid = True
-            else:
-                square.valid = False
-        self.board.enable_valid_squares()
-        self.activeplayer.bind(pieces_on_board = self.pieces_are_all_placed)
 
+
+#boolean helper functions
     def pieces_are_all_placed(self, *args):
-        if self.activeplayer.pieces_on_board != 40:
-            return
+        if self.activeplayer.pieces_left_to_be_placed > 0:
+            return False
 
         print("pieces placed")
-        if self.activeplayer == self.player1:
-            self.swap_active_player()
-            self.player_start()
-        else:
-            self.gamestate = 1
+        return True
+
+    def piece_belongs_to_activeplayer(self, piece):
+        if piece.player_color == self.activeplayer.color:
+            return True
+        return False
 
 
+#conflict
 
-
-#gameplay actions
-
-    def player_conflict(self, instance, idontknowwhythisishere, square, attacker):
+    def player_conflict(self, square):
         '''returns the winner of the conflict and destroys the loser'''
-        if square.occupied is None:
-            self.board.officially_place_on_square(square, attacker)
-            return
-
+        attacker = self.pieceinhand
         defender = square.occupied
+
+
         winner = None
         loser = None
 
@@ -148,11 +183,9 @@ class StrategoGame(FloatLayout):
             loser = attacker
 
         #delete the losing piece, or move it to sidebar??
-        piece_death(loser)
+        self.piece_death(loser)
 
-        self.board.officially_place_on_square(square, winner)
-
-
+        self.officially_place_on_square(square, winner)
 
     def piece_death(self, piece):
         piece.dead = True
@@ -163,6 +196,8 @@ class StrategoGame(FloatLayout):
                 #slot.disabled = True
                 break
         #there are not enough slots....
+
+
 
 
 
@@ -179,9 +214,10 @@ class StrategoGame(FloatLayout):
             templist.append(piece)
         while len(templist) > 0:
             piece = templist[randint(0,len(templist)-1)]
-            self.activeplayer.in_hand = piece
-            self.board.move_to_square(self.board.grid[x][y])
+            self.pieceinhand = piece
+            self.move_to_square(self.board.grid[x][y])
             templist.remove(piece)
+            self.activeplayer.pieces_left_to_be_placed -= 1
             if y == 9:
                 y = 0
                 x += 1

@@ -1,18 +1,14 @@
 <StrategoGame>:
     id: game
-    gamestate: -1
-    on_gamestate: self.change_gamestate()
-    activeplayer: None
+
 
     BoxLayout:
         GameBoard:
             id: board
-            player: game.activeplayer
             size_hint_x:10
 
         SideBoard:
             id: sidebar
-            player: game.activeplayer
             size_hint_x: 4
 
         BoxLayout:
@@ -23,7 +19,7 @@
 
             Button:
                 text: "start new game"
-                on_press: game.gamestate = 0
+                on_press: game.eventsobject.start_game_button_press()
 
             Button:
                 text: "place all pieces"
@@ -39,6 +35,7 @@
     background_normal: self.get_background_image()
     background_disabled_normal: self.get_disabled_image()
     border: (0,0,0,0)
+    on_press: self.parent.eventsobject.square_press(self)
 
 
 
@@ -51,6 +48,8 @@
     size_hint:(None, None)
     group: self.player_color
     border: (0,0,0,0)
+    on_press: self.eventsobject.gamepiece_press(self)
+
 
 
 
@@ -73,13 +72,7 @@
             bold: True
             pos_hint: {"x": -.4, "y": -.45}
 
-        #Label:
-            #text: gamepiece.get_name()
-            #bold: True
-            #font_size: gamepiece.width/4.5
-            #color: (0,0,0,1)
 
-            #pos_hint_y: .2
 
 
 
