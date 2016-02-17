@@ -12,7 +12,12 @@ class Player(Widget):
 
         for piecenumber in pieceamounts:
             for i in range(pieceamounts[piecenumber]):
-                self.pieces.append((GamePiece(piecenumber, self.color)))
+                temp = GamePiece(piecenumber, self.color)
+                self.pieces.append(temp)
+                if self.color == "Red":
+                    temp.reveal_image()
+                else:
+                    temp.hide_image()
 
 
     def activate_player_pieces(self):
