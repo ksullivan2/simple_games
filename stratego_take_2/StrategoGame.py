@@ -144,7 +144,7 @@ class StrategoGame(FloatLayout):
         return True
 
     def piece_belongs_to_activeplayer(self, piece):
-        if piece.player_color == activeplayer.color:
+        if piece.player_color == self.activeplayer.color:
             return True
         return False
 

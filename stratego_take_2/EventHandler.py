@@ -77,15 +77,13 @@ class EventsMethods(EventDispatcher):
             self.game.change_gamestate(4)
         elif self.game.gamestate == 4:
             if self.game.piece_belongs_to_activeplayer(instance):
-                self.game.remove_from_hand()
+                self.game.clear_hand()
                 self.game.change_gamestate(3)
             else:
                 self.game.change_gamestate(5)
         #nothing for state 5 and 6
 
     def square_press(self,instance):
-        print(instance.id)
-        #make sure that during state 1, it -=1 to pieces left to be placed
         if self.game.gamestate == 1:
             self.game.move_to_square(instance)
             self.game.update_pieces_left_to_be_placed(instance)
