@@ -105,7 +105,7 @@ class StrategoGame(FloatLayout):
             else:
                 self.activeplayer.pieces_left_to_be_placed -=1
 
-    def move_to_square(self, square):
+    def move_to_square(self, square, on_complete=None):
         piece = self.pieceinhand
 
         #remove it from the previous spot and put it on new one
@@ -113,7 +113,8 @@ class StrategoGame(FloatLayout):
 
         #piece's animation
         piece.moveanim = Animation(pos = square.pos)
-        piece.moveanim.bind(on_complete = partial(self.eventsobject.anim_on_complete, self, square))
+        if on_complete:
+            piece.moveanim.bind(on_complete = partial(on_complete, self, square))
         piece.moveanim.start(piece)
 
         #this is necessary since this method is also used before player conflict

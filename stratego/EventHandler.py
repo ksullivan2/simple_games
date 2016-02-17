@@ -76,7 +76,8 @@ class EventsMethods(EventDispatcher):
                 self.game.clear_hand()
                 self.game.change_gamestate(GameState.gameplay_no_piece)
             else:
-                self.game.move_to_square(instance.spot)
+                # not obvious anim_on_complete would be called here!
+                self.game.move_to_square(instance.spot, on_complete=self.anim_on_complete)
                 self.game.change_gamestate(GameState.conflict)
         #nothing for state 5 and 6
 
@@ -92,17 +93,14 @@ class EventsMethods(EventDispatcher):
     def square_press(self,instance):
         if self.game.gamestate == GameState.setup_selected_piece:
             self.game.update_pieces_left_to_be_placed(instance)
-            self.game.move_to_square(instance)
-            #see "anim_on_complete" for the rest of the actions
+            self.game.move_to_square(instance, on_complete=self.anim_on_complete)
         if self.game.gamestate == GameState.game_selected_piece:
-            self.game.move_to_square(instance)
-            #see "anim_on_complete" for the rest of the actions
+            self.game.move_to_square(instance, on_complete=self.anim_on_complete)
 
 
     def anim_on_complete(self, instance, square, *args):
         if self.game.gamestate == GameState.setup_selected_piece:
             self.game.change_gamestate(GameState.setup_no_piece)
-
 
         elif self.game.gamestate == GameState.game_selected_piece:
             self.game.swap_active_player()
@@ -112,4 +110,4 @@ class EventsMethods(EventDispatcher):
             self.game.player_conflict(square)
             #i want to add conflict animation here
             self.game.swap_active_player()
-            self.game.change_gamestate(GaneState.gameplay_no_piece)
+            self.game.change_gamestate(GameState.gameplay_no_piece)
