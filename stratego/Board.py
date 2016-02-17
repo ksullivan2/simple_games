@@ -3,7 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty
 from ResizeBehavior import *
-from functools import partial
+
 from Square import *
 
 from GamePiece import *

@@ -3,6 +3,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.properties import ObjectProperty
 from kivy.animation import Animation
 from math import sin, cos
+from functools import partial
 from ResizeBehavior import *
 
 
@@ -55,8 +56,16 @@ class GamePiece(ToggleButton):
         anim += Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")
         anim += Animation(pos = (xcenter + radius , ycenter - radius/2), t = "in_out_back")
 
+        if direction == 1:
+            anim.bind(on_complete = (partial(self.winner_animation)))
+
         return anim
 
+
+    def winner_animation(self, *args):
+        self.sizeanim = Animation(size = (self.width*1.5, self.height*1.5), t = "out_bounce")
+        self.sizeanim += Animation(size = (self.width, self.height), t = "out_bounce", pos = self.spot.pos)
+        self.sizeanim.start(self)
 
 
 
