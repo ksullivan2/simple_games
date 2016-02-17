@@ -3,8 +3,12 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.graphics.instructions import *
+from kivy.clock import Clock
+#from kivy.animation import *
 
 from random import randint
+from math import sin, cos
+
 from ResizeBehavior import *
 from functools import partial
 from Square import *
@@ -37,8 +41,6 @@ class StrategoGame(FloatLayout):
 
         #board also needs to know the active player
         self.board.activeplayer = self.activeplayer
-
-
 
 
 
@@ -111,8 +113,8 @@ class StrategoGame(FloatLayout):
         piece.spot.occupied = None
 
         #piece's animation
-        piece.moveanim = Animation(pos = square.pos)
-        piece.moveanim.bind(on_complete = partial(self.eventsobject.anim_on_complete, self, square))
+        piece.moveanim = Animation(pos = square.pos, t = "out_expo")
+        piece.moveanim.bind(on_complete = partial(self.eventsobject.moveanim_on_complete, self, square))
         piece.moveanim.start(piece)
 
         #this is necessary since this method is also used before player conflict
@@ -172,15 +174,13 @@ class StrategoGame(FloatLayout):
         #special cases first
         if defender.number == 0:
             pass
-            #game over
+            #game over, need to write this
         elif (attacker.number == 1 and defender.number == 10) or \
                 (attacker.number == 3 and defender.number == 11) or \
                 (attacker.number >= defender.number):
-            print("attacker wins")
             winner = attacker
             loser = defender
         else:
-            print("defender wins")
             winner = defender
             loser = attacker
 
@@ -188,6 +188,42 @@ class StrategoGame(FloatLayout):
         self.piece_death(loser)
 
         self.officially_place_on_square(square, winner)
+
+    def conflict_animation(self, instance):
+        radius = 100
+        xcenter, ycenter = instance.pos
+
+        #current angle IN RADIANS
+        #6.28319 radians in 360 degress
+        #starts at 90 deg
+        angle = 1.57
+
+        #speed IN RADIANS per frame
+        speed = .25
+
+        instance.anim = Animation(pos = (xcenter + radius, ycenter))
+
+
+        while angle < 6.28+1.57:
+            newx = radius * sin(angle) + xcenter
+            newy = radius * cos(angle) + ycenter
+            print(newx,newx)
+
+            instance.anim += Animation(pos = (newx,newy), d = .05)
+            angle += speed
+
+        instance.anim += Animation(pos = (xcenter, ycenter))
+
+        instance.anim.start(instance)
+
+
+
+        #conflictanim = Animation(pos = (xcenter + radius, ycenter))
+
+        #return conflictanim
+
+
+
 
     def piece_death(self, piece):
         piece.dead = True

@@ -100,7 +100,7 @@ class EventsMethods(EventDispatcher):
             #see "anim_on_complete" for the rest of the actions
 
 
-    def anim_on_complete(self, instance, square, *args):
+    def moveanim_on_complete(self, instance, square, *args):
         if self.game.gamestate == 1:
             self.game.change_gamestate(0)
 
@@ -112,6 +112,10 @@ class EventsMethods(EventDispatcher):
         elif self.game.gamestate == 5:
             self.game.player_conflict(square)
             #i want to add conflict animation here
+            self.game.swap_active_player()
+            self.game.change_gamestate(3)
+
+    def conflictanim_on_complete(self, instance, square, *args):
             self.game.swap_active_player()
             self.game.change_gamestate(3)
 
