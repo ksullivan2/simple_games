@@ -60,6 +60,7 @@ class GamePiece(ToggleButton):
         anim += Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")
         anim += Animation(pos = (xcenter + radius , ycenter - radius/2), t = "in_out_back")
 
+        # winner always goes in direction 1
         if direction == 1:
             anim.bind(on_complete = (partial(self.winner_animation)))
         else:
@@ -70,8 +71,8 @@ class GamePiece(ToggleButton):
 
     def winner_animation(self, *args):
         print(self.number, "winner")
-        self.winanim = Animation(size = (self.width*1.5, self.height*1.5), t = "out_bounce")
-        self.winanim += Animation(size = (self.width, self.height), t = "out_bounce", pos = self.spot.pos)
+        self.winanim = Animation(size = (self.width*1.5, self.height*1.5), pos = self.spot.pos, t = "out_bounce")
+        self.winanim += Animation(size = (self.width, self.height))
         self.winanim.bind(on_complete = self.parent.eventsobject.conflictanim_on_complete)
         self.winanim.start(self)
 

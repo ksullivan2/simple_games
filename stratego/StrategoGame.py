@@ -113,6 +113,13 @@ class StrategoGame(FloatLayout):
     def move_to_square(self, square):
         piece = self.pieceinhand
 
+        #the most recently added piece is highest on Z axis
+        #it's really annoying there's no other way to do this
+        #the check is so that it goes behind the winning piece if it's dying
+        if square.type != "sideboard":
+            self.remove_widget(piece)
+            self.add_widget(piece)
+
         #remove it from the previous spot and put it on new one
         piece.spot.occupied = None
 
@@ -189,6 +196,12 @@ class StrategoGame(FloatLayout):
             loser = attacker
 
         self.officially_place_on_square(square, winner)
+
+        #makes sure that the pieces are at the top of the Z axis
+        self.remove_widget(loser)
+        self.remove_widget(winner)
+        self.add_widget(loser)
+        self.add_widget(winner)
 
         winner.conflictanim = winner.conflict_animation(winner, 1)
         loser.conflictanim = loser.conflict_animation(loser, -1)
