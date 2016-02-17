@@ -32,6 +32,10 @@ class GamePiece(ToggleButton):
         '''first the pieces circle each other, then "joust" at each other
         direction is 1 for winner, -1 for loser'''
 
+        #make sure they look normal
+        instance.state = "normal"
+        instance.disabled = False
+
         #circle animation
         radius = 100*direction
         xcenter, ycenter = self.pos
@@ -58,7 +62,6 @@ class GamePiece(ToggleButton):
 
         if direction == 1:
             anim.bind(on_complete = (partial(self.winner_animation)))
-            anim.bind(on_complete = (partial(self.winner_animation)))
         else:
             anim.bind(on_complete = (partial(self.loser_animation)))
 
@@ -66,8 +69,10 @@ class GamePiece(ToggleButton):
 
 
     def winner_animation(self, *args):
+        print(self.number, "winner")
         self.winanim = Animation(size = (self.width*1.5, self.height*1.5), t = "out_bounce")
         self.winanim += Animation(size = (self.width, self.height), t = "out_bounce", pos = self.spot.pos)
+        self.winanim.bind(on_complete = self.parent.eventsobject.conflictanim_on_complete)
         self.winanim.start(self)
 
     def loser_animation(self, *args):
