@@ -84,7 +84,7 @@ class EventsMethods(EventDispatcher):
         #nothing for state 5 and 6
 
     def square_press(self,instance):
-        print(square.id)
+        print(instance.id)
         #make sure that during state 1, it -=1 to pieces left to be placed
         if self.game.gamestate == 1:
             self.game.move_to_square(instance)
@@ -93,7 +93,7 @@ class EventsMethods(EventDispatcher):
 
 
 
-    def piece_placed(self):
+    def piece_placed(self, *args):
         if self.game.pieces_are_all_placed():
             if self.game.activeplayer.color == "Red":
                 self.game.swap_active_player()
