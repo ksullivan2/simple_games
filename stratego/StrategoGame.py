@@ -27,8 +27,18 @@ class StrategoGame(FloatLayout):
 #gamestate actions
 
     def change_gamestate(self):
+        '''
+        activities associated with leaving the current state
+        change the current status to the new status
+        activities associated with entering the new state
+        '''
+        
+        #-1 is new window
         #0 is game setup
-        #1 is move during game
+        #1 is no piece selected
+        #2 is piece selected
+        #3 is player conflict
+
         if self.gamestate == 0:
             self.player_start()
 
@@ -37,10 +47,41 @@ class StrategoGame(FloatLayout):
                 slot.disabled = True
             self.swap_active_player()
 
+    def new_turn(self):
+        print("new turn")
+        self.swap_active_player()
+        self.board.clear_all_valid_markers()
+
+
+    def swap_active_player(self):
+        self.activeplayer.disable_player_pieces()
+        if self.activeplayer == self.player1:
+            self.activeplayer = self.player2
+        else:
+            self.activeplayer = self.player1
+        self.activeplayer.activate_player_pieces()
+        print(self.activeplayer.color)
+
+
+#interacting with the "hand"
+    def place_in_hand(self, piece):
+        self.activeplayer.in_hand = piece
+
+        if self.gamestate == 1:
+            self.board.highlight_valid_moves_during_game()
+
+
+    def clear_hand(self):
+        self.activeplayer.in_hand = None
+
+        if self.gamestate == 1:
+            self.board.clear_all_valid_markers()
+
+#creating players
 
     def player_start(self):
         self.create_piece_widgets()
-        self.setup_to_place_pieces()
+        self.setup_gamestate_1()
 
 
     def create_piece_widgets(self):
@@ -51,7 +92,8 @@ class StrategoGame(FloatLayout):
             piece.size = square.size
             square.occupied = True
 
-    def setup_to_place_pieces(self):
+    def setup_gamestate_1(self):
+        '''activates the appropriate rows for each player'''
         if self.activeplayer.color == "Red":
             toprow = 6
             bottomrow = 9
@@ -78,23 +120,10 @@ class StrategoGame(FloatLayout):
             self.gamestate = 1
 
 
-    def new_turn(self):
-        print("new turn")
-        self.swap_active_player()
-        self.board.clear_all_valid_markers()
 
 
-    def swap_active_player(self):
-        self.activeplayer.disable_player_pieces()
-        if self.activeplayer == self.player1:
-            self.activeplayer = self.player2
-        else:
-            self.activeplayer = self.player1
-        self.activeplayer.activate_player_pieces()
-        print(self.activeplayer.color)
+#gameplay actions
 
-
-# game actions
     def player_conflict(self, instance, idontknowwhythisishere, square, attacker):
         '''returns the winner of the conflict and destroys the loser'''
         if square.occupied is None:
@@ -119,26 +148,22 @@ class StrategoGame(FloatLayout):
             loser = attacker
 
         #delete the losing piece, or move it to sidebar??
-        loser.piece_death()
+        piece_death(loser)
 
         self.board.officially_place_on_square(square, winner)
 
 
 
+    def piece_death(self, piece):
+        piece.dead = True
+        for slot in self.sidebar.children:
+            if slot.occupied is None:
+                #self.state = "normal"
+                self.move_to_square(slot)
+                #slot.disabled = True
+                break
+        #there are not enough slots....
 
-#interacting with the "hand"
-    def place_in_hand(self, piece):
-        self.activeplayer.in_hand = piece
-
-        if self.gamestate == 1:
-            self.board.highlight_valid_moves_during_game()
-
-
-    def clear_hand(self):
-        self.activeplayer.in_hand = None
-
-        if self.gamestate == 1:
-            self.board.clear_all_valid_markers()
 
 
 #debug functions
