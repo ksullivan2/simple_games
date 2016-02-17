@@ -96,8 +96,7 @@ class EventsMethods(EventDispatcher):
         if self.game.pieces_are_all_placed():
             if self.game.activeplayer.color == "Red":
                 self.game.swap_active_player()
-                self.game.change_gamestate(0)
+                self.game.change_gamestate(-1)
             else:
-                self.game.swap_active_player()
-                self.game.change_gamestate(1)
+                self.game.change_gamestate(2)
 

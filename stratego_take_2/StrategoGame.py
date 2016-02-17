@@ -51,12 +51,16 @@ class StrategoGame(FloatLayout):
         elif self.gamestate == 0:
             pass
 
-
-        elif self.gamestate == 3:
-            #move this to LEAVING state 2
+        elif self.gamestate == 2:
             for slot in self.sidebar.children:
                 slot.disabled = True
             self.swap_active_player()
+            self.change_gamestate(3)
+
+
+        elif self.gamestate == 3:
+            pass
+
 
 
 
