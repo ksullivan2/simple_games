@@ -57,10 +57,7 @@ class EventsMethods(EventDispatcher):
 
 
     def start_game_button_press(self, *args):
-        print("start button press")
-
         if self.game.gamestate in (-2,2):
-
             self.game.change_gamestate(-1)
 
     def gamepiece_press(self, instance):
@@ -83,23 +80,30 @@ class EventsMethods(EventDispatcher):
                 self.game.change_gamestate(5)
         #nothing for state 5 and 6
 
-    def square_press(self,instance):
-        if self.game.gamestate == 1:
-            self.game.move_to_square(instance)
-            self.game.update_pieces_left_to_be_placed(instance)
-            self.game.change_gamestate(0)
-
-        if self.game.gamestate == 4:
-            self.game.move_to_square(instance)
-            self.game.swap_active_player()
-            self.game.change_gamestate(3)
-
-
     def piece_placed(self, *args):
+        #only relevant in game setup
         if self.game.pieces_are_all_placed():
             if self.game.activeplayer.color == "Red":
                 self.game.swap_active_player()
                 self.game.change_gamestate(-1)
             else:
                 self.game.change_gamestate(2)
+
+    def square_press(self,instance):
+        if self.game.gamestate in (1,4):
+            self.game.move_to_square(instance)
+            #see "anim_on_complete" for the rest of the actions
+
+
+    def anim_on_complete(self, *args):
+        if self.game.gamestate == 1:
+            self.game.change_gamestate(0)
+            self.game.update_pieces_left_to_be_placed(instance)
+
+        elif self.game.gamestate == 4:
+            self.game.swap_active_player()
+            self.game.change_gamestate(3)
+
+        #self.game.parent.player_conflict, attacker= piece,
+                                                #square= square)
 

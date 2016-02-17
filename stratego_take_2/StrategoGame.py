@@ -112,8 +112,7 @@ class StrategoGame(FloatLayout):
 
         #piece's animation
         piece.moveanim = Animation(pos = piece.spot.pos)
-        #piece.moveanim.bind(on_complete = partial(self.parent.parent.player_conflict, attacker= piece,
-                                                #square= square))
+        piece.moveanim.bind(on_complete = self.eventsobject.anim_on_complete)
         piece.moveanim.start(piece)
 
     #def officially_place_on_square(self, square, piece):
