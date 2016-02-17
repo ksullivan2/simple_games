@@ -30,12 +30,6 @@ class Square(Button):
             return "atlas://data/images/defaulttheme/button_disabled"
 
 
-    def on_press(self):
-         #if self.occupied is None:
-         self.parent.move_to_square(self)
-         #else:
-             #self.parent.player_conflict()
-
 
 
 
