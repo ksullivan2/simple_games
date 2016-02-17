@@ -56,6 +56,9 @@ class GameBoard(Board):
                     temp = Square(i,j, "land")
                 self.add_square_to_grid(i,temp)
 
+                #debug
+                #temp.bind(occupied = temp.test_occupied)
+
 
     def highlight_valid_game_setup_rows(self):
         '''activates the appropriate rows for each player'''
@@ -104,6 +107,10 @@ class GameBoard(Board):
                 square.disabled = True
 
     def test_for_valid_square(self, square):
+        #debug
+        #if square.occupied is not None and not self.piece_belongs_to_activeplayer(square.occupied):
+            #print("detected", square.occupied.id)
+
         if square.type == "land":
             if square.occupied is None or \
                 not self.piece_belongs_to_activeplayer(square.occupied):

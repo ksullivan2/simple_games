@@ -29,8 +29,12 @@ class Square(Button):
         else:
             return "atlas://data/images/defaulttheme/button_disabled"
 
-
-
+    #debug
+    def test_occupied(self, *args):
+        if self.occupied is not None:
+            print(self.id + " now has " + self.occupied.id + "on it")
+        else:
+            print(self.id + "is empty")
 
 
 

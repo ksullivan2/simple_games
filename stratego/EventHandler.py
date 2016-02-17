@@ -60,6 +60,9 @@ class EventsMethods(EventDispatcher):
             self.game.change_gamestate(GameState.player_setup)
 
     def gamepiece_press(self, instance):
+        #debug
+        #print(instance.spot.occupied.id, "pressed")
+
         if self.game.gamestate == GameState.setup_no_piece:
             self.game.place_in_hand(instance)
             self.game.change_gamestate(GameState.setup_selected_piece)

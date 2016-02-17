@@ -48,7 +48,10 @@ class StrategoGame(FloatLayout):
 #gamestate actions
 
     def change_gamestate(self, newstate):
-        print("swap", self.gamestate, "to", newstate)
+
+        #debug
+        #print("swap", self.gamestate, "to", newstate)
+
         self.gamestate = newstate
 
         if self.gamestate == GameState.player_setup:
@@ -89,7 +92,9 @@ class StrategoGame(FloatLayout):
         self.board.activeplayer = self.activeplayer
 
         self.activeplayer.activate_player_pieces()
-        print("swap activeplayer to " + self.activeplayer.color)
+
+        #debug
+        #print("swap activeplayer to " + self.activeplayer.color)
 
 
 #interacting with the "hand"
@@ -120,10 +125,8 @@ class StrategoGame(FloatLayout):
 
         #the most recently added piece is highest on Z axis
         #it's really annoying there's no other way to do this
-        #the check is so that it goes behind the winning piece if it's dying
-        if square.type != "sideboard":
-            self.remove_widget(piece)
-            self.add_widget(piece)
+        self.remove_widget(piece)
+        self.add_widget(piece)
 
         #remove it from the previous spot and put it on new one
         piece.spot.occupied = None
@@ -143,6 +146,11 @@ class StrategoGame(FloatLayout):
         piece.spot = square
         square.occupied = piece
         piece.state = "normal"
+
+        #debug
+        #print(piece.id, square.occupied.id)
+
+
 
 
 
@@ -169,8 +177,9 @@ class StrategoGame(FloatLayout):
     def pieces_are_all_placed(self, *args):
         if self.activeplayer.pieces_left_to_be_placed > 0:
             return False
+        #debug
+        # print("pieces placed")
 
-        print("pieces placed")
         return True
 
     def piece_belongs_to_activeplayer(self, piece):
@@ -182,7 +191,7 @@ class StrategoGame(FloatLayout):
 #conflict
 
     def player_conflict(self, square):
-        '''returns the winner of the conflict and destroys the loser'''
+        '''does the conflict animation, moves winner to square and "kills" loser'''
         attacker = self.pieceinhand
         defender = square.occupied
 
@@ -217,16 +226,27 @@ class StrategoGame(FloatLayout):
 
 
     def piece_death(self, instance, piece, *args):
-        print(piece.number, "dead")
+        #debug
+        # print(piece.number, "dead")
+
+        #kill the beast! (umm... piece...)
         piece.dead = True
-        self.pieceinhand = piece
+
+        #find an empty slot on the sidebar.
+        #there are not enough slots.... fix this later
+        deadslot = None
         for slot in self.sidebar.children:
             if slot.occupied is None:
-                self.move_to_square(slot)
-                piece.disabled = True
+                deadslot = slot
                 break
-        #there are not enough slots....
 
+        piece.disabled = True
+
+        #piece's animation
+        piece.moveanim = Animation(pos = deadslot.pos, t = "out_expo")
+        piece.moveanim.start(piece)
+
+        self.officially_place_on_square(deadslot, piece)
 
 
 

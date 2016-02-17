@@ -13,6 +13,7 @@ class GamePiece(ToggleButton):
     def __init__(self, number, color, **kwargs):
         self.number = number
         self.player_color = color
+        self.id = self.player_color + str(self.number)
         self.dead = False
         self.moveanim = Animation()
 
@@ -70,7 +71,6 @@ class GamePiece(ToggleButton):
 
 
     def winner_animation(self, *args):
-        print(self.number, "winner")
         self.winanim = Animation(size = (self.width*1.5, self.height*1.5), pos = self.spot.pos, t = "out_bounce")
         self.winanim += Animation(size = (self.width, self.height))
         self.winanim.bind(on_complete = self.parent.eventsobject.conflictanim_on_complete)
