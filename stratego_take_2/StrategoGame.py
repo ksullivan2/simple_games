@@ -25,15 +25,20 @@ class StrategoGame(FloatLayout):
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
 
+        #gamestatus
+        self.activeplayer = self.player1
+        self.pieceinhand = None
+        self.gamestate = -2
+
         #set up event handlers for all relevant widgets
         self.eventsobject = EventsMethods(self)
         self.board.eventsobject = self.eventsobject
         self.sidebar.eventsobject = self.eventsobject
 
-        #gamestatus
-        self.activeplayer = self.player1
-        self.pieceinhand = None
-        self.gamestate = -2
+        #board also needs to know the active player
+        self.board.activeplayer = self.activeplayer
+
+
 
 
 
@@ -45,7 +50,7 @@ class StrategoGame(FloatLayout):
 
         if self.gamestate == -1:
             self.player_start()
-            self.board.highlight_valid_game_setup_rows(self.activeplayer)
+            self.board.highlight_valid_game_setup_rows()
             self.change_gamestate(0)
 
         elif self.gamestate == 0:
@@ -54,12 +59,17 @@ class StrategoGame(FloatLayout):
         elif self.gamestate == 2:
             for slot in self.sidebar.children:
                 slot.disabled = True
-            self.swap_active_player()
             self.change_gamestate(3)
+            self.swap_active_player()
 
 
         elif self.gamestate == 3:
-            pass
+            self.board.clear_all_valid_markers()
+
+
+
+        elif self.gamestate == 4:
+            self.board.highlight_valid_moves_during_game(self.pieceinhand)
 
 
 

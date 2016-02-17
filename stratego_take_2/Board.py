@@ -22,8 +22,6 @@ class Board(GridLayout):
         self.grid[row].append(square)
         self.add_widget(square)
 
-        #need to set a reference to the event dispatcher object upon widget creation
-        #square.bind(on_press = self.eventsobject.square_press)
 
 
 class SideBoard(Board):
@@ -59,9 +57,9 @@ class GameBoard(Board):
                 self.add_square_to_grid(i,temp)
 
 
-    def highlight_valid_game_setup_rows(self, activeplayer):
+    def highlight_valid_game_setup_rows(self):
         '''activates the appropriate rows for each player'''
-        if activeplayer.color == "Red":
+        if self.activeplayer.color == "Red":
             toprow = 6
             bottomrow = 9
         else:
@@ -77,9 +75,7 @@ class GameBoard(Board):
 
 
 
-    def highlight_valid_moves_during_game(self, *args):
-        piece = self.player.in_hand
-
+    def highlight_valid_moves_during_game(self, piece, *args):
         if piece.max_spaces == 0:
             return
 
@@ -101,7 +97,7 @@ class GameBoard(Board):
             if square.valid:
                 square.disabled = False
                 if square.occupied is not None and \
-                    square.occupied.player_color != self.parent.parent.activeplayer.color:
+                    square.occupied.player_color != self.activeplayer.color:
                     square.occupied.disabled = False
 
             else:
@@ -110,7 +106,7 @@ class GameBoard(Board):
     def test_for_valid_square(self, square):
         if square.type == "land":
             if square.occupied is None or \
-                square.occupied.player_color != self.player.color:
+                square.occupied.player_color != self.activeplayer.color:
                 return True
         return False
 
