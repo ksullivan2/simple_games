@@ -319,16 +319,20 @@ class StrategoGame(FloatLayout):
 
 
     def create_place_pieces_popup(self):
-        self.pp_popup = Popup(title = "Instructions")
-        self.pp_popup.center = (self.board.center_x, self.board.center_y + self.board.height/4)
+        self.pp_popup = Popup(title = "Instructions", size = (1000,800))
+        self.pp_popup.center = (self.board.center_x, self.board.center_y)
         self.pp_popup.instructions = "The purpose of the game is to capture your opponent's flag.\n" \
-                                        "Place your pieces on the highlighted squares in a strategic formation."
+                                    "Place your pieces on the highlighted squares in a strategic formation.\n\n" \
+                                    "RULES:\nHigher numbered pieces capture lower pieces.\nAttacker wins in a tie.\n" \
+                                    "3s can defuse bombs.\n2s can move unlimited spaces.\n" \
+                                    "1s are Spies and can capture 10s only if the Spy attacks."
+
         self.pp_popup.startbuttontext = "Got it!"
         self.pp_popup.buttonpress = partial(self.remove_widget, self.pp_popup)
 
         self.qpp_button = Button(text= "Impatient? Click to randomly place the rest of your pieces.",
                                on_press = self.quick_place_pieces_callback, pos = (self.board.center_x -
-                                self.pp_popup.width/2, self.board.center_y + self.board.height/4),
+                                self.pp_popup.width/2, self.board.center_y),
                                  size_hint = (None, None), size = (self.pp_popup.width, 100))
 
         self.add_widget(self.qpp_button)
