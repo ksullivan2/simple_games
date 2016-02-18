@@ -45,7 +45,7 @@ class GamePiece(ToggleButton):
         #this state will only be used for movement, so I use the bright color but disable the button
         self.background_disabled_down = "images/" + self.player_color + "/normal/back.png"
 
-    def conflict_animation(self, instance, direction):
+    def conflict_animation(self, instance, direction, won):
         '''first the pieces circle each other, then "joust" at each other
         direction is 1 for winner, -1 for loser'''
 
@@ -67,6 +67,7 @@ class GamePiece(ToggleButton):
 
         anim = Animation(pos = (xcenter + radius, ycenter), d = .1)
 
+
         while angle < 6.28+1.57:
             newx = radius * sin(angle) + xcenter
             newy = radius * cos(angle) + ycenter
@@ -74,16 +75,25 @@ class GamePiece(ToggleButton):
             anim += Animation(pos = (newx,newy), d = .03)
             angle += speed
 
-        anim += Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")
+        anim.bind(on_complete = partial(self.conflict_anim_p2, instance, direction, radius, xcenter, ycenter, won))
+        return anim
+
+
+    def conflict_anim_p2(self, instance, direction, radius, xcenter, ycenter, won, *args):
+        '''has to be separate because of the image switch'''
+
+        instance.background_disabled_down =  "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
+
+        anim = Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")
         anim += Animation(pos = (xcenter + radius , ycenter - radius/2), t = "in_out_back")
 
-        # winner always goes in direction 1
-        if direction == 1:
+
+        if won:
             anim.bind(on_complete = (partial(self.winner_animation)))
         else:
             anim.bind(on_complete = (partial(self.loser_animation)))
 
-        return anim
+        anim.start(instance)
 
 
     def winner_animation(self, *args):

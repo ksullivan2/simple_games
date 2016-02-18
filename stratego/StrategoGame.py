@@ -275,8 +275,10 @@ class StrategoGame(FloatLayout):
         self.add_widget(loser)
         self.add_widget(winner)
 
-        winner.conflictanim = winner.conflict_animation(winner, 1)
-        loser.conflictanim = loser.conflict_animation(loser, -1)
+        #attacker goes in positive direction, defender in -1
+        #then pass in boolean for if they won
+        attacker.conflictanim = attacker.conflict_animation(attacker, 1, winner==attacker)
+        defender.conflictanim = defender.conflict_animation(defender, -1, winner==defender)
         winner.conflictanim.start(winner)
         loser.conflictanim.start(loser)
 

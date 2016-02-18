@@ -139,6 +139,8 @@ class EventsMethods(EventDispatcher):
     def conflictanim_on_complete(self, something, instance, *args):
         # it was "down" before for visual reasons
         instance.state = "normal"
+        if instance.player_color == "Blue":
+            instance.hide_image()
 
         self.game.swap_active_player()
         if self.game.winner is None:
