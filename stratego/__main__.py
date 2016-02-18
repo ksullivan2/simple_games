@@ -12,7 +12,7 @@ from StrategoGame import *
 
 
 
-Window.size = (1070, 700)
+Window.size = (1000, 700)
 
 
 

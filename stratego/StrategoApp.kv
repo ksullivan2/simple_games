@@ -11,24 +11,6 @@
             id: sidebar
             size_hint_x: 4
 
-        BoxLayout:
-            id: debug
-            #change window size back to 1000 when you delete this
-            size_hint_x: 2
-            orientation: "vertical"
-
-            Button:
-                id: newgame
-                text: "start new game"
-                on_press: game.eventsobject.start_game_button_press()
-
-            Button:
-                text: "place all pieces"
-                on_press: game.quick_place_pieces()
-
-            Button:
-                text: "gamestate 1"
-                on_press: game.gamestate = 1
 
 
 <Popup>:
