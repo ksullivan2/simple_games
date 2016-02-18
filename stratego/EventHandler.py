@@ -56,8 +56,10 @@ class EventsMethods(EventDispatcher):
 
 
     def start_game_button_press(self, *args):
-        if self.game.gamestate in (GameState.start_popup, GameState.pieces_placed):
+        if self.game.gamestate == GameState.start_popup:
             self.game.change_gamestate(GameState.player_setup)
+            self.game.remove_widget(self.game.startpopup)
+
 
     def gamepiece_press(self, instance):
         #debug

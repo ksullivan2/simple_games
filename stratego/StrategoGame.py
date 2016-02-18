@@ -3,6 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty, OptionProperty
 from kivy.graphics.instructions import *
+from Popups import *
 from kivy.clock import Clock
 
 
@@ -43,7 +44,10 @@ class StrategoGame(FloatLayout):
         #board also needs to know the active player
         self.board.activeplayer = self.activeplayer
 
-
+        #create the start game popup
+        self.startpopup = StartGamePopup(center = (300,400))
+        self.startpopup.ids["startbutton"].bind(on_press = self.eventsobject.start_game_button_press)
+        self.add_widget(self.startpopup)
 
 #gamestate actions
 

@@ -31,6 +31,26 @@
                 on_press: game.gamestate = 1
 
 
+<StartGamePopup>:
+    id: startpopup
+    size_hint: None, None
+    size: (1000,700)
+    title: "STRATEGO"
+    title_align: "center"
+    auto_dismiss: True
+    on_dismiss: print("dismissed")
+    content:
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            size_hint_y: 2
+            text: "Test your mettle in a game of strategy and cunning!"
+        Button:
+            id: startbutton
+            text: "Start a new game!"
+
+
+
 
 
 <Square>:
