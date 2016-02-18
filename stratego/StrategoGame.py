@@ -121,7 +121,8 @@ class StrategoGame(FloatLayout):
         self.pp_popup.buttonpress = partial(self.remove_widget, self.pp_popup)
 
         self.qpp_button = Button(text= "Impatient? Click to randomly place the rest of your pieces.",
-                               on_press = self.quick_place_pieces_callback, pos = self.pp_popup.pos, size = (100,100))
+                               on_press = self.quick_place_pieces_callback, center = self.pp_popup.center,
+                                 size_hint = (None,None), size = (self.pp_popup.width, 100))
 
         self.add_widget(self.qpp_button)
         self.add_widget(self.pp_popup)
