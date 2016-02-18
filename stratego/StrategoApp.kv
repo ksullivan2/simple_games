@@ -51,14 +51,18 @@
     border: (0,0,0,0)
     on_press: self.eventsobject.gamepiece_press(self)
 
+
     RelativeLayout:
         center: root.center
         on_size: self.size = root.size
+        id: layout
 
         canvas:
+
             Color:
-                rgb: 0,0,0
+                rgba: 0,0,0,1
             Ellipse:
+                id: circle
                 size: (root.width/2.5, root.height/3)
                 pos: -15, -20
         Label:

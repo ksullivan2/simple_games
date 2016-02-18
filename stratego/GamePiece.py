@@ -25,6 +25,8 @@ class GamePiece(ToggleButton):
         else:
             self.max_spaces = 1
         super(GamePiece, self).__init__()
+        for key in self.ids.keys():
+            print(key)
 
     def get_name(self):
         return names[self.number]
@@ -44,6 +46,9 @@ class GamePiece(ToggleButton):
 
         #this state will only be used for movement, so I use the bright color but disable the button
         self.background_disabled_down = "images/" + self.player_color + "/normal/back.png"
+
+        #turns the opacity on the number in a circle down to 0
+        self.ids["layout"].opacity = 0
 
     def conflict_animation(self, instance, direction, won):
         '''first the pieces circle each other, then "joust" at each other
@@ -83,6 +88,7 @@ class GamePiece(ToggleButton):
         '''has to be separate because of the image switch'''
 
         instance.background_disabled_down =  "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
+        self.ids["layout"].opacity = 1
 
         anim = Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")
         anim += Animation(pos = (xcenter + radius , ycenter - radius/2), t = "in_out_back")
