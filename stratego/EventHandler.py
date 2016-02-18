@@ -102,6 +102,10 @@ class EventsMethods(EventDispatcher):
 
     def piece_placed(self, *args):
         #only relevant in game setup
+
+        #debug
+        #print(self.game.activeplayer.pieces_left_to_be_placed)
+
         if self.game.pieces_are_all_placed() and self.game.activeplayer.color == "Red":
             self.game.create_ready_popup()
 

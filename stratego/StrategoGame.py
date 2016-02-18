@@ -118,11 +118,10 @@ class StrategoGame(FloatLayout):
 #moving pieces around the board
 
     def update_pieces_left_to_be_placed(self, square):
-        if self.pieceinhand.spot.type != "sideboard":
-            if square.type == "sideboard":
-                self.activeplayer.pieces_left_to_be_placed += 1
-            else:
-                self.activeplayer.pieces_left_to_be_placed -=1
+        if square.type == "sideboard":
+            self.activeplayer.pieces_left_to_be_placed += 1
+        else:
+            self.activeplayer.pieces_left_to_be_placed -=1
 
     def move_to_square(self, square, on_complete=None):
         piece = self.pieceinhand
