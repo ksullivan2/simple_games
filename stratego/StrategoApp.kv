@@ -52,21 +52,20 @@
     on_press: self.eventsobject.gamepiece_press(self)
 
     RelativeLayout:
-        #orientation: "vertical"
-        center: gamepiece.center
-        on_size: self.size = gamepiece.size
+        center: root.center
+        on_size: self.size = root.size
 
         canvas:
             Color:
                 rgb: 0,0,0
             Ellipse:
-                size: (gamepiece.width/2.5, gamepiece.height/3)
+                size: (root.width/2.5, root.height/3)
                 pos: -15, -20
         Label:
             id: number
-            text: str(gamepiece.number)
+            text: str(root.number)
             color: (1,1,1,1)
-            font_size: gamepiece.height/4
+            font_size: root.height/4
             bold: True
             pos_hint: {"x": -.4, "y": -.45}
 
