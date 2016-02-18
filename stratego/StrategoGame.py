@@ -51,7 +51,7 @@ class StrategoGame(FloatLayout):
     def change_gamestate(self, newstate):
 
         #debug
-        #print("swap", self.gamestate, "to", newstate)
+        print("swap", self.gamestate, "to", newstate)
 
         self.gamestate = newstate
 
@@ -62,7 +62,7 @@ class StrategoGame(FloatLayout):
             self.change_gamestate(GameState.setup_no_piece)
 
         elif self.gamestate == GameState.setup_no_piece:
-            pass
+            self.activeplayer.activate_player_pieces()
 
         elif self.gamestate == GameState.pieces_placed:
             for slot in self.sidebar.children:
@@ -170,7 +170,7 @@ class StrategoGame(FloatLayout):
         piece.spot.occupied = None
 
         #piece's animation
-        piece.moveanim = Animation(pos = square.pos, t = "out_expo")
+        piece.moveanim = Animation(pos = square.pos, t = "out_expo", d=.5)
         if on_complete:
             piece.moveanim.bind(on_complete = partial(on_complete, self, square))
 
