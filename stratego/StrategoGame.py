@@ -44,10 +44,7 @@ class StrategoGame(FloatLayout):
         #board also needs to know the active player
         self.board.activeplayer = self.activeplayer
 
-        #create the start game popup
-        self.startpopup = StartGamePopup(center = (300,400))
-        self.startpopup.ids["startbutton"].bind(on_press = self.eventsobject.start_game_button_press)
-        self.add_widget(self.startpopup)
+        self.create_start_game_popup()
 
 #gamestate actions
 
@@ -61,6 +58,7 @@ class StrategoGame(FloatLayout):
         if self.gamestate == GameState.player_setup:
             self.player_start()
             self.board.highlight_valid_game_setup_rows()
+            self.create_place_pieces_popup()
             self.change_gamestate(GameState.setup_no_piece)
 
         elif self.gamestate == GameState.setup_no_piece:
@@ -99,6 +97,39 @@ class StrategoGame(FloatLayout):
 
         #debug
         #print("swap activeplayer to " + self.activeplayer.color)
+
+
+
+#creating popups
+    def create_start_game_popup(self):
+        self.startpopup = Popup()
+        self.startpopup.center = 670,700
+        #apparently the widgets aren't size yet when this is run, need to fix
+        #self.center = (self.center_x, self.center_y + self.board.height/2)
+        self.startpopup.instructions = "Test your mettle in a game of strategy and cunning!"
+        self.startpopup.startbuttontext = "Start a new game!"
+        self.startpopup.buttonpress = self.eventsobject.start_game_button_press
+        self.add_widget(self.startpopup)
+
+
+    def create_place_pieces_popup(self):
+        self.pp_popup = Popup(title = "Instructions")
+        self.pp_popup.center = (self.board.center_x, self.board.center_y + self.board.height/4)
+        self.pp_popup.instructions = "The purpose of the game is to capture your opponent's flag.\n" \
+                                        "Place your pieces on the highlighted squares in a strategic formation."
+        self.pp_popup.startbuttontext = "Got it!"
+        self.pp_popup.buttonpress = partial(self.remove_widget, self.pp_popup)
+
+        self.qpp_button = Button(text= "Impatient? Click to randomly place the rest of your pieces.",
+                               on_press = self.quick_place_pieces_callback, pos = self.pp_popup.pos, size = (100,100))
+
+        self.add_widget(self.qpp_button)
+        self.add_widget(self.pp_popup)
+
+    def quick_place_pieces_callback(self, *args):
+        self.quick_place_pieces()
+        self.remove_widget(self.qpp_button)
+
 
 
 #interacting with the "hand"
@@ -260,7 +291,7 @@ class StrategoGame(FloatLayout):
 
 #debug functions
 
-    def debug_place_pieces(self):
+    def quick_place_pieces(self, *args):
         if self.activeplayer.color =="Red":
             x = 6
         else:
