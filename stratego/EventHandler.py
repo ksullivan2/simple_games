@@ -57,8 +57,12 @@ class EventsMethods(EventDispatcher):
 
     def start_game_button_press(self, *args):
         if self.game.gamestate == GameState.start_popup:
-            self.game.change_gamestate(GameState.player_setup)
             self.game.remove_widget(self.game.startpopup)
+        elif self.game.gamestate == GameState.win:
+            self.game.remove_widget(self.game.winpopup)
+
+        self.game.change_gamestate(GameState.player_setup)
+
 
 
     def gamepiece_press(self, instance):
@@ -137,7 +141,10 @@ class EventsMethods(EventDispatcher):
         instance.state = "normal"
 
         self.game.swap_active_player()
-        self.game.change_gamestate(GameState.gameplay_no_piece)
+        if self.game.winner is None:
+            self.game.change_gamestate(GameState.gameplay_no_piece)
+        else:
+            self.game.change_gamestate(GameState.win)
 
 
 

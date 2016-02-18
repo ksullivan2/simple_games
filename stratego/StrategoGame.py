@@ -35,6 +35,7 @@ class StrategoGame(FloatLayout):
         self.activeplayer = self.player1
         self.pieceinhand = None
         self.gamestate = GameState.start_popup
+        self.winner = None
 
         #set up event handlers for all relevant widgets
         self.eventsobject = EventsMethods(self)
@@ -87,7 +88,25 @@ class StrategoGame(FloatLayout):
         elif self.gamestate == GameState.conflict:
             self.board.clear_all_valid_markers()
 
+        elif self.gamestate == GameState.win:
+            self.win_popup(self.winner)
 
+            #remove player widgets and unoccupy squares
+            for piece in self.player1.pieces:
+                self.remove_widget(piece)
+            for piece in self.player2.pieces:
+                self.remove_widget(piece)
+            for square in self.board.children:
+                square.occupied = None
+            for square in self.sidebar.children:
+                square.occupied = None
+
+
+
+            #clear winner property and create new player objects so that all the create methods work again
+            self.winner = None
+            self.player1 = Player("Red")
+            self.player2 = Player("Blue")
 
 
     def swap_active_player(self):
@@ -235,9 +254,9 @@ class StrategoGame(FloatLayout):
 
         #special cases first
         if defender.number == 0:
-            pass
-            #game over, need to write this
-        elif (attacker.number == 1 and defender.number == 10) or \
+            self.winner = attacker
+
+        if (attacker.number == 1 and defender.number == 10) or \
                 (attacker.number == 3 and defender.number == 11) or \
                 (attacker.number >= defender.number):
             winner = attacker
@@ -331,9 +350,17 @@ class StrategoGame(FloatLayout):
         self.remove_widget(self.readypopup)
         self.change_gamestate(GameState.setup_no_piece)
 
-
-
     def ready_callback(self, *args):
         self.remove_widget(self.readypopup)
         self.swap_active_player()
         self.change_gamestate(GameState.player_setup)
+
+    def win_popup(self, winner):
+        self.winpopup = Popup()
+        self.winpopup.center = 670,700
+        #apparently the widgets aren't size yet when this is run, need to fix
+        #self.center = (self.center_x, self.center_y + self.board.height/2)
+        self.winpopup.instructions = self.winner.player_color + " won the game!"
+        self.winpopup.startbuttontext = "Start a new game!"
+        self.winpopup.buttonpress = self.eventsobject.start_game_button_press
+        self.add_widget(self.winpopup)
