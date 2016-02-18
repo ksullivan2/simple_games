@@ -103,8 +103,7 @@ class EventsMethods(EventDispatcher):
     def piece_placed(self, *args):
         #only relevant in game setup
         if self.game.pieces_are_all_placed() and self.game.activeplayer.color == "Red":
-            self.game.swap_active_player()
-            self.game.change_gamestate(GameState.player_setup)
+            self.game.create_ready_popup()
 
 
     def square_press(self,instance):

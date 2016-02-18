@@ -318,3 +318,22 @@ class StrategoGame(FloatLayout):
         self.remove_widget(self.qpp_button)
 
 
+    def create_ready_popup(self):
+        self.readypopup = Popup(title = "Ready to Play?")
+        self.readypopup.center = (self.board.center_x, self.board.center_y + self.board.height/4)
+        self.readypopup.instructions = "If you're happy with your formation, click Play."
+        self.readypopup.startbuttontext = "PLAY STRATEGO!"
+        self.readypopup.buttonpress = self.ready_callback
+        self.readypopup.ids["layout"].add_widget(Button(text = "Not yet", on_press = self.not_yet_callback))
+        self.add_widget(self.readypopup)
+
+    def not_yet_callback(self, *args):
+        self.remove_widget(self.readypopup)
+        self.change_gamestate(GameState.setup_no_piece)
+
+
+
+    def ready_callback(self, *args):
+        self.remove_widget(self.readypopup)
+        self.swap_active_player()
+        self.change_gamestate(GameState.player_setup)
