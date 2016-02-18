@@ -198,7 +198,29 @@ class StrategoGame(FloatLayout):
         #print(piece.id, square.occupied.id)
 
 
-
+    def quick_place_pieces(self, *args):
+        if self.activeplayer.color =="Red":
+            x = 6
+        else:
+            x = 0
+        y = 0
+        templist = []
+        for piece in self.activeplayer.pieces:
+            if piece.spot.type == "sideboard":
+                templist.append(piece)
+        while len(templist) > 0:
+            if self.board.grid[x][y].occupied is None:
+                piece = templist[randint(0,len(templist)-1)]
+                self.pieceinhand = piece
+                self.move_to_square(self.board.grid[x][y])
+                self.officially_place_on_square(self.board.grid[x][y], piece)
+                templist.remove(piece)
+                self.activeplayer.pieces_left_to_be_placed -= 1
+            if y == 9:
+                y = 0
+                x += 1
+            else:
+                y += 1
 
 
 #creating players & pieces
@@ -298,28 +320,5 @@ class StrategoGame(FloatLayout):
 
 
 
-
-#debug functions
-
-    def quick_place_pieces(self, *args):
-        if self.activeplayer.color =="Red":
-            x = 6
-        else:
-            x = 0
-        y = 0
-        templist = []
-        for piece in self.activeplayer.pieces:
-            templist.append(piece)
-        while len(templist) > 0:
-            piece = templist[randint(0,len(templist)-1)]
-            self.pieceinhand = piece
-            self.move_to_square(self.board.grid[x][y])
-            templist.remove(piece)
-            self.activeplayer.pieces_left_to_be_placed -= 1
-            if y == 9:
-                y = 0
-                x += 1
-            else:
-                y += 1
 
 
