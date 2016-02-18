@@ -10,6 +10,19 @@ Blue:
         background: 0166FF
         foreground: FDFDFD
 
+BlueBACK:
+    disabled:
+        background: 072771
+        foreground: 414b66
+        border: 010001
+    normal:
+        background: 090e93
+        foreground: 94a7cc
+    down:
+        background: 0166FF
+        foreground: 7b8aa6
+
+
 Red:
     disabled:
         background: 711007
@@ -21,3 +34,15 @@ Red:
     down:
         background: D40000
         foreground: FDFDFD
+
+RedBACK:
+    disabled:
+        background: 711007
+        foreground:
+        border: 010001
+    normal:
+        background: a8180b
+        foreground: b2958d
+    down:
+        background: D40000
+        foreground: c1b4b1
