@@ -51,7 +51,7 @@ class StrategoGame(FloatLayout):
     def change_gamestate(self, newstate):
 
         #debug
-        print("swap", self.gamestate, "to", newstate)
+        #print("swap", self.gamestate, "to", newstate)
 
         self.gamestate = newstate
 
@@ -157,8 +157,11 @@ class StrategoGame(FloatLayout):
         #disable inactive pieces so the user can't create unwanted input
         for item in self.activeplayer.pieces:
             item.disabled = True
+            #don't dim if we're in game setup cause it's annoying
+            if self.gamestate == GameState.setup_selected_piece:
+                item.state = "down"
             #sets the image to the bright one while still disabling the piece
-            if item == self.pieceinhand:
+            elif item == self.pieceinhand:
                 item.state = "down"
 
         #the most recently added piece is highest on Z axis

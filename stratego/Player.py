@@ -24,6 +24,7 @@ class Player(Widget):
         for piece in self.pieces:
             if not piece.dead:
                 piece.disabled = False
+                piece.state = "normal"
 
     def disable_player_pieces(self):
         for piece in self.pieces:
