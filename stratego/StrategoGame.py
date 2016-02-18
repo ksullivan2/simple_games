@@ -57,9 +57,15 @@ class StrategoGame(FloatLayout):
 
         if self.gamestate == GameState.player_setup:
             self.player_start()
-            self.board.highlight_valid_game_setup_rows()
-            self.create_place_pieces_popup()
-            self.change_gamestate(GameState.setup_no_piece)
+
+            if self.activeplayer.color == "Red":
+                self.board.highlight_valid_game_setup_rows()
+                self.create_place_pieces_popup()
+                self.change_gamestate(GameState.setup_no_piece)
+            else:
+                self.quick_place_pieces()
+                self.swap_active_player()
+                self.change_gamestate(GameState.gameplay_no_piece)
 
         elif self.gamestate == GameState.setup_no_piece:
             self.activeplayer.activate_player_pieces()

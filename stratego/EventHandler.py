@@ -102,12 +102,10 @@ class EventsMethods(EventDispatcher):
 
     def piece_placed(self, *args):
         #only relevant in game setup
-        if self.game.pieces_are_all_placed():
-            if self.game.activeplayer.color == "Red":
-                self.game.swap_active_player()
-                self.game.change_gamestate(GameState.player_setup)
-            else:
-                self.game.change_gamestate(GameState.pieces_placed)
+        if self.game.pieces_are_all_placed() and self.game.activeplayer.color == "Red":
+            self.game.swap_active_player()
+            self.game.change_gamestate(GameState.player_setup)
+
 
     def square_press(self,instance):
         if self.game.gamestate == GameState.setup_selected_piece:
