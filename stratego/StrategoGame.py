@@ -107,6 +107,8 @@ class StrategoGame(FloatLayout):
             self.winner = None
             self.player1 = Player("Red")
             self.player2 = Player("Blue")
+            self.activeplayer = self.player1
+            self.board.activeplayer = self.player1
 
 
     def swap_active_player(self):
