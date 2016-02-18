@@ -129,7 +129,10 @@ class EventsMethods(EventDispatcher):
 
 
 
-    def conflictanim_on_complete(self, *args):
+    def conflictanim_on_complete(self, something, instance, *args):
+        # it was "down" before for visual reasons
+        instance.state = "normal"
+
         self.game.swap_active_player()
         self.game.change_gamestate(GameState.gameplay_no_piece)
 

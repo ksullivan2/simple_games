@@ -120,8 +120,10 @@ class StrategoGame(FloatLayout):
 
         #disable inactive pieces so the user can't create unwanted input
         for item in self.activeplayer.pieces:
-            if item != self.pieceinhand:
-                item.disabled = True
+            item.disabled = True
+            #sets the image to the bright one while still disabling the piece
+            if item == self.pieceinhand:
+                item.state = "down"
 
         #the most recently added piece is highest on Z axis
         #it's really annoying there's no other way to do this
@@ -241,6 +243,7 @@ class StrategoGame(FloatLayout):
                 break
 
         piece.disabled = True
+        piece.state = "normal"
 
         #piece's animation
         piece.moveanim = Animation(pos = deadslot.pos, t = "out_expo")

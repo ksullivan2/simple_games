@@ -31,21 +31,27 @@ class GamePiece(ToggleButton):
 
     def reveal_image(self):
         self.background_normal = "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
-        self.background_disabled_normal = "images/" + self.player_color + "/disabled/" + str(self.number) + ".png"
         self.background_down = "images/" + self.player_color + "/down/" + str(self.number) + ".png"
+        self.background_disabled_normal = "images/" + self.player_color + "/disabled/" + str(self.number) + ".png"
+
+        #this state will only be used for movement, so I use the bright color but disable the button
+        self.background_disabled_down = "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
 
     def hide_image(self):
         self.background_normal = "images/" + self.player_color + "/normal/back.png"
-        self.background_disabled_normal = "images/" + self.player_color + "/disabled/back.png"
         self.background_down = "images/" + self.player_color + "/down/back.png"
+        self.background_disabled_normal = "images/" + self.player_color + "/disabled/back.png"
+
+        #this state will only be used for movement, so I use the bright color but disable the button
+        self.background_disabled_down = "images/" + self.player_color + "/normal/back.png"
 
     def conflict_animation(self, instance, direction):
         '''first the pieces circle each other, then "joust" at each other
         direction is 1 for winner, -1 for loser'''
 
-        #make sure they look normal
-        #instance.state = "normal"
-        #instance.disabled = False
+        #make sure they look bright, but are actually disabled
+        instance.state = "down"
+        instance.disabled = True
 
         #circle animation
         radius = 100*direction
