@@ -59,7 +59,7 @@ class GameBoard(Board):
                 self.add_square_to_grid(i,temp)
 
                 #debug
-                temp.bind(occupied = temp.test_occupied)
+                #temp.bind(occupied = temp.test_occupied)
 
 
     def highlight_valid_game_setup_rows(self):

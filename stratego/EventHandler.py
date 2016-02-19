@@ -50,9 +50,10 @@ from GameState import GameState
         activities associated with entering the new state '''
 
 
-class EventsMethods(EventDispatcher):
+class Controller():
     def __init__(self, game):
         self.game = game
+        print("created controller")
 
 
     def start_game_button_press(self, *args):

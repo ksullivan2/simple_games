@@ -23,28 +23,24 @@ from GameState import *
 
 class StrategoGame(FloatLayout):
     def __init__(self, **kwargs):
-        super (StrategoGame, self).__init__()
-        #create players
-        self.player1 = Player("Red")
-        self.player2 = Player("Blue")
+        super().__init__()
 
         #create aliases for children widgets
         self.board = self.ids["board"]
         self.sidebar = self.ids["sidebar"]
 
         #gamestatus
-        self.activeplayer = self.player1
+        self.activeplayer = None
         self.pieceinhand = None
         self.gamestate = GameState.start_popup
         self.winner = None
 
         #set up event handlers for all relevant widgets
-        self.eventsobject = EventsMethods(self)
+        self.eventsobject = Controller(self)
         self.board.eventsobject = self.eventsobject
         self.sidebar.eventsobject = self.eventsobject
 
-        #board also needs to know the active player
-        self.board.activeplayer = self.activeplayer
+       #players are now created after initialization to ease up the memory load
 
         self.create_start_game_popup()
 
@@ -58,6 +54,10 @@ class StrategoGame(FloatLayout):
         self.gamestate = newstate
 
         if self.gamestate == GameState.player_setup:
+            #create new players has been moved to here to ease up memory load
+            if self.activeplayer is None:
+                self.create_new_players()
+
             self.player_start()
 
             if self.activeplayer.color == "Red":
@@ -102,14 +102,9 @@ class StrategoGame(FloatLayout):
             for square in self.sidebar.children:
                 square.occupied = None
 
-
-
             #clear winner property and create new player objects so that all the create methods work again
             self.winner = None
-            self.player1 = Player("Red")
-            self.player2 = Player("Blue")
-            self.activeplayer = self.player1
-            self.board.activeplayer = self.player1
+            self.create_new_players()
 
 
     def swap_active_player(self):
@@ -212,6 +207,12 @@ class StrategoGame(FloatLayout):
 
 
 #creating players & pieces
+    def create_new_players(self):
+        self.player1 = Player("Red")
+        self.player2 = Player("Blue")
+        self.activeplayer = self.player1
+        self.board.activeplayer = self.player1
+
 
     def player_start(self):
         '''creates the gamepieces for each player'''

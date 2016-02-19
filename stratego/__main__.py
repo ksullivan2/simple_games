@@ -20,6 +20,5 @@ class StrategoApp(App):
 
 
 
-
 if __name__ == '__main__':
     StrategoApp().run()
