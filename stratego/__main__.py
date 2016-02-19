@@ -12,9 +12,6 @@ from StrategoGame import *
 
 
 
-Window.size = (1000, 700)
-
-
 
 class StrategoApp(App):
     def build(self):

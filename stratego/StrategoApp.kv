@@ -1,5 +1,11 @@
+AnchorLayout:
+    padding: 200,200,200,200
+
+    StrategoGame:
+
 <StrategoGame>:
     id: game
+    height: self.width * .7
 
 
     BoxLayout:
@@ -42,11 +48,13 @@
     background_disabled_normal: self.get_disabled_image()
     border: (0,0,0,0)
     on_press: self.parent.eventsobject.square_press(self)
+    #on_size: print(self.occupied)
 
 
 <GamePiece>:
     id: gamepiece
     size_hint:(None, None)
+
     group: self.player_color
     border: (0,0,0,0)
     on_press: self.eventsobject.gamepiece_press(self)
@@ -64,14 +72,16 @@
             Ellipse:
                 id: circle
                 size: (root.width/2.5, root.height/3)
-                pos: -15, -20
+                #pos: -15, -20
+                pos: 0,0
         Label:
             id: number
             text: str(root.number)
             color: (1,1,1,1)
             font_size: root.height/4
             bold: True
-            pos_hint: {"x": -.4, "y": -.45}
+            pos: 0,0
+            #pos_hint: {"x": -.4, "y": -.45}
 
 
 

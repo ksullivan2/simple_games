@@ -29,6 +29,12 @@ class Square(Button):
         else:
             return "atlas://data/images/defaulttheme/button_disabled"
 
+
+    def on_size(self, *args):
+        if self.occupied is not None:
+            self.occupied.size = self.size
+            self.occupied.pos = self.pos
+
     #debug
     def test_occupied(self, *args):
         if self.occupied is not None:

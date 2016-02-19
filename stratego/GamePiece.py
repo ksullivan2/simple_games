@@ -25,8 +25,7 @@ class GamePiece(ToggleButton):
         else:
             self.max_spaces = 1
         super(GamePiece, self).__init__()
-        for key in self.ids.keys():
-            print(key)
+
 
     def get_name(self):
         return names[self.number]

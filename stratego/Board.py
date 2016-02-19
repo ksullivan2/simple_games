@@ -23,7 +23,6 @@ class Board(GridLayout):
         self.add_widget(square)
 
 
-
 class SideBoard(Board):
     def __init__(self, **kwargs):
         super().__init__()
@@ -38,6 +37,9 @@ class SideBoard(Board):
             for j in range(4):
                 temp = Square(i,j, "sideboard")
                 self.add_square_to_grid(i,temp)
+
+                #debug
+                #temp.bind(occupied = temp.test_occupied)
 
 class GameBoard(Board):
     def __init__(self, **kwargs):
@@ -57,7 +59,7 @@ class GameBoard(Board):
                 self.add_square_to_grid(i,temp)
 
                 #debug
-                #temp.bind(occupied = temp.test_occupied)
+                temp.bind(occupied = temp.test_occupied)
 
 
     def highlight_valid_game_setup_rows(self):

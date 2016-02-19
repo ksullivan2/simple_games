@@ -1,5 +1,6 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty, OptionProperty
 from kivy.graphics.instructions import *
@@ -225,7 +226,7 @@ class StrategoGame(FloatLayout):
             piece.pos = piece.spot.pos
             piece.size = square.size
             piece.eventsobject = self.eventsobject
-            square.occupied = True
+            square.occupied = piece
 
 
 
