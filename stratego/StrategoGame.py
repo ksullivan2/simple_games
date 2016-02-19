@@ -102,9 +102,9 @@ class StrategoGame(FloatLayout):
             for square in self.sidebar.children:
                 square.occupied = None
 
-            #clear winner property and create new player objects so that all the create methods work again
+            #clear winner property and sets activeplayer to none so player setup will create new ones
             self.winner = None
-            self.create_new_players()
+            self.activeplayer = None
 
 
     def swap_active_player(self):
