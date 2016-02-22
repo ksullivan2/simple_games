@@ -50,34 +50,37 @@
 <GamePiece>:
     id: gamepiece
     size_hint:(None, None)
-
     group: self.player_color
     border: (0,0,0,0)
     on_press: self.eventsobject.gamepiece_press(self)
 
 
-    RelativeLayout:
+    AnchorLayout:
+        id: layout
         center: root.center
         on_size: self.size = root.size
-        id: layout
+        anchor_x: "left"
+        anchor_y: "bottom"
 
         canvas:
-
             Color:
                 rgba: 0,0,0,1
             Ellipse:
                 id: circle
                 size: (root.width/2.5, root.height/3)
                 #pos: -15, -20
-                pos: 0,0
+                pos: root.pos
+
         Label:
             id: number
             text: str(root.number)
             color: (1,1,1,1)
             font_size: root.height/4
             bold: True
-            pos: 0,0
-            #pos_hint: {"x": -.4, "y": -.45}
+            #pos: root.pos
+
+
+
 
 
 
