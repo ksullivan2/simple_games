@@ -38,6 +38,12 @@ class GamePiece(ToggleButton):
         #this state will only be used for movement, so I use the bright color but disable the button
         self.background_disabled_down = "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
 
+        #turns the opacity on the number in a circle back to 1
+        self.ids["layout"].opacity = 1
+        self.ids["number"].opacity = 1
+
+
+
     def hide_image(self):
         self.background_normal = "images/" + self.player_color + "/normal/back.png"
         self.background_down = "images/" + self.player_color + "/down/back.png"
@@ -48,6 +54,7 @@ class GamePiece(ToggleButton):
 
         #turns the opacity on the number in a circle down to 0
         self.ids["layout"].opacity = 0
+        self.ids["number"].opacity = 0
 
     def conflict_animation(self, instance, direction, won):
         '''first the pieces circle each other, then "joust" at each other
@@ -86,7 +93,7 @@ class GamePiece(ToggleButton):
     def conflict_anim_p2(self, instance, direction, radius, xcenter, ycenter, won, *args):
         '''has to be separate because of the image switch'''
 
-        instance.background_disabled_down =  "images/" + self.player_color + "/normal/" + str(self.number) + ".png"
+        self.reveal_image()
         self.ids["layout"].opacity = 1
 
         anim = Animation(pos = (xcenter - radius , ycenter + radius/2), t = "in_out_back")

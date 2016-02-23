@@ -313,8 +313,8 @@ class StrategoGame(FloatLayout):
 #creating popups
     def create_start_game_popup(self):
         self.startpopup = Popup()
-        self.startpopup.center = 670,700
-        #apparently the widgets aren't size yet when this is run, need to fix
+        self.startpopup.center = 600,700
+        #apparently the widgets aren't sized yet when this is run, need to fix
         #self.center = (self.center_x, self.center_y + self.board.height/2)
         self.startpopup.instructions = "Test your mettle in a game of strategy and cunning!"
         self.startpopup.startbuttontext = "Start a new game!"
@@ -353,7 +353,8 @@ class StrategoGame(FloatLayout):
         self.readypopup.instructions = "If you're happy with your formation, click Play."
         self.readypopup.startbuttontext = "PLAY STRATEGO!"
         self.readypopup.buttonpress = self.ready_callback
-        self.readypopup.ids["layout"].add_widget(Button(text = "Not yet", on_press = self.not_yet_callback))
+        self.readypopup.ids["layout"].add_widget(Button(text = "Not yet", on_press = self.not_yet_callback,
+                                                 size_hint_y = 1/3))
         self.add_widget(self.readypopup)
 
     def not_yet_callback(self, *args):
@@ -367,7 +368,7 @@ class StrategoGame(FloatLayout):
 
     def win_popup(self, winner):
         self.winpopup = Popup()
-        self.winpopup.center = 670,700
+        self.winpopup.center = 600,700
         #apparently the widgets aren't size yet when this is run, need to fix
         #self.center = (self.center_x, self.center_y + self.board.height/2)
         self.winpopup.instructions = self.winner.player_color + " won the game!"
